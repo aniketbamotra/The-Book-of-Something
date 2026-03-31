@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { BookOpen, Code2, Lightbulb, RefreshCw, Zap, ChevronUp } from 'lucide-react'
 import type { LessonPost, DifficultyLevel } from '@/types'
 import { Badge } from '@/components/ui/Badge'
-import { slideUp } from '@/constants/animations'
+import { slideUp } from '@/lib/animations'
 import { cn } from '@/lib/utils'
 
 interface PostCardProps {

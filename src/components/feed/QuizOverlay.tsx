@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { BrainCircuit, Trophy, ThumbsUp, BookMarked } from 'lucide-react'
 import type { QuizQuestion } from '@/types'
 import { Button } from '@/components/ui/Button'
-import { scaleIn } from '@/constants/animations'
+import { scaleIn } from '@/lib/animations'
 import { cn } from '@/lib/utils'
 
 interface QuizOverlayProps {

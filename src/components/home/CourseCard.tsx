@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Clock } from 'lucide-react'
 import type { Course, CourseProgress } from '@/types'
 import { Badge } from '@/components/ui/Badge'
-import { fadeUp } from '@/constants/animations'
+import { fadeUp } from '@/lib/animations'
 import { getDifficultyLabel } from '@/lib/difficultyEngine'
 
 interface CourseCardProps {

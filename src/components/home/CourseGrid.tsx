@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import type { Course, CourseProgress } from '@/types'
 import { CourseCard } from './CourseCard'
 import { loadProgress } from '@/lib/progressStorage'
-import { stagger } from '@/constants/animations'
+import { stagger } from '@/lib/animations'
 
 interface CourseGridProps {
   courses: Course[]
