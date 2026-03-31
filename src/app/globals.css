@@ -1,26 +1,109 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
+
+  /* Design system — indigo primary */
+  --color-primary: #4f46e5;
+  --color-primary-hover: #6366f1;
+  --color-primary-muted: rgba(79, 70, 229, 0.15);
+  --color-primary-border: rgba(79, 70, 229, 0.35);
+  --color-success: #22c55e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), system-ui, sans-serif;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono), 'Fira Code', monospace;
+}
+
+/* Doom scroll feed container */
+.feed-container {
+  height: 100svh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.feed-container::-webkit-scrollbar {
+  display: none;
+}
+
+.feed-item {
+  height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Thin scrollbar for code blocks */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+/* Neon glow utilities */
+.glow-indigo {
+  box-shadow: 0 0 0 1px var(--color-primary-border), 0 0 20px rgba(79, 70, 229, 0.12);
+}
+
+.glow-indigo-strong {
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5), 0 0 30px rgba(79, 70, 229, 0.2);
+}
+
+.text-glow {
+  text-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+}
+
+/* Code block neon accent */
+.code-block {
+  position: relative;
+  border-left: 2px solid rgba(99, 102, 241, 0.4);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

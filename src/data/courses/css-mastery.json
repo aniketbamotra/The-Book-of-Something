@@ -1,0 +1,228 @@
+{
+  "course": {
+    "id": "css-mastery",
+    "title": "CSS Mastery",
+    "description": "Level up your CSS skills — flexbox, grid, animations, custom properties, and modern layout patterns.",
+    "category": "Styling",
+    "tags": ["CSS", "Layout", "Design"],
+    "coverGradient": "from-pink-500 to-rose-600",
+    "emoji": "🎨",
+    "estimatedMinutes": 22,
+    "difficulty": "beginner"
+  },
+  "posts": [
+    {
+      "id": "css-1",
+      "courseId": "css-mastery",
+      "order": 1,
+      "title": "The Box Model",
+      "type": "analogy",
+      "content": {
+        "beginner": "Every element in CSS is a box. The box has four layers:\n- **Content** — the actual text/image\n- **Padding** — space inside the border\n- **Border** — the outline\n- **Margin** — space outside the border\n\nThink of it like a framed picture: content → mat → frame → wall space.",
+        "intermediate": "The default `box-sizing: content-box` means `width` only covers content — padding and border add to the total size. Use `box-sizing: border-box` (in a reset) so `width` includes padding and border — much more predictable.",
+        "advanced": "Margin collapsing: vertical margins between adjacent block elements collapse to the largest single margin. Margins of a parent and first/last child collapse if no border, padding, or formatting context separates them. Flexbox and Grid containers don't collapse margins with their children."
+      }
+    },
+    {
+      "id": "css-2",
+      "courseId": "css-mastery",
+      "order": 2,
+      "title": "Flexbox in 5 Minutes",
+      "type": "code",
+      "codeLanguage": "css",
+      "content": {
+        "beginner": "Flexbox makes layout easy. Apply it to the parent:\n\n```css\n.container {\n  display: flex;\n  justify-content: center;  /* horizontal */\n  align-items: center;      /* vertical */\n  gap: 16px;\n}\n```\n\nThe children automatically lay out in a row. Done!",
+        "intermediate": "Key flex properties:\n- `flex-direction`: row/column\n- `flex-wrap`: wrap to next line\n- `justify-content`: main axis alignment (space-between, around, evenly)\n- `align-items`: cross axis alignment\n- `flex: 1` on children = 'grow to fill available space'\n- `flex-shrink: 0` = 'don't shrink'",
+        "advanced": "The `flex` shorthand is `flex-grow flex-shrink flex-basis`. `flex: 1` = `1 1 0%` (equal-width flexible children). `flex: auto` = `1 1 auto` (flexible, respects content size). `flex: none` = `0 0 auto` (rigid). `align-self` overrides `align-items` for a single child."
+      }
+    },
+    {
+      "id": "css-3",
+      "courseId": "css-mastery",
+      "order": 3,
+      "title": "CSS Grid",
+      "type": "code",
+      "codeLanguage": "css",
+      "content": {
+        "beginner": "Grid is for 2D layouts (rows AND columns):\n\n```css\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n```\n\nThis creates 3 equal columns. `1fr` means '1 fraction of available space'.",
+        "intermediate": "`fr` units distribute space after fixed sizes. Named lines: `grid-template-columns: [sidebar-start] 250px [sidebar-end main-start] 1fr [main-end]`. Template areas: a visual ASCII-art layout. `auto-fill` vs `auto-fit` with `minmax`: `repeat(auto-fill, minmax(200px, 1fr))` for responsive columns without media queries.",
+        "advanced": "Explicit vs implicit grid: you define the explicit grid with `grid-template-*`; items overflowing create the implicit grid (controlled by `grid-auto-rows/columns`). Subgrid (`grid-template-columns: subgrid`) lets children participate in the parent grid's track definition — great for aligning content across cards."
+      }
+    },
+    {
+      "id": "css-4",
+      "courseId": "css-mastery",
+      "order": 4,
+      "title": "CSS Custom Properties",
+      "type": "code",
+      "codeLanguage": "css",
+      "content": {
+        "beginner": "CSS variables let you reuse values:\n\n```css\n:root {\n  --primary-color: #6366f1;\n  --spacing-md: 16px;\n}\n\n.button {\n  background: var(--primary-color);\n  padding: var(--spacing-md);\n}\n```\n\nChange `--primary-color` once, updates everywhere!",
+        "intermediate": "Custom properties cascade and are inherited (unlike preprocessor variables). They can be updated with JavaScript: `el.style.setProperty('--color', '#fff')`. They can have fallbacks: `var(--maybe-undefined, blue)`. They're scoped to the element they're declared on and all descendants.",
+        "advanced": "Custom properties are powerful for theming, component APIs, and calculated values. They participate in transitions/animations (with `@property` for registered custom properties). `@property` lets you declare syntax, inheritance, and initial value — enabling animations on non-interpolatable values like colors stored in variables."
+      }
+    },
+    {
+      "id": "css-5",
+      "courseId": "css-mastery",
+      "order": 5,
+      "title": "CSS Transitions",
+      "type": "code",
+      "codeLanguage": "css",
+      "content": {
+        "beginner": "Add smooth animations with `transition`:\n\n```css\n.button {\n  background: blue;\n  transition: background 0.3s ease;\n}\n\n.button:hover {\n  background: darkblue;\n}\n```\n\nNow hovering smoothly animates the background color!",
+        "intermediate": "`transition` shorthand: `property duration timing-function delay`. Transition multiple properties: `transition: color 0.2s, transform 0.3s`. Prefer transitioning `transform` and `opacity` — they're GPU-accelerated and don't cause layout recalculation. Avoid transitioning `width`, `height`, or `margin`.",
+        "advanced": "Transitions require a start and end state — they only animate between two values. For more complex animations, use `@keyframes`. The `will-change: transform` hint promotes an element to its own compositor layer (use sparingly — excessive use wastes GPU memory). `prefers-reduced-motion` media query: wrap animations in `@media (prefers-reduced-motion: no-preference)`."
+      }
+    },
+    {
+      "id": "css-6",
+      "courseId": "css-mastery",
+      "order": 6,
+      "title": "CSS Keyframe Animations",
+      "type": "code",
+      "codeLanguage": "css",
+      "content": {
+        "beginner": "For multi-step animations, use `@keyframes`:\n\n```css\n@keyframes bounce {\n  0%   { transform: translateY(0); }\n  50%  { transform: translateY(-20px); }\n  100% { transform: translateY(0); }\n}\n\n.ball {\n  animation: bounce 0.6s ease-in-out infinite;\n}\n```",
+        "intermediate": "`animation` shorthand: `name duration timing-function delay iteration-count direction fill-mode`. Key values: `animation-fill-mode: forwards` (keep end state), `animation-direction: alternate` (ping-pong), `animation-play-state: paused` (pause via JS). Use `from`/`to` as aliases for `0%`/`100%`.",
+        "advanced": "Keyframe animations run on the compositor thread for `transform` and `opacity` — no main thread needed. CSS `animation-timeline` (scroll-driven animations, CSS 2023) links animation progress to scroll position without JavaScript: `animation-timeline: scroll()`. Use `View Transition API` for page-transition animations."
+      }
+    },
+    {
+      "id": "css-7",
+      "courseId": "css-mastery",
+      "order": 7,
+      "title": "Responsive Design",
+      "type": "tip",
+      "content": {
+        "beginner": "Media queries let you apply different styles at different screen sizes:\n\n```css\n/* Mobile first: base styles are for mobile */\n.container { padding: 16px; }\n\n/* Then add styles for larger screens */\n@media (min-width: 768px) {\n  .container { padding: 32px; }\n}\n```",
+        "intermediate": "Mobile-first approach: write base styles for small screens, override for larger ones using `min-width`. This is more efficient than desktop-first with `max-width`. Use `clamp()` for fluid typography: `font-size: clamp(1rem, 2.5vw, 1.5rem)`. CSS Grid with `auto-fill`/`auto-fit` can eliminate many media queries.",
+        "advanced": "Container queries (`@container`) are now widely supported — apply styles based on the container's size, not the viewport. Use `container-type: inline-size` on the parent. Combined with `:has()` selector, you can build fully self-contained, context-aware components that don't need JavaScript for responsive behavior."
+      }
+    },
+    {
+      "id": "css-8",
+      "courseId": "css-mastery",
+      "order": 8,
+      "title": "CSS Specificity",
+      "type": "analogy",
+      "content": {
+        "beginner": "When two CSS rules conflict, specificity decides the winner. Think of it as a scoring system:\n- Element selector (p, div): 1 point\n- Class (.button): 10 points\n- ID (#header): 100 points\n- Inline style: 1000 points\n\nHigher score wins!",
+        "intermediate": "Specificity is calculated as (A, B, C): A = IDs, B = classes/attributes/pseudo-classes, C = elements/pseudo-elements. Equal specificity: last rule wins (cascade order). `!important` overrides everything (avoid it — it breaks the natural cascade). `:is()`, `:not()`, `:has()` take the specificity of their most specific argument.",
+        "advanced": "CSS Cascade Layers (`@layer`) give you explicit control over cascade order, superseding specificity: rules in later-declared layers win regardless of specificity. This solves the specificity war problem in large codebases. `@layer utilities { }` at the end beats all unlayered styles — the opposite of what you might expect."
+      }
+    },
+    {
+      "id": "css-9",
+      "courseId": "css-mastery",
+      "order": 9,
+      "title": "Modern CSS Features",
+      "type": "fact",
+      "content": {
+        "beginner": "CSS has come a long way! Some cool modern features:\n- `:is()` — matches any of a list of selectors\n- `gap` — works in both flexbox AND grid\n- `aspect-ratio` — maintain proportions easily\n- `clamp()` — fluid sizing without media queries\n- Logical properties (`padding-inline`, `margin-block`)",
+        "intermediate": "2023-2024 CSS highlights:\n- `@layer` cascade layers\n- `@container` container queries\n- `:has()` parent selector (finally!)\n- `color-mix()` for blending colors\n- `text-wrap: balance` for better headlines\n- `@starting-style` for entry animations\n- Nesting (no preprocessor needed!)",
+        "advanced": "Cutting edge:\n- `scroll-driven animations` (no JS needed for scroll effects)\n- `View Transitions API` (page animations)\n- `Anchor Positioning` (tooltips/popovers without JS)\n- `CSS Houdini` (custom paint worklets)\n- `@property` registered custom properties with animation support\n- `light-dark()` for automatic dark mode"
+      }
+    },
+    {
+      "id": "css-10",
+      "courseId": "css-mastery",
+      "order": 10,
+      "title": "You're a CSS Master! 🎨",
+      "type": "fact",
+      "content": {
+        "beginner": "Look at you! You've learned:\n✅ Box Model\n✅ Flexbox\n✅ CSS Grid\n✅ Custom Properties\n✅ Transitions & Animations\n✅ Responsive Design\n\nNext: try building a real layout project. Recreate a website you love!",
+        "intermediate": "Solid CSS skills! Explore further:\n- **Tailwind CSS** — utility-first framework\n- **CSS Modules** — scoped styles in React\n- **Styled Components** or **CSS-in-JS**\n- **Storybook** for design systems\n- **Motion One** for performant animations",
+        "advanced": "You've got depth. Next:\n- Design system architecture\n- CSS performance profiling\n- Custom @property animations\n- Scroll-driven animation patterns\n- CSS Architecture methodologies (CUBE, ITCSS)"
+      }
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "css-q1",
+      "courseId": "css-mastery",
+      "afterPostOrder": 5,
+      "questions": [
+        {
+          "id": "cq1-1",
+          "questionText": "What does `box-sizing: border-box` do?",
+          "options": [
+            "Adds a border to all elements",
+            "Makes width include padding and border",
+            "Removes the default margin",
+            "Enables flexbox"
+          ],
+          "correctIndex": 1,
+          "explanation": "border-box makes the width property include padding and border, so the element is exactly the size you set — much more predictable than the default content-box."
+        },
+        {
+          "id": "cq1-2",
+          "questionText": "What does `justify-content: space-between` do in flexbox?",
+          "options": [
+            "Centers all items",
+            "Adds space inside each item",
+            "Distributes items with space between them, first and last at edges",
+            "Makes items equal width"
+          ],
+          "correctIndex": 2,
+          "explanation": "space-between places the first item at the start, last at the end, and distributes remaining items with equal space between them."
+        },
+        {
+          "id": "cq1-3",
+          "questionText": "What does `1fr` mean in CSS Grid?",
+          "options": [
+            "1 pixel",
+            "1% of the container",
+            "1 fraction of the available space",
+            "First row"
+          ],
+          "correctIndex": 2,
+          "explanation": "fr is a fractional unit. 1fr means 'take 1 equal share of the available space'. Three columns of 1fr each would each get 1/3 of the space."
+        }
+      ]
+    },
+    {
+      "id": "css-q2",
+      "courseId": "css-mastery",
+      "afterPostOrder": 9,
+      "questions": [
+        {
+          "id": "cq2-1",
+          "questionText": "Why should you prefer transitioning `transform` over `width`?",
+          "options": [
+            "transform has more options",
+            "transform is GPU-accelerated and doesn't cause layout recalculation",
+            "width transitions are not supported",
+            "transform is shorter to type"
+          ],
+          "correctIndex": 1,
+          "explanation": "transform and opacity are handled by the GPU compositor and don't trigger layout or paint — making them much smoother, especially on mobile."
+        },
+        {
+          "id": "cq2-2",
+          "questionText": "In mobile-first CSS, what does the base style target?",
+          "options": [
+            "Desktop screens",
+            "Tablet screens",
+            "Mobile/small screens",
+            "All screens equally"
+          ],
+          "correctIndex": 2,
+          "explanation": "Mobile-first means base styles are written for small screens, then you add overrides with min-width media queries for larger screens. This is more efficient than max-width desktop-first."
+        },
+        {
+          "id": "cq2-3",
+          "questionText": "Which CSS selector has the HIGHEST specificity?",
+          "options": [
+            ".button",
+            "button",
+            "#submit",
+            "div.button"
+          ],
+          "correctIndex": 2,
+          "explanation": "IDs (#submit) have a specificity of (1,0,0) — higher than classes (0,1,0) or elements (0,0,1)."
+        }
+      ]
+    }
+  ]
+}

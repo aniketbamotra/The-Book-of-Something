@@ -1,0 +1,35 @@
+[
+  {
+    "id": "intro-to-react",
+    "title": "Intro to React",
+    "description": "Master the fundamentals of React — components, state, props, and hooks — through bite-sized scrollable lessons.",
+    "category": "Frontend",
+    "tags": ["React", "JavaScript", "UI"],
+    "coverGradient": "from-cyan-500 to-blue-600",
+    "emoji": "⚛️",
+    "estimatedMinutes": 25,
+    "difficulty": "beginner"
+  },
+  {
+    "id": "typescript-basics",
+    "title": "TypeScript Basics",
+    "description": "Go from JavaScript to TypeScript with confidence. Learn types, interfaces, generics, and real-world patterns.",
+    "category": "Language",
+    "tags": ["TypeScript", "JavaScript", "Types"],
+    "coverGradient": "from-blue-500 to-indigo-600",
+    "emoji": "🔷",
+    "estimatedMinutes": 20,
+    "difficulty": "beginner"
+  },
+  {
+    "id": "css-mastery",
+    "title": "CSS Mastery",
+    "description": "Level up your CSS skills — flexbox, grid, animations, custom properties, and modern layout patterns.",
+    "category": "Styling",
+    "tags": ["CSS", "Layout", "Design"],
+    "coverGradient": "from-pink-500 to-rose-600",
+    "emoji": "🎨",
+    "estimatedMinutes": 22,
+    "difficulty": "beginner"
+  }
+]

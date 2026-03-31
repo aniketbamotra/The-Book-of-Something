@@ -1,0 +1,229 @@
+{
+  "course": {
+    "id": "typescript-basics",
+    "title": "TypeScript Basics",
+    "description": "Go from JavaScript to TypeScript with confidence. Learn types, interfaces, generics, and real-world patterns.",
+    "category": "Language",
+    "tags": ["TypeScript", "JavaScript", "Types"],
+    "coverGradient": "from-blue-500 to-indigo-600",
+    "emoji": "🔷",
+    "estimatedMinutes": 20,
+    "difficulty": "beginner"
+  },
+  "posts": [
+    {
+      "id": "ts-1",
+      "courseId": "typescript-basics",
+      "order": 1,
+      "title": "Why TypeScript?",
+      "type": "text",
+      "content": {
+        "beginner": "TypeScript is JavaScript with a superpower: **types**. It catches bugs before you run your code — like a spell-checker for your code. Every valid JavaScript file is already valid TypeScript!",
+        "intermediate": "TypeScript is a statically typed superset of JavaScript. It compiles to plain JS, so it runs anywhere JS runs. The key benefit: type errors surface at compile time, not at runtime in production.",
+        "advanced": "TypeScript's type system is structural (duck-typed), not nominal. Its inference engine is Turing-complete, enabling complex conditional and mapped types. The `tsc` compiler erases all type annotations — they have zero runtime overhead."
+      }
+    },
+    {
+      "id": "ts-2",
+      "courseId": "typescript-basics",
+      "order": 2,
+      "title": "Basic Types",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "You annotate variables with `: type`:\n\n```typescript\nlet name: string = 'Alice';\nlet age: number = 30;\nlet isAdmin: boolean = true;\nlet scores: number[] = [95, 87, 92];\n```\n\nTypeScript can also **infer** types — you don't always need to write them!",
+        "intermediate": "Core types: `string`, `number`, `boolean`, `null`, `undefined`, `any` (avoid!), `unknown`, `never`, `void`. Arrays: `T[]` or `Array<T>`. Tuples: `[string, number]`. TypeScript infers types from initializers — explicit annotations are often redundant.",
+        "advanced": "Prefer `unknown` over `any` — `unknown` requires type narrowing before use. `never` is the bottom type: a function that always throws has return type `never`, and it's assignable to nothing. Use `satisfies` (TS 4.9) to validate a value matches a type while preserving its literal type."
+      }
+    },
+    {
+      "id": "ts-3",
+      "courseId": "typescript-basics",
+      "order": 3,
+      "title": "Interfaces & Types",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "Use `interface` to describe the shape of an object:\n\n```typescript\ninterface User {\n  name: string;\n  age: number;\n  email?: string; // optional\n}\n\nfunction greet(user: User) {\n  console.log('Hello, ' + user.name);\n}\n```",
+        "intermediate": "Both `interface` and `type` alias can describe objects. Key differences: `interface` is extendable (`extends`), `type` supports unions/intersections. Use `interface` for public APIs (it's more familiar and mergeable), `type` for complex type compositions.",
+        "advanced": "`interface` declarations merge (declaration merging) — useful for augmenting third-party types. `type` aliases are eagerly evaluated, `interface` is lazily evaluated. For recursive types, `interface` often works better. The TypeScript team recommends `interface` for object shapes and `type` for everything else."
+      }
+    },
+    {
+      "id": "ts-4",
+      "courseId": "typescript-basics",
+      "order": 4,
+      "title": "Union & Intersection Types",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "A union type means 'this OR that':\n\n```typescript\ntype Status = 'loading' | 'success' | 'error';\n\nfunction getColor(status: Status): string {\n  if (status === 'loading') return 'gray';\n  if (status === 'success') return 'green';\n  return 'red';\n}\n```",
+        "intermediate": "Union `A | B` = a value of either type. Intersection `A & B` = a value with all properties of both types. Type guards narrow unions: `typeof`, `instanceof`, `in`, or custom `is` predicates. Discriminated unions (a `kind` field) make exhaustive switch statements easy.",
+        "advanced": "Distributive conditional types distribute over naked type parameters in unions: `T extends U ? X : Y` where T is a type param distributes over union members. Use `[T] extends [U]` to prevent distribution. Template literal types + mapped types + conditional types enable powerful string manipulation types."
+      }
+    },
+    {
+      "id": "ts-5",
+      "courseId": "typescript-basics",
+      "order": 5,
+      "title": "Generics",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "Generics let you write reusable code that works with different types:\n\n```typescript\nfunction identity<T>(value: T): T {\n  return value;\n}\n\nidentity<string>('hello'); // T = string\nidentity<number>(42);      // T = number\n```\n\nThink of `T` as a type variable — a placeholder for the actual type.",
+        "intermediate": "Generics enable type-safe reuse. Common patterns: `Array<T>`, `Promise<T>`, `Record<K, V>`. Constrain generics with `extends`: `<T extends string>` means T must be a subtype of string. Generic interfaces and classes work the same way.",
+        "advanced": "Generic constraints with `keyof`: `<T, K extends keyof T>` lets you safely access `obj[key]`. Conditional types `T extends U ? X : Y` are generic-aware. Infer in conditional types: `T extends Promise<infer R> ? R : never` extracts the resolved type. Higher-kinded types aren't natively supported but can be emulated."
+      }
+    },
+    {
+      "id": "ts-6",
+      "courseId": "typescript-basics",
+      "order": 6,
+      "title": "Type Narrowing",
+      "type": "tip",
+      "content": {
+        "beginner": "TypeScript narrows types inside conditionals:\n\n```typescript\nfunction printLength(val: string | number) {\n  if (typeof val === 'string') {\n    console.log(val.length); // TS knows it's a string here\n  } else {\n    console.log(val.toFixed(2)); // TS knows it's a number\n  }\n}\n```",
+        "intermediate": "Narrowing techniques: `typeof`, `instanceof`, `in` operator, truthiness checks, equality (`===`), assignment narrowing, and discriminated unions. TypeScript tracks control flow — it knows which branch you're in and what type is possible.",
+        "advanced": "Custom type guards with `is`: `function isUser(val: unknown): val is User { return typeof val === 'object' && val !== null && 'name' in val; }`. Assertion functions: `function assert(cond: boolean): asserts cond`. The `satisfies` operator validates type without widening."
+      }
+    },
+    {
+      "id": "ts-7",
+      "courseId": "typescript-basics",
+      "order": 7,
+      "title": "Utility Types",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "TypeScript has built-in utility types to transform types:\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n}\n\ntype PartialUser = Partial<User>;   // all optional\ntype ReadonlyUser = Readonly<User>; // all readonly\ntype UserPreview = Pick<User, 'id' | 'name'>; // only those fields\n```",
+        "intermediate": "Key utility types: `Partial<T>`, `Required<T>`, `Readonly<T>`, `Record<K, V>`, `Pick<T, K>`, `Omit<T, K>`, `Exclude<T, U>`, `Extract<T, U>`, `NonNullable<T>`, `ReturnType<F>`, `Parameters<F>`, `Awaited<T>`. These are all built using mapped and conditional types.",
+        "advanced": "You can build your own utility types. `DeepPartial<T>` = `{ [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] }`. `Prettify<T>` = `{ [K in keyof T]: T[K] } & {}` flattens intersection types in IDE tooltips. Study the TypeScript lib source — it's just TypeScript types."
+      }
+    },
+    {
+      "id": "ts-8",
+      "courseId": "typescript-basics",
+      "order": 8,
+      "title": "Enums vs Const Objects",
+      "type": "analogy",
+      "content": {
+        "beginner": "Enums let you define named constants:\n\n```typescript\nenum Direction {\n  Up = 'UP',\n  Down = 'DOWN',\n  Left = 'LEFT',\n  Right = 'RIGHT'\n}\n\nconst move = Direction.Up;\n```\nThink of them like a menu of options.",
+        "intermediate": "Prefer `const` objects over enums for most cases:\n```typescript\nconst Direction = { Up: 'UP', Down: 'DOWN' } as const;\ntype Direction = typeof Direction[keyof typeof Direction];\n```\nThis is tree-shakeable, works at runtime like a plain object, and avoids enum's non-standard JS output.",
+        "advanced": "TypeScript enums are not erased — they compile to real JS objects, making them non-tree-shakeable. Const enums (`const enum`) are fully erased but break with `isolatedModules` (required by Babel/esbuild). The TypeScript team considers enums a design mistake. Use string literal unions or `as const` objects instead."
+      }
+    },
+    {
+      "id": "ts-9",
+      "courseId": "typescript-basics",
+      "order": 9,
+      "title": "TypeScript with Functions",
+      "type": "code",
+      "codeLanguage": "typescript",
+      "content": {
+        "beginner": "Type your function parameters and return value:\n\n```typescript\nfunction add(a: number, b: number): number {\n  return a + b;\n}\n\nconst greet = (name: string): string => {\n  return `Hello, ${name}!`;\n};\n```\n\nTypeScript will catch if you pass the wrong type!",
+        "intermediate": "Function type annotations: `(a: number, b: number) => number`. Optional params: `name?: string`. Default params: `name = 'World'`. Rest params: `...nums: number[]`. Overloads let you define multiple call signatures for the same function.",
+        "advanced": "Function overloads: declare multiple signatures, then one implementation signature (not visible to callers). The `this` parameter (first param, erased at runtime) lets you type the `this` context. `typeof fn` captures the function type. `Parameters<typeof fn>` and `ReturnType<typeof fn>` extract types from existing functions."
+      }
+    },
+    {
+      "id": "ts-10",
+      "courseId": "typescript-basics",
+      "order": 10,
+      "title": "You Know TypeScript! 🎯",
+      "type": "fact",
+      "content": {
+        "beginner": "Amazing work! You've learned:\n✅ Basic types & inference\n✅ Interfaces & type aliases\n✅ Union types\n✅ Generics\n✅ Type narrowing\n✅ Utility types\n\nNext: Add TypeScript to a real project with `tsc --init` and set `strict: true` in tsconfig!",
+        "intermediate": "You've got a solid foundation. Explore next:\n- **Mapped types** for transform patterns\n- **Template literal types** for string manipulation\n- **Module augmentation** for third-party types\n- **Zod** for runtime type validation",
+        "advanced": "Next level:\n- **TypeScript Compiler API** for tooling\n- **Type-level programming** patterns\n- **ts-morph** for codemods\n- Contribute to **DefinitelyTyped**\n- Read the TypeScript **spec** and **design goals**"
+      }
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "ts-q1",
+      "courseId": "typescript-basics",
+      "afterPostOrder": 5,
+      "questions": [
+        {
+          "id": "tq1-1",
+          "questionText": "What does the `?` in `email?: string` mean?",
+          "options": [
+            "email is required",
+            "email is optional (may be undefined)",
+            "email can be any type",
+            "email is nullable"
+          ],
+          "correctIndex": 1,
+          "explanation": "The ? makes the property optional — it can be present as a string, or absent (undefined)."
+        },
+        {
+          "id": "tq1-2",
+          "questionText": "What is a generic type like <T> used for?",
+          "options": [
+            "To make code run faster",
+            "To write reusable code that works with different types",
+            "To restrict code to only work with strings",
+            "To replace interfaces"
+          ],
+          "correctIndex": 1,
+          "explanation": "Generics are type placeholders that let you write one function or interface that works correctly with many different types."
+        },
+        {
+          "id": "tq1-3",
+          "questionText": "What does a union type `string | number` mean?",
+          "options": [
+            "Both string AND number at the same time",
+            "A value that is either a string OR a number",
+            "A string that contains a number",
+            "A number converted to string"
+          ],
+          "correctIndex": 1,
+          "explanation": "A union type means the value can be one OR the other type — like accepting multiple types for a single parameter."
+        }
+      ]
+    },
+    {
+      "id": "ts-q2",
+      "courseId": "typescript-basics",
+      "afterPostOrder": 9,
+      "questions": [
+        {
+          "id": "tq2-1",
+          "questionText": "What does Partial<User> do?",
+          "options": [
+            "Deletes some fields from User",
+            "Makes all fields in User optional",
+            "Makes all fields in User required",
+            "Creates a partial copy of User"
+          ],
+          "correctIndex": 1,
+          "explanation": "Partial<T> is a utility type that makes all properties of T optional — useful for update/patch operations."
+        },
+        {
+          "id": "tq2-2",
+          "questionText": "Why is `unknown` preferred over `any`?",
+          "options": [
+            "unknown is faster at runtime",
+            "unknown requires type narrowing before you can use the value",
+            "unknown works with more browsers",
+            "They're identical"
+          ],
+          "correctIndex": 1,
+          "explanation": "unknown forces you to check the type before using it, making it safe. `any` bypasses all type checking — it's essentially opting out of TypeScript."
+        },
+        {
+          "id": "tq2-3",
+          "questionText": "What is the recommended alternative to TypeScript enums?",
+          "options": [
+            "Regular JavaScript objects",
+            "const objects with 'as const' and a type alias using typeof",
+            "String variables",
+            "JSON files"
+          ],
+          "correctIndex": 1,
+          "explanation": "const objects with 'as const' are tree-shakeable, compile to plain JS objects, and avoid enum's non-standard output. They're now preferred by the TS community."
+        }
+      ]
+    }
+  ]
+}
