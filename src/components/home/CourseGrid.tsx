@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import type { Course, CourseProgress } from '@/types'
-import { CourseCard } from './CourseCard'
+import { CourseCard } from '@/components/home/CourseCard'
 import { loadProgress } from '@/lib/progressStorage'
 import { stagger } from '@/lib/animations'
 
