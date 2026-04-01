@@ -32,12 +32,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading), system-ui, sans-serif;
 }
 
-code, pre, kbd, samp {
-  font-family: var(--font-mono), 'Fira Code', monospace;
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono), "Fira Code", monospace;
 }
 
 /* Doom scroll feed container */
@@ -83,11 +91,15 @@ code, pre, kbd, samp {
 
 /* Neon glow utilities */
 .glow-indigo {
-  box-shadow: 0 0 0 1px var(--color-primary-border), 0 0 20px rgba(79, 70, 229, 0.12);
+  box-shadow:
+    0 0 0 1px var(--color-primary-border),
+    0 0 20px rgba(79, 70, 229, 0.12);
 }
 
 .glow-indigo-strong {
-  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5), 0 0 30px rgba(79, 70, 229, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(99, 102, 241, 0.5),
+    0 0 30px rgba(79, 70, 229, 0.2);
 }
 
 .text-glow {

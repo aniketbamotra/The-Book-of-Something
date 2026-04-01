@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { BrainCircuit, Trophy, ThumbsUp, BookMarked } from 'lucide-react'
-import type { QuizQuestion } from '@/types'
-import { Button } from '@/components/ui/Button'
-import { scaleIn } from '@/lib/animations'
-import { cn } from '@/lib/utils'
+import { motion, AnimatePresence } from "framer-motion";
+import { BrainCircuit, Trophy, ThumbsUp, BookMarked } from "lucide-react";
+import type { QuizQuestion } from "@/types";
+import { Button } from "@/components/ui/Button";
+import { scaleIn } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 interface QuizOverlayProps {
-  question: QuizQuestion | null
-  questionIndex: number
-  totalQuestions: number
-  selectedOption: number | null
-  isReviewing: boolean
-  isComplete: boolean
-  score?: number
-  difficultyChanged?: boolean
-  newDifficulty?: string
-  onSelect: (index: number) => void
-  onNext: () => void
-  onFinish: () => void
+  question: QuizQuestion | null;
+  questionIndex: number;
+  totalQuestions: number;
+  selectedOption: number | null;
+  isReviewing: boolean;
+  isComplete: boolean;
+  score?: number;
+  difficultyChanged?: boolean;
+  newDifficulty?: string;
+  onSelect: (index: number) => void;
+  onNext: () => void;
+  onFinish: () => void;
 }
 
 export function QuizOverlay({
@@ -74,7 +74,7 @@ export function QuizOverlay({
         )}
       </motion.div>
     </div>
-  )
+  );
 }
 
 function QuestionView({
@@ -85,8 +85,11 @@ function QuestionView({
   isReviewing,
   onSelect,
   onNext,
-}: Omit<QuizOverlayProps, 'isComplete' | 'score' | 'difficultyChanged' | 'newDifficulty' | 'onFinish'>) {
-  if (!question) return null
+}: Omit<
+  QuizOverlayProps,
+  "isComplete" | "score" | "difficultyChanged" | "newDifficulty" | "onFinish"
+>) {
+  if (!question) return null;
 
   return (
     <div className="p-6">
@@ -108,8 +111,12 @@ function QuestionView({
           <div
             key={i}
             className={cn(
-              'h-1 flex-1 rounded-full transition-colors',
-              i < questionIndex ? 'bg-indigo-500' : i === questionIndex ? 'bg-white/60' : 'bg-white/15'
+              "h-1 flex-1 rounded-full transition-colors",
+              i < questionIndex
+                ? "bg-indigo-500"
+                : i === questionIndex
+                  ? "bg-white/60"
+                  : "bg-white/15"
             )}
           />
         ))}
@@ -124,19 +131,25 @@ function QuestionView({
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.25 }}
         >
-          <p className="text-white font-medium text-lg leading-snug mb-5">{question.questionText}</p>
+          <p className="text-white font-medium text-lg leading-snug mb-5">
+            {question.questionText}
+          </p>
 
           <div className="space-y-2.5 mb-5">
             {question.options.map((option, i) => {
-              const isSelected = selectedOption === i
-              const isCorrect = i === question.correctIndex
-              let style = 'bg-white/5 border-white/15 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-500/30'
+              const isSelected = selectedOption === i;
+              const isCorrect = i === question.correctIndex;
+              let style =
+                "bg-white/5 border-white/15 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-500/30";
               if (isReviewing) {
-                if (isCorrect) style = 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
-                else if (isSelected && !isCorrect) style = 'bg-rose-500/20 border-rose-400 text-rose-300'
-                else style = 'bg-white/5 border-white/10 text-white/40'
+                if (isCorrect)
+                  style =
+                    "bg-emerald-500/20 border-emerald-400 text-emerald-300";
+                else if (isSelected && !isCorrect)
+                  style = "bg-rose-500/20 border-rose-400 text-rose-300";
+                else style = "bg-white/5 border-white/10 text-white/40";
               } else if (isSelected) {
-                style = 'bg-indigo-500/20 border-indigo-400 text-white'
+                style = "bg-indigo-500/20 border-indigo-400 text-white";
               }
 
               return (
@@ -150,9 +163,9 @@ function QuestionView({
                   }
                   transition={{ duration: 0.4 }}
                   className={cn(
-                    'w-full text-left px-4 py-3 rounded-xl border text-sm transition-all cursor-pointer',
+                    "w-full text-left px-4 py-3 rounded-xl border text-sm transition-all cursor-pointer",
                     style,
-                    !isReviewing && 'cursor-pointer'
+                    !isReviewing && "cursor-pointer"
                   )}
                   disabled={isReviewing}
                 >
@@ -161,7 +174,7 @@ function QuestionView({
                   </span>
                   {option}
                 </motion.button>
-              )
+              );
             })}
           </div>
 
@@ -170,7 +183,7 @@ function QuestionView({
             {isReviewing && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-3 mb-4 text-white/70 text-sm"
               >
                 <span className="font-medium text-white/90">Explanation: </span>
@@ -187,7 +200,7 @@ function QuestionView({
         </motion.div>
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
 function CompletionView({
@@ -197,21 +210,30 @@ function CompletionView({
   newDifficulty,
   onFinish,
 }: {
-  score: number
-  totalQuestions: number
-  difficultyChanged?: boolean
-  newDifficulty?: string
-  onFinish: () => void
+  score: number;
+  totalQuestions: number;
+  difficultyChanged?: boolean;
+  newDifficulty?: string;
+  onFinish: () => void;
 }) {
-  const correct = Math.round(score * totalQuestions)
-  const pct = Math.round(score * 100)
+  const correct = Math.round(score * totalQuestions);
+  const pct = Math.round(score * 100);
 
   const result =
     pct >= 80
-      ? { icon: <Trophy size={48} className="text-yellow-400" />, message: 'Great work!' }
+      ? {
+          icon: <Trophy size={48} className="text-yellow-400" />,
+          message: "Great work!",
+        }
       : pct >= 50
-      ? { icon: <ThumbsUp size={48} className="text-indigo-400" />, message: 'Solid effort!' }
-      : { icon: <BookMarked size={48} className="text-white/50" />, message: 'Keep going, you got this!' }
+        ? {
+            icon: <ThumbsUp size={48} className="text-indigo-400" />,
+            message: "Solid effort!",
+          }
+        : {
+            icon: <BookMarked size={48} className="text-white/50" />,
+            message: "Keep going, you got this!",
+          };
 
   return (
     <div className="p-8 text-center">
@@ -225,12 +247,16 @@ function CompletionView({
       <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-6">
         <motion.div
           className={cn(
-            'h-full rounded-full',
-            pct >= 80 ? 'bg-emerald-400' : pct >= 50 ? 'bg-indigo-500' : 'bg-rose-400'
+            "h-full rounded-full",
+            pct >= 80
+              ? "bg-emerald-400"
+              : pct >= 50
+                ? "bg-indigo-500"
+                : "bg-rose-400"
           )}
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
-          transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         />
       </div>
 
@@ -242,7 +268,9 @@ function CompletionView({
           className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-6 text-sm"
         >
           <span className="text-white/60">Difficulty adjusted to </span>
-          <span className="text-indigo-300 font-semibold capitalize">{newDifficulty}</span>
+          <span className="text-indigo-300 font-semibold capitalize">
+            {newDifficulty}
+          </span>
         </motion.div>
       )}
 
@@ -250,5 +278,5 @@ function CompletionView({
         Continue Learning →
       </Button>
     </div>
-  )
+  );
 }

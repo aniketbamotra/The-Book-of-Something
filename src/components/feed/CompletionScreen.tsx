@@ -1,47 +1,56 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Trophy } from 'lucide-react'
-import type { Course } from '@/types'
-import { Button } from '@/components/ui/Button'
-import { useConfetti } from '@/hooks/useConfetti'
+import { useEffect } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Trophy } from "lucide-react";
+import type { Course } from "@/types";
+import { Button } from "@/components/ui/Button";
+import { useConfetti } from "@/hooks/useConfetti";
 
 interface CompletionScreenProps {
-  course: Course
-  quizCount: number
-  avgScore: number
+  course: Course;
+  quizCount: number;
+  avgScore: number;
 }
 
-export function CompletionScreen({ course, quizCount, avgScore }: CompletionScreenProps) {
-  const { triggerConfetti } = useConfetti()
+export function CompletionScreen({
+  course,
+  quizCount,
+  avgScore,
+}: CompletionScreenProps) {
+  const { triggerConfetti } = useConfetti();
 
   useEffect(() => {
-    triggerConfetti()
-  }, [triggerConfetti])
+    triggerConfetti();
+  }, [triggerConfetti]);
 
-  const pct = Math.round(avgScore * 100)
+  const pct = Math.round(avgScore * 100);
 
   return (
     <div className="feed-item flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className="max-w-md w-full text-center"
       >
         {/* Trophy icon with glow */}
         <div className="flex justify-center mb-6">
           <div className="relative">
             <div className="absolute inset-0 bg-yellow-400/20 blur-2xl rounded-full" />
-            <Trophy size={72} className="text-yellow-400 relative" strokeWidth={1.5} />
+            <Trophy
+              size={72}
+              className="text-yellow-400 relative"
+              strokeWidth={1.5}
+            />
           </div>
         </div>
 
         <h1 className="text-3xl font-bold text-white mb-2">Course Complete!</h1>
         <p className="text-white/50 mb-8">
-          You finished <span className="text-white font-medium">{course.title}</span>
+          You finished{" "}
+          <span className="text-white font-medium">{course.title}</span>
         </p>
 
         <div className="bg-white/4 border border-white/8 rounded-2xl p-6 mb-8 grid grid-cols-2 gap-4 text-left">
@@ -69,5 +78,5 @@ export function CompletionScreen({ course, quizCount, avgScore }: CompletionScre
         </div>
       </motion.div>
     </div>
-  )
+  );
 }

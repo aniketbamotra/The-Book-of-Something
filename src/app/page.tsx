@@ -1,10 +1,10 @@
-import type { Course } from '@/types'
-import { CourseGrid } from '@/components/home/CourseGrid'
-import coursesData from '@/data/courses.json'
-import { BookOpen, Smartphone } from 'lucide-react'
+import type { Course } from "@/types";
+import { CourseGrid } from "@/components/home/CourseGrid";
+import coursesData from "@/data/courses.json";
+import { BookOpen, Smartphone } from "lucide-react";
 
 export default function HomePage() {
-  const courses = coursesData as Course[]
+  const courses = coursesData as Course[];
 
   return (
     <main className="min-h-screen bg-zinc-950">
@@ -21,12 +21,11 @@ export default function HomePage() {
             <span>Scroll to learn</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight text-glow">
-            The Book of{' '}
-            <span className="text-indigo-400">Something</span>
+            The Book of <span className="text-indigo-400">Something</span>
           </h1>
           <p className="text-white/50 text-lg leading-relaxed">
-            Bite-sized lessons designed for the scroll generation. Pick a course, scroll through
-            posts, and level up — one swipe at a time.
+            Bite-sized lessons designed for the scroll generation. Pick a
+            course, scroll through posts, and level up — one swipe at a time.
           </p>
         </div>
       </div>
@@ -38,10 +37,12 @@ export default function HomePage() {
             <BookOpen size={18} className="text-indigo-400" />
             All Courses
           </h2>
-          <span className="text-white/30 text-sm">{courses.length} courses</span>
+          <span className="text-white/30 text-sm">
+            {courses.length} courses
+          </span>
         </div>
         <CourseGrid courses={courses} />
       </div>
     </main>
-  )
+  );
 }
