@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { ArrowLeft } from 'lucide-react'
-import type { DifficultyLevel } from '@/types'
-import { getDifficultyColor, getDifficultyLabel } from '@/lib/difficultyEngine'
-import { cn } from '@/lib/utils'
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import type { DifficultyLevel } from "@/types";
+import { getDifficultyColor, getDifficultyLabel } from "@/lib/difficultyEngine";
+import { cn } from "@/lib/utils";
 
 interface FeedProgressHUDProps {
-  current: number
-  total: number
-  difficulty: DifficultyLevel
-  courseTitle: string
-  onBack: () => void
+  current: number;
+  total: number;
+  difficulty: DifficultyLevel;
+  courseTitle: string;
+  onBack: () => void;
 }
 
 export function FeedProgressHUD({
   current,
   total,
   difficulty,
-  courseTitle,
+  courseTitle: _courseTitle,
   onBack,
 }: FeedProgressHUDProps) {
-  const pct = Math.round((current / total) * 100)
+  const pct = Math.round((current / total) * 100);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
@@ -30,8 +30,8 @@ export function FeedProgressHUD({
         <motion.div
           className="h-full bg-indigo-500"
           animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          style={{ boxShadow: '0 0 8px rgba(99, 102, 241, 0.6)' }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ boxShadow: "0 0 8px rgba(99, 102, 241, 0.6)" }}
         />
       </div>
 
@@ -48,7 +48,7 @@ export function FeedProgressHUD({
         <div className="flex items-center gap-3">
           <span
             className={cn(
-              'text-xs font-medium px-2 py-0.5 rounded-full border',
+              "text-xs font-medium px-2 py-0.5 rounded-full border",
               getDifficultyColor(difficulty)
             )}
           >
@@ -65,5 +65,5 @@ export function FeedProgressHUD({
         </div>
       </div>
     </div>
-  )
+  );
 }
