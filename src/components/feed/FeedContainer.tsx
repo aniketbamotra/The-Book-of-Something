@@ -2,14 +2,23 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import type { CourseData, DifficultyLevel } from '@/types'
 import { PostCard } from '@/components/feed/PostCard'
-import { QuizOverlay } from '@/components/feed/QuizOverlay'
 import { FeedProgressHUD } from '@/components/feed/FeedProgressHUD'
-import { CompletionScreen } from '@/components/feed/CompletionScreen'
 import { useQuizEngine } from '@/hooks/useQuizEngine'
 import { useUserProgress } from '@/hooks/useUserProgress'
 import { useRouter } from 'next/navigation'
+
+const QuizOverlay = dynamic(
+  () => import('@/components/feed/QuizOverlay').then((m) => m.QuizOverlay),
+  { ssr: false }
+)
+
+const CompletionScreen = dynamic(
+  () => import('@/components/feed/CompletionScreen').then((m) => m.CompletionScreen),
+  { ssr: false }
+)
 
 interface FeedContainerProps {
   data: CourseData
