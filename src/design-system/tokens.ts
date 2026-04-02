@@ -7,11 +7,11 @@
  */
 
 export const colors = {
-  // Backgrounds — clean white, gray-50 surface
-  bgBase: "#FFFFFF",
-  bgSurface: "#F9FAFB", // gray-50
-  bgCard: "#FFFFFF",
-  bgElevated: "#F3F4F6", // gray-100
+  // Backgrounds — warm cream base with noise texture (easier on eyes than pure white)
+  bgBase: "#FFF9F5", // warm cream
+  bgSurface: "#FEF5EF", // slightly richer warm surface
+  bgCard: "#FFFFFF", // pure white cards pop off the warm background
+  bgElevated: "#FDEEE6", // warm elevated
 
   // Primary — Indigo brand
   primary300: "#A5B4FC",
@@ -30,7 +30,7 @@ export const colors = {
   textDisabled: "#D1D5DB", // gray-300
 
   // Borders — gray-based
-  borderSubtle: "#F3F4F6", // gray-100
+  borderSubtle: "#F0EBE6", // warm subtle border
   borderDefault: "#E5E7EB", // gray-200
   borderStrong: "#D1D5DB", // gray-300
 

@@ -3,11 +3,11 @@
 /* ─── Design system tokens ────────────────────────────────────────────────── */
 
 :root {
-  /* Backgrounds */
-  --ds-bg-base: #ffffff;
-  --ds-bg-surface: #f9fafb;
+  /* Backgrounds — warm cream base */
+  --ds-bg-base: #fff9f5;
+  --ds-bg-surface: #fef5ef;
   --ds-bg-card: #ffffff;
-  --ds-bg-elevated: #f3f4f6;
+  --ds-bg-elevated: #fdeee6;
 
   /* Primary — Indigo */
   --ds-primary-300: #a5b4fc;
@@ -25,7 +25,7 @@
   --ds-text-subtle: #9ca3af;
 
   /* Borders */
-  --ds-border-subtle: #f3f4f6;
+  --ds-border-subtle: #f0ebe6;
   --ds-border-default: #e5e7eb;
   --ds-border-strong: #d1d5db;
 
@@ -62,7 +62,7 @@
     0 0 0 1px rgba(99, 102, 241, 0.25), 0 4px 16px rgba(99, 102, 241, 0.18);
 
   /* Legacy */
-  --background: #ffffff;
+  --background: #fff9f5;
   --foreground: #111827;
   --color-primary: #6366f1;
   --color-primary-hover: #818cf8;
@@ -101,7 +101,10 @@
 
 html,
 body {
-  background: var(--ds-bg-base);
+  background-color: var(--ds-bg-base);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
   color: var(--ds-text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
