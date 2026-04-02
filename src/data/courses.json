@@ -31,5 +31,16 @@
     "emoji": "🎨",
     "estimatedMinutes": 22,
     "difficulty": "beginner"
+  },
+  {
+    "id": "computer-basics",
+    "title": "Computer Basics",
+    "description": "Start from zero. Learn what a computer is, how to use it, browse the web, send emails, and stay safe online.",
+    "category": "Technology",
+    "tags": ["Hardware", "Internet", "Email", "Safety", "Beginner"],
+    "coverGradient": "from-teal-500 to-cyan-600",
+    "emoji": "💻",
+    "estimatedMinutes": 45,
+    "difficulty": "beginner"
   }
 ]

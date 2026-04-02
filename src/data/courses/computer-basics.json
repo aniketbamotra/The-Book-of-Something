@@ -1,0 +1,484 @@
+{
+  "course": {
+    "id": "computer-basics",
+    "title": "Computer Basics",
+    "description": "Start from zero. Learn what a computer is, how to use it, browse the web, send emails, and stay safe online.",
+    "category": "Technology",
+    "tags": ["Hardware", "Internet", "Email", "Safety", "Beginner"],
+    "coverGradient": "from-teal-500 to-cyan-600",
+    "emoji": "💻",
+    "estimatedMinutes": 45,
+    "difficulty": "beginner"
+  },
+  "posts": [
+    {
+      "id": "cb-01-what-is-computer",
+      "courseId": "computer-basics",
+      "order": 1,
+      "title": "What is a Computer?",
+      "type": "text",
+      "content": {
+        "beginner": "A computer is a machine that follows your instructions to do tasks — like writing, browsing the web, or playing music.\n\nThere are different types:\n\n- **Desktop** — sits on a desk, needs a plug\n- **Laptop** — portable, has a built-in battery\n- **Tablet** — touchscreen, no physical keyboard\n- **Smartphone** — a pocket-sized computer\n\nAll of them do the same basic thing: take your input, process it, and show you a result.",
+        "intermediate": "A computer is a programmable electronic device that processes data using a CPU (Central Processing Unit). It takes **input** (keyboard, mouse, touch), **processes** it using software instructions, stores data in **memory**, and produces **output** (screen, sound, print).\n\nForm factors vary — desktops prioritize power, laptops balance portability and performance, tablets and phones optimize for touch-first use.",
+        "advanced": "A computer is a general-purpose stored-program machine based on the von Neumann architecture: a CPU that fetches, decodes, and executes instructions from memory. The instruction set architecture (ISA) — x86-64, ARM, RISC-V — defines what operations the CPU can perform.\n\nModern devices blur form-factor lines: Apple's M-series chips run macOS on laptops and iOS on iPads using the same ARM core, with performance differentiated by thermal envelope and memory bandwidth, not architecture."
+      }
+    },
+    {
+      "id": "cb-02-hardware-parts",
+      "courseId": "computer-basics",
+      "order": 2,
+      "title": "The Main Parts of a Computer",
+      "type": "text",
+      "content": {
+        "beginner": "Every computer has a few key parts:\n\n- **CPU** — the brain. It does all the thinking and calculations.\n- **RAM** — short-term memory. It holds what you're working on right now.\n- **Storage (SSD/Hard Drive)** — long-term memory. It keeps your files even when the computer is off.\n- **Monitor** — the screen that shows you everything.\n- **Keyboard & Mouse** — how you talk to the computer.\n\nThink of it like a kitchen: the CPU is the chef, RAM is the counter space, and storage is the fridge.",
+        "intermediate": "Core components:\n\n- **CPU** — executes program instructions. Speed measured in GHz, cores matter for multitasking.\n- **RAM** — volatile memory (data lost on power off). More RAM = more apps open at once.\n- **Storage** — non-volatile. SSDs are faster than HDDs; NVMe SSDs are fastest.\n- **GPU** — handles graphics. Integrated GPUs share RAM; discrete GPUs have their own VRAM.\n- **Motherboard** — connects everything.\n- **PSU** — powers the system.\n\nPeripherals (monitor, keyboard, mouse) are separate input/output devices.",
+        "advanced": "The memory hierarchy: registers (ps latency) → L1/L2/L3 cache (ns) → DRAM (100ns) → NVMe SSD (μs) → HDD (ms). Each level trades speed for capacity and cost.\n\nCPU performance is a function of IPC × clock speed × core count. Modern CPUs use out-of-order execution, branch prediction, and speculative execution to maximise IPC — the source of Spectre/Meltdown class vulnerabilities.\n\nThe PCIe bus (Gen 4/5) connects CPU to GPU, NVMe, and high-speed peripherals. Bandwidth doubles each generation."
+      }
+    },
+    {
+      "id": "cb-03-input-output",
+      "courseId": "computer-basics",
+      "order": 3,
+      "title": "Input vs Output Devices",
+      "type": "analogy",
+      "content": {
+        "beginner": "Think of a computer like a conversation:\n\n- **Input devices** are how *you talk to the computer* — keyboard, mouse, microphone, camera, touchscreen.\n- **Output devices** are how *the computer talks back to you* — monitor, speakers, printer.\n\nSome devices do both! A touchscreen tablet is both input (you tap) and output (it shows the display).\n\n**Quick rule:** If you're sending something *in*, it's input. If the computer is sending something *out* to you, it's output.",
+        "intermediate": "I/O devices bridge the human-computer interface:\n\n**Input:** keyboard, mouse, trackpad, stylus, microphone, webcam, scanner, game controller, touchscreen (digitiser layer).\n\n**Output:** monitor (HDMI/DisplayPort), speakers, headphones, printer, haptic motors.\n\n**Bidirectional:** touchscreen (input via digitiser + output via display panel), network cards (send and receive), USB drives (read and write).\n\nI/O speed matters — a slow USB 2.0 drive bottlenecks file transfers even with a fast CPU.",
+        "advanced": "I/O devices communicate via device drivers that abstract hardware into standardised OS interfaces (character devices, block devices, network interfaces in Linux). The kernel's I/O scheduler manages block device queues to optimise throughput vs latency.\n\nUSB 4 / Thunderbolt 4 unify the peripheral bus at 40 Gbps. Display output protocols (HDMI 2.1, DisplayPort 2.0) now support 8K/120Hz. The shift to USB-C as a universal connector abstracts the underlying protocol (USB, Thunderbolt, DisplayPort alt-mode, power delivery) behind a single physical interface."
+      }
+    },
+    {
+      "id": "cb-04-turning-on-off",
+      "courseId": "computer-basics",
+      "order": 4,
+      "title": "Turning On, Off, and Restarting",
+      "type": "tip",
+      "content": {
+        "beginner": "**Turning on:** Press the power button. Wait — it takes 30–60 seconds to start up fully.\n\n**Turning off properly:**\n- On Windows: Start menu → Power → Shut down\n- On Mac: Apple menu → Shut Down\n\n**Never just hold the power button** — that's a force-quit and can corrupt your files.\n\n**Restart** (different from shut down): closes everything, then starts fresh. Use this when something isn't working — it fixes 80% of problems.\n\n**Sleep mode** saves power but keeps your work open. Good for short breaks.",
+        "intermediate": "**Shutdown** closes all processes, writes unsaved data to disk, and cuts power. **Restart** does the same but immediately boots again — useful for applying updates or clearing memory leaks.\n\n**Sleep** suspends RAM to low-power state; **Hibernate** writes RAM contents to disk and powers off fully (slower to resume, but survives battery loss).\n\nWindows uses Fast Startup by default (hybrid shutdown — keeps kernel session in RAM), which can mask driver issues. A full restart bypasses this.",
+        "advanced": "The shutdown sequence: userspace processes receive SIGTERM → SIGKILL after timeout → systemd/launchd unloads services → filesystems unmounted (journal flushed) → kernel halts.\n\nFast Startup (Windows) / Hibernate uses the hiberfile (hiberfil.sys) to persist kernel and driver state, reducing POST time but preventing dual-boot Linux from mounting NTFS volumes cleanly (filesystem marked dirty).\n\nACPI power states: S0 (on), S1-S3 (sleep, varying depth), S4 (hibernate), S5 (soft off). Modern systems also use S0ix (connected standby) for always-on functionality while appearing off."
+      }
+    },
+    {
+      "id": "cb-05-using-mouse",
+      "courseId": "computer-basics",
+      "order": 5,
+      "title": "Using a Mouse or Touchpad",
+      "type": "text",
+      "content": {
+        "beginner": "The mouse (or touchpad) moves the **cursor** — the little arrow on screen.\n\nHere are the main actions:\n\n- **Click** (left button) — select something or press a button\n- **Double-click** — open a file or program\n- **Right-click** — see a menu of options\n- **Click and drag** — move something (hold the button down while moving)\n- **Scroll wheel** — move up and down a page\n\nOn a **touchpad**: tap = click, two-finger scroll = scroll wheel, two-finger tap = right-click.",
+        "intermediate": "Mouse input generates HID (Human Interface Device) events. Key interactions:\n\n- **Single click** — focus/select\n- **Double-click** — activate/open (OS-defined timing threshold, typically ~500ms)\n- **Right-click** — context menu\n- **Click-drag** — move, resize, select range\n- **Scroll** — pan viewport; with modifier keys (Ctrl/Cmd) often zooms\n\nTouchpad gestures extend this: two-finger scroll, pinch-to-zoom, three-finger swipe (app switch), four-finger swipe (Mission Control/Task View). Precision touchpads (Windows) use the same driver stack as mice.",
+        "advanced": "Mouse events in the browser: `mousedown` → `mouseup` → `click` (or `dblclick`). Drag involves `mousedown` → `mousemove` (repeated) → `mouseup` → `dragend`.\n\nPointer Events API unifies mouse, touch, and stylus under a single event model (`pointerdown`, `pointermove`, `pointerup`), with `pointerId` to handle multi-touch. `PointerEvent.pressure` and `.tiltX/Y` enable stylus applications.\n\nRaw input (DirectInput/Windows Raw Input API) bypasses OS acceleration curves — important for gaming mice where hardware DPI and polling rate (125–8000Hz) matter."
+      }
+    },
+    {
+      "id": "cb-06-keyboard-basics",
+      "courseId": "computer-basics",
+      "order": 6,
+      "title": "Keyboard Essentials",
+      "type": "text",
+      "content": {
+        "beginner": "The keyboard is how you type. A few important keys:\n\n- **Enter** — confirm, go to next line\n- **Backspace** — delete the character to the left\n- **Delete** — delete the character to the right\n- **Space bar** — add a space between words\n- **Shift** — hold it to type capital letters or symbols\n- **Caps Lock** — keeps everything in capitals until you press it again\n- **Ctrl (or Cmd on Mac)** — used with other keys for shortcuts\n\n**Useful shortcuts:**\n- `Ctrl + C` = Copy\n- `Ctrl + V` = Paste\n- `Ctrl + Z` = Undo",
+        "intermediate": "Essential shortcuts that work almost universally:\n\n| Shortcut | Action |\n|---|---|\n| Ctrl/Cmd + C | Copy |\n| Ctrl/Cmd + X | Cut |\n| Ctrl/Cmd + V | Paste |\n| Ctrl/Cmd + Z | Undo |\n| Ctrl/Cmd + S | Save |\n| Ctrl/Cmd + A | Select all |\n| Ctrl/Cmd + F | Find |\n| Alt + Tab | Switch apps (Windows) |\n| Cmd + Tab | Switch apps (Mac) |\n\nFunction keys (F1–F12) have app-specific roles. The Windows key opens Start; Cmd+Space opens Spotlight.",
+        "advanced": "Keyboard events fire in order: `keydown` → `keypress` (deprecated) → `keyup`. `keydown` is the one to handle — it captures modifier keys and non-printing keys (`Escape`, `Tab`, arrow keys).\n\n`KeyboardEvent.code` (physical key, layout-independent) vs `.key` (character produced, layout-dependent). For shortcuts, use `.code` (`KeyS`) not `.key` (`'s'`) to avoid issues on non-QWERTY layouts.\n\nIME (Input Method Editor) compositing events (`compositionstart/update/end`) handle CJK and other multi-keystroke input systems — critical for internationalised apps to handle correctly."
+      }
+    },
+    {
+      "id": "cb-07-operating-system",
+      "courseId": "computer-basics",
+      "order": 7,
+      "title": "What is an Operating System?",
+      "type": "analogy",
+      "content": {
+        "beginner": "The **operating system (OS)** is the software that runs your computer. Everything else runs on top of it.\n\nThink of it like the manager of a restaurant:\n- The manager (OS) coordinates the kitchen (hardware)\n- The chefs (apps) focus on their job without worrying about the oven's wiring\n- Customers (you) give orders through the manager\n\nThe three most common operating systems:\n- **Windows** — made by Microsoft, most common on PCs\n- **macOS** — made by Apple, runs on Macs\n- **Android / iOS** — for phones and tablets",
+        "intermediate": "The OS is system software that manages hardware resources and provides services to applications:\n\n- **Process management** — runs multiple programs concurrently via scheduling\n- **Memory management** — allocates/deallocates RAM, handles virtual memory\n- **File system** — organises files on disk (NTFS, APFS, ext4)\n- **Device drivers** — abstracts hardware for apps\n- **Security** — user accounts, permissions, sandboxing\n\nMajor families: Windows (NT kernel), macOS/iOS (XNU/Darwin), Linux (GNU/Linux), Android (Linux kernel + Android Runtime).",
+        "advanced": "The OS kernel runs in privileged (ring 0) mode; user processes run in ring 3. System calls (`syscall`/`sysenter`) are the controlled gateway between rings.\n\nMonolithic kernels (Linux) run most services in kernel space for performance. Microkernels (QNX, seL4) push drivers and services to userspace for isolation — better fault tolerance, lower performance. macOS uses a hybrid: Mach microkernel + BSD subsystem in the same kernel space (XNU).\n\nModern OS security: mandatory access control (SELinux, AppArmor), address space layout randomisation (ASLR), kernel page-table isolation (KPTI post-Meltdown), and secure boot chains."
+      }
+    },
+    {
+      "id": "cb-08-desktop-navigation",
+      "courseId": "computer-basics",
+      "order": 8,
+      "title": "Navigating the Desktop",
+      "type": "text",
+      "content": {
+        "beginner": "When your computer starts, you see the **desktop** — your home screen.\n\nKey things you'll see:\n\n- **Icons** — small pictures that represent programs or files. Double-click to open.\n- **Taskbar (Windows) / Dock (Mac)** — the bar at the bottom. Shows open apps and quick-launch shortcuts.\n- **Start Menu (Windows)** — click the Windows logo to find all your apps.\n- **Menu Bar (Mac)** — the bar at the top. Changes depending on which app is open.\n- **Windows** — boxes that contain open apps. You can resize, move, minimise, or close them.\n\nPress `Windows key` (or `Cmd + Space` on Mac) to search for anything.",
+        "intermediate": "The desktop is a shell — a graphical interface layered over the OS:\n\n- **Windows Explorer / Finder** — file manager that also renders the desktop\n- **System tray / Menu bar extras** — background app status (Wi-Fi, battery, clock)\n- **Virtual desktops** — Task View (Win+Tab on Windows), Mission Control (Mac) for workspace organisation\n- **Snap layouts (Windows 11)** — hover over maximise button to tile windows\n- **Spotlight / Windows Search** — fastest way to launch apps, find files, do calculations\n\nKeyboard-first navigation is faster: `Win+D` (show desktop), `Win+E` (file explorer), `Cmd+M` (minimise).",
+        "advanced": "Windows Explorer is both the shell (`explorer.exe`) and the file manager — they share the same process. Killing explorer.exe removes the desktop, taskbar, and file manager simultaneously; it can be restarted via Task Manager.\n\nmacOS separates: the Finder (file manager, `com.apple.finder`) from the WindowServer (compositor) and Dock (`com.apple.dock`). The Quartz compositor uses a scene graph of CALayer-backed windows.\n\nWayland (Linux) replaces X11's client-server model with a direct compositor protocol. Each Wayland compositor (Sway, GNOME Mutter, KDE KWin) implements the protocol independently — no centralised display server."
+      }
+    },
+    {
+      "id": "cb-09-files-folders",
+      "courseId": "computer-basics",
+      "order": 9,
+      "title": "Files and Folders",
+      "type": "text",
+      "content": {
+        "beginner": "**Files** store your stuff — documents, photos, videos, music.\n\n**Folders** (also called directories) are containers that hold files. You use folders to stay organised.\n\nEvery file has:\n- A **name** (e.g. `my-letter`)\n- An **extension** that says what type it is (e.g. `.docx` for Word, `.jpg` for a photo, `.pdf` for a document)\n\nCommon actions:\n- **Create:** Right-click → New Folder\n- **Rename:** Right-click → Rename\n- **Copy:** `Ctrl + C`, then `Ctrl + V` somewhere else\n- **Move:** Drag it, or Cut (`Ctrl + X`) and Paste\n- **Delete:** Press `Delete` key (it goes to the Recycle Bin first)",
+        "intermediate": "The file system organises data in a tree hierarchy: root → directories → subdirectories → files.\n\n**Common extensions by type:**\n- Documents: `.docx`, `.pdf`, `.txt`, `.md`\n- Images: `.jpg`, `.png`, `.webp`, `.svg`\n- Video: `.mp4`, `.mov`, `.mkv`\n- Audio: `.mp3`, `.wav`, `.flac`\n- Archives: `.zip`, `.tar.gz`\n- Executables: `.exe` (Windows), `.app` (Mac)\n\nFile paths: `C:\\Users\\Name\\Documents\\file.txt` (Windows) or `/Users/name/Documents/file.txt` (Mac/Linux).\n\nCloud storage (OneDrive, iCloud, Google Drive) syncs local folders to the cloud automatically.",
+        "advanced": "File systems store files as inodes (Linux ext4, macOS APFS) or MFT records (Windows NTFS). An inode contains metadata (permissions, timestamps, size, block pointers) but not the filename — the directory entry maps name → inode number.\n\nAPFS (Apple File System) introduces copy-on-write, snapshots, clones (instant zero-cost file copies sharing blocks until modified), and native encryption per-file or per-volume.\n\nNTFS supports alternate data streams (ADS) — additional data attached to a file (`file.txt:hiddenStream`) invisible in Explorer. Used by Windows for zone identifiers on downloaded files (the 'This file came from the internet' warning)."
+      }
+    },
+    {
+      "id": "cb-10-what-is-internet",
+      "courseId": "computer-basics",
+      "order": 10,
+      "title": "What is the Internet?",
+      "type": "analogy",
+      "content": {
+        "beginner": "The **internet** is a giant network of computers connected to each other around the world.\n\nThink of it like a postal system:\n- Every computer has an **address** (called an IP address)\n- Information travels in small packets, like letters\n- Routers are like post offices — they direct traffic to the right place\n\nThe **web** (websites) is just one part of the internet. Email, video calls, and online gaming are all separate services that also use the internet.\n\nYou connect through your **Wi-Fi router** or a cable — your router connects to your **ISP** (Internet Service Provider), who connects you to the rest of the world.",
+        "intermediate": "The internet is a global network using the TCP/IP protocol stack:\n\n- **IP** — addresses and routes packets between devices\n- **TCP** — reliable, ordered delivery (used by web, email)\n- **UDP** — fast, unordered delivery (used by video, gaming)\n- **DNS** — translates domain names (`google.com`) to IP addresses\n- **HTTP/HTTPS** — the protocol the web runs on\n\nYour home router assigns private IP addresses (192.168.x.x) via DHCP. NAT (Network Address Translation) maps these to your single public IP when communicating with the outside world.",
+        "advanced": "The internet's architecture: BGP (Border Gateway Protocol) routes traffic between Autonomous Systems (ISPs, cloud providers). Each AS announces its IP prefixes — BGP hijacking (announcing someone else's prefix) is a real attack vector.\n\nHTTP/3 runs over QUIC (UDP-based) rather than TCP, eliminating head-of-line blocking at the transport layer. TLS 1.3 reduces handshake to 1-RTT (or 0-RTT for resumption).\n\nIPv6 adoption is accelerating as IPv4 exhaustion forces CGN (carrier-grade NAT), which breaks peer-to-peer and complicates server hosting. IPv6 provides 128-bit addresses — 340 undecillion unique addresses."
+      }
+    },
+    {
+      "id": "cb-11-using-browser",
+      "courseId": "computer-basics",
+      "order": 11,
+      "title": "Using a Web Browser",
+      "type": "text",
+      "content": {
+        "beginner": "A **web browser** is the app you use to visit websites. Common ones: **Chrome**, **Edge**, **Firefox**, **Safari**.\n\nThe key parts of a browser:\n\n- **Address bar** — type a website address (URL) here, e.g. `www.google.com`\n- **Back / Forward buttons** — go back to the previous page or forward\n- **Refresh button** — reload the page\n- **Tabs** — open multiple websites at once\n- **Bookmarks** — save your favourite pages\n\n**URL vs Search:** If you know the address, type it directly. If you don't, just type your question — the browser will search Google (or your default search engine) for you.",
+        "intermediate": "Browser anatomy:\n\n- **URL bar (Omnibox)** — doubles as search. Recognises URLs vs queries automatically.\n- **Dev Tools** (`F12`) — inspect HTML/CSS, network requests, console errors\n- **Extensions** — add-ons that modify browser behaviour (ad blockers, password managers)\n- **Private/Incognito mode** — no local history, cookies, or cache stored. Your ISP and websites still see you.\n- **Sync** — bookmarks, passwords, history synced across devices via your Google/Firefox account\n\nShortcuts: `Ctrl+T` new tab, `Ctrl+W` close tab, `Ctrl+L` focus address bar, `Ctrl+R` refresh, `Ctrl+Shift+T` reopen closed tab.",
+        "advanced": "Modern browsers (Chrome, Edge, Firefox, Safari) are full platform runtimes:\n\n- **Rendering engine:** Blink (Chrome/Edge), Gecko (Firefox), WebKit (Safari)\n- **JS engine:** V8 (Chrome/Edge), SpiderMonkey (Firefox), JavaScriptCore (Safari)\n- **Multi-process:** Each tab runs in a sandboxed renderer process (Site Isolation). GPU process handles compositing. Browser process manages UI.\n\nThe critical rendering path: HTML parse → DOM → CSSOM → Render Tree → Layout → Paint → Composite. Understanding this drives web performance optimisation.\n\nService Workers run off the main thread, enabling offline-capable PWAs via the Cache API and background sync."
+      }
+    },
+    {
+      "id": "cb-12-search-engines",
+      "courseId": "computer-basics",
+      "order": 12,
+      "title": "How to Search the Web",
+      "type": "tip",
+      "content": {
+        "beginner": "A **search engine** (like Google, Bing, or DuckDuckGo) finds websites for you based on keywords.\n\n**Tips for better searches:**\n\n- Be specific: `best pizza near me` not just `pizza`\n- Use quotes for exact phrases: `\"how to tie a tie\"`\n- Add a site name to search within it: `climate change site:bbc.com`\n- If results aren't helpful, try different words\n\n**Reading results:**\n- The blue links are websites to visit\n- Text underneath is a preview of the page\n- Ads appear at the top — they're paid placements, not always the best answer\n\nAlways check the **source** of information — anyone can publish anything online.",
+        "intermediate": "Search operators for power users:\n\n| Operator | Example | Effect |\n|---|---|---|\n| `\" \"` | `\"exact phrase\"` | Exact match |\n| `site:` | `site:reddit.com topic` | Search within a site |\n| `-` | `python -snake` | Exclude a word |\n| `OR` | `cat OR dog` | Either term |\n| `filetype:` | `report filetype:pdf` | Specific file type |\n| `before:` / `after:` | `news after:2024-01-01` | Date filtering |\n\nGoogle ranks results using hundreds of signals: PageRank (link authority), content relevance, freshness, E-E-A-T (Experience, Expertise, Authoritativeness, Trust).",
+        "advanced": "Search engines crawl the web with bots (Googlebot), index pages in a massive inverted index, and rank results using ML models (Google's MUM, BERT for query understanding).\n\nSEO (Search Engine Optimisation) manipulates these signals: technical (crawlability, Core Web Vitals, structured data), on-page (keyword targeting, content quality), and off-page (backlink authority via PageRank-derived signals).\n\nSearch is shifting: AI overviews (SGE) synthesise answers directly, reducing click-through to source sites. Vector search (semantic similarity via embeddings) increasingly supplements keyword-based BM25 ranking — a fundamental shift in how relevance is computed."
+      }
+    },
+    {
+      "id": "cb-13-https-security",
+      "courseId": "computer-basics",
+      "order": 13,
+      "title": "Spotting a Secure Website",
+      "type": "fact",
+      "content": {
+        "beginner": "Before entering personal information on a website, always check:\n\n✅ The address starts with **https://** (not just http://)\n✅ There's a **padlock icon** in the address bar\n\nThe **S in HTTPS** stands for Secure. It means your data is encrypted — scrambled so only you and the website can read it.\n\n**Never enter passwords or payment info on a site without HTTPS.**\n\nBut HTTPS alone doesn't mean the site is trustworthy — a scam site can also have HTTPS. Always double-check the domain name: `paypa1.com` is not `paypal.com`.",
+        "intermediate": "HTTPS uses **TLS (Transport Layer Security)** to encrypt the connection between your browser and the server:\n\n1. Your browser requests the server's **SSL certificate**\n2. The certificate proves the server's identity (signed by a trusted Certificate Authority)\n3. A session key is negotiated and data is encrypted end-to-end\n\nThe padlock shows TLS is active. Clicking it shows certificate details — issuer, expiry, domain it's valid for.\n\nHTTP Strict Transport Security (HSTS) forces HTTPS-only for listed domains — even if you type `http://`, the browser upgrades automatically. Check `chrome://net-internals/#hsts`.",
+        "advanced": "TLS 1.3 handshake: Client Hello (supported cipher suites, key shares) → Server Hello (chosen suite, server key share, certificate) → client verifies cert against trusted CA store → both derive session keys via ECDHE → Finished. Total: 1 RTT before data.\n\nCertificate Transparency (CT) logs require all publicly-trusted certificates to be published in append-only logs — enabling detection of mis-issuance. Browsers enforce CT via SCTs (Signed Certificate Timestamps) embedded in certificates.\n\nLet's Encrypt automated free DV certificates via ACME protocol, dramatically increasing HTTPS adoption (now ~95% of web traffic). EV certificates (green bar, organisation name shown) are no longer visually distinguished in modern browsers — research showed users didn't understand the distinction."
+      }
+    },
+    {
+      "id": "cb-14-email-basics",
+      "courseId": "computer-basics",
+      "order": 14,
+      "title": "How Email Works",
+      "type": "text",
+      "content": {
+        "beginner": "**Email** is like a digital letter. You write a message and send it to someone's email address.\n\nAn email address always has:\n- A **username** (your name or a nickname)\n- The **@ symbol**\n- A **domain** (like gmail.com or outlook.com)\n\nExample: `yourname@gmail.com`\n\nWhen writing an email:\n- **To:** The person you're sending to\n- **Subject:** A short title for your email\n- **Body:** Your message\n- **CC:** Send a copy to someone else (they can all see each other)\n- **BCC:** Send a hidden copy (others can't see you added them)\n- **Attach:** Add a file (photo, document) to send with the email",
+        "intermediate": "Email infrastructure:\n\n- **SMTP** (Simple Mail Transfer Protocol) — sends mail from client to server and between servers\n- **IMAP** — syncs mail between server and multiple devices (read on phone, still there on laptop)\n- **POP3** — downloads mail to one device and (optionally) deletes from server; older, less common\n\nEmail providers (Gmail, Outlook) handle spam filtering, virus scanning, and storage. Gmail uses AI-powered spam detection.\n\nEmail is **not encrypted by default** — content travels as plaintext between servers unless TLS is used for transport, or end-to-end encryption (PGP, S/MIME) is applied.",
+        "advanced": "Email authentication to prevent spoofing:\n\n- **SPF** (Sender Policy Framework) — DNS record listing authorised sending IPs for a domain\n- **DKIM** (DomainKeys Identified Mail) — cryptographic signature in email headers, verified via DNS public key\n- **DMARC** — policy telling receivers what to do with SPF/DKIM failures (none/quarantine/reject) and where to send reports\n\nDMARC `p=reject` + DKIM + SPF is the current best practice for domain spoofing prevention.\n\nSMTP was designed in 1982 with no authentication — all modern anti-spam measures are retrofitted. This is why email spoofing (`From: ceo@yourcompany.com`) still works on domains without DMARC."
+      }
+    },
+    {
+      "id": "cb-15-phishing",
+      "courseId": "computer-basics",
+      "order": 15,
+      "title": "Spotting Phishing & Scams",
+      "type": "tip",
+      "content": {
+        "beginner": "**Phishing** is when scammers pretend to be someone trustworthy (your bank, Amazon, a friend) to trick you into giving them your password or money.\n\n**Red flags to watch for:**\n\n- Urgency: \"URGENT! Your account will be closed!\"\n- Sender email looks odd: `support@paypa1-help.net`\n- Links that look wrong when you hover over them\n- Unexpected attachments\n- Bad grammar or spelling\n- Asking for your password or payment info via email\n\n**Golden rule:** Legitimate companies will never ask for your password by email.\n\nWhen in doubt — don't click. Go directly to the website by typing the address yourself.",
+        "intermediate": "Phishing attack types:\n\n- **Spear phishing** — targeted, researched attacks using personal info (your name, company, recent purchase)\n- **Whaling** — targets executives specifically\n- **Smishing** — phishing via SMS\n- **Vishing** — phishing via phone call\n- **Clone phishing** — duplicates a real email you received, swaps links for malicious ones\n\nTechnical indicators:\n- Check the actual sender domain (not the display name)\n- Hover links before clicking — inspect the real URL\n- Email headers reveal routing (check via \"Show original\" in Gmail)\n- Unexpected urgency or out-of-character requests are social engineering signals",
+        "advanced": "Modern phishing bypasses technical controls via:\n\n- **Adversary-in-the-middle (AiTM)** proxies — real-time relay of credentials + session cookies, bypassing MFA (Evilginx, Modlishka)\n- **QR code phishing (Quishing)** — links in images bypass email link scanners\n- **HTML smuggling** — malicious payload assembled client-side via JavaScript, evading gateway scanning\n\nDefence layers: email gateway filtering (EOP, Proofpoint) → DMARC enforcement → browser isolation → phishing-resistant MFA (FIDO2/passkeys resist AiTM) → security awareness training → incident response playbooks.\n\nPhishing simulation platforms (KnowBe4, Proofpoint Security Awareness) measure and track click rates across an organisation."
+      }
+    },
+    {
+      "id": "cb-16-passwords",
+      "courseId": "computer-basics",
+      "order": 16,
+      "title": "Creating Strong Passwords",
+      "type": "tip",
+      "content": {
+        "beginner": "A **strong password** is hard for others (and computers) to guess.\n\n**Good password rules:**\n- At least **12 characters** long\n- Mix of **UPPERCASE**, **lowercase**, **numbers**, and **symbols** (!@#$)\n- Don't use your name, birthday, or common words like `password123`\n\n**Easy trick — use a passphrase:**\nPick 4 random words: `purple-cloud-guitar-river`\nLong, easy to remember, hard to crack!\n\n**Never reuse passwords** — if one account is hacked, others stay safe.\n\nUse a **password manager** (like Bitwarden or 1Password) to remember them all — you only need to remember one master password.",
+        "intermediate": "Password strength is about **entropy** — the number of possible combinations an attacker must try.\n\n- Each added character multiplies possibilities exponentially\n- A 12-character random password has ~72 bits of entropy — sufficient for most threats\n- Common words reduce entropy drastically (dictionary attacks)\n- Substitutions (`p@ssw0rd`) are known patterns — attackers include them\n\n**Credential stuffing** — attackers use leaked username/password pairs from data breaches against other sites. Password reuse is the main attack vector.\n\nEnable **2FA (two-factor authentication)** wherever possible — a TOTP code (Google Authenticator) or hardware key (YubiKey) means a stolen password alone isn't enough.",
+        "advanced": "Password hashing: servers should never store plaintext passwords. Correct approach: bcrypt, Argon2id, or scrypt with a per-user random salt. These are deliberately slow (configurable cost factor) to resist offline brute-force after a database breach.\n\nMD5/SHA-1 password hashes are crackable in seconds on a GPU — many breached databases still use them. Tools like Hashcat leverage GPU parallelism (billions of hashes/second) with wordlists and rule-based mangling.\n\nPasskeys (FIDO2/WebAuthn) are replacing passwords entirely: private key stored in device secure enclave, public key registered with the site, biometric/PIN unlocks the key locally. Phishing-resistant by design — key is domain-bound."
+      }
+    },
+    {
+      "id": "cb-17-safe-browsing",
+      "courseId": "computer-basics",
+      "order": 17,
+      "title": "Staying Safe Online",
+      "type": "text",
+      "content": {
+        "beginner": "A few simple habits keep you safe online:\n\n✅ **Keep software updated** — updates fix security holes\n✅ **Use HTTPS websites** (look for the padlock)\n✅ **Don't click suspicious links** in emails or messages\n✅ **Use strong, unique passwords** (use a password manager)\n✅ **Enable two-factor authentication** on important accounts\n✅ **Don't share personal info publicly** — full name, address, phone number\n✅ **If it seems too good to be true, it probably is** — free iPhone giveaways are scams\n\n**If something goes wrong:**\n- Change your password immediately\n- Tell your bank if financial info was involved\n- Run a virus scan",
+        "intermediate": "Layered security approach:\n\n1. **Device security** — OS updates, antivirus (Windows Defender is sufficient), full-disk encryption (BitLocker/FileVault)\n2. **Account security** — unique passwords via password manager + TOTP/hardware key 2FA\n3. **Network security** — avoid public Wi-Fi for sensitive tasks; use VPN if necessary (trust your VPN provider as much as your ISP)\n4. **Browser security** — extensions: uBlock Origin (ad/tracker blocking), HTTPS Everywhere\n5. **Behaviour** — verify before clicking, check senders, don't overshare\n\nPrivacy vs security are related but different: security protects against attacks; privacy protects against surveillance (advertisers, ISPs, governments).",
+        "advanced": "Threat modelling: identify assets → enumerate threats → assess likelihood and impact → select controls proportional to risk.\n\nFor most individuals: credential-based account takeover is the primary threat. Defence: phishing-resistant MFA (FIDO2) + password manager. For high-risk individuals (journalists, activists): consider Qubes OS (compartmentalisation), Signal for comms, hardware keys, and operational security practices.\n\nBrowser fingerprinting can track users across sites without cookies: canvas fingerprint, WebGL renderer, installed fonts, screen resolution, timezone, and 50+ other signals create a unique profile. Privacy browsers (Brave, Firefox with hardening) mitigate this via randomisation or normalisation of fingerprint values."
+      }
+    },
+    {
+      "id": "cb-18-word-processing",
+      "courseId": "computer-basics",
+      "order": 18,
+      "title": "Word Processing Basics",
+      "type": "text",
+      "content": {
+        "beginner": "A **word processor** lets you write, edit, and format documents. The most common ones:\n\n- **Microsoft Word** (.docx files)\n- **Google Docs** (free, works in your browser)\n- **LibreOffice Writer** (free to download)\n\n**Basic formatting:**\n- **Bold** — `Ctrl + B` — makes text **bold**\n- **Italic** — `Ctrl + I` — makes text *italic*\n- **Underline** — `Ctrl + U`\n- Font size — change how big the text is\n- Alignment — left, centre, right, justified\n\n**Saving your work:**\n- `Ctrl + S` — save (do this often!)\n- `File → Save As` — save with a new name or location\n- Google Docs saves automatically to the cloud",
+        "intermediate": "Word processing beyond basics:\n\n- **Styles** — predefined formatting (Heading 1, Normal, Quote) that make documents consistent and enable auto-generated tables of contents\n- **Track Changes** — collaborative editing with visible edits and comments (essential for document review workflows)\n- **Mail Merge** — generates personalised copies of a document from a data source (e.g. sending 500 personalised letters)\n- **Templates** — pre-formatted starting points\n\nFile formats matter: `.docx` (Office Open XML) is the standard. `.odt` is the open standard. `.pdf` is for distribution (preserves layout, not easily editable). Export to PDF via `File → Export` or `Ctrl + P → Save as PDF`.",
+        "advanced": "OOXML (`.docx`) is a ZIP archive of XML files — unzip any `.docx` to see `word/document.xml`, `word/styles.xml`, relationships, and media files. This enables programmatic document generation (python-docx, docx4j, OpenXML SDK).\n\nFor complex document pipelines: Pandoc converts between 40+ formats (Markdown → docx → PDF → HTML) using an intermediate AST. LaTeX remains the standard for mathematical and academic publishing — pixel-perfect typesetting with BibTeX for citations.\n\nCRDT (Conflict-free Replicated Data Types) power real-time collaborative editors like Google Docs — each character gets a globally unique ID enabling merge without conflicts, replacing OT (Operational Transformation) in newer systems."
+      }
+    },
+    {
+      "id": "cb-19-cloud-storage",
+      "courseId": "computer-basics",
+      "order": 19,
+      "title": "Cloud Storage & Backups",
+      "type": "fact",
+      "content": {
+        "beginner": "**Cloud storage** saves your files on the internet so you can access them from anywhere.\n\nPopular services:\n- **Google Drive** — 15GB free, works great with Google Docs\n- **OneDrive** — built into Windows, 5GB free\n- **iCloud** — built into Apple devices, 5GB free\n- **Dropbox** — easy file sharing\n\n**Why use it?**\n- Access files from any device\n- If your computer breaks, your files are safe\n- Easy to share files with others\n\n**Backup rule — 3-2-1:**\n- **3** copies of important data\n- **2** different storage types\n- **1** copy offsite (cloud counts!)\n\nDon't rely on only one place for important files.",
+        "intermediate": "Cloud storage is object storage delivered as a service:\n\n- Files synced to the cloud are accessible via web, mobile, and desktop clients\n- **Selective sync** — choose which folders sync locally to save disk space\n- **Version history** — recover previous versions of files (Google Drive: 30 days; OneDrive: 30 days; Dropbox paid: extended)\n- **Sharing** — share links with view/comment/edit permissions; set expiry dates\n\nFor true backup (vs sync): sync is not backup — if you delete a file, it deletes everywhere. Use dedicated backup tools (Time Machine, Windows Backup, Backblaze) for point-in-time recovery.",
+        "advanced": "Cloud storage services are built on object storage infrastructure (AWS S3, Azure Blob, Google Cloud Storage). Objects are stored with a key (path), value (bytes), and metadata — no directory hierarchy at the storage layer (simulated by key prefixes).\n\nData durability: S3 Standard is designed for 99.999999999% (11 nines) annual durability via redundant storage across 3+ AZs with automatic replication.\n\nFor enterprise backup: RPO (Recovery Point Objective — max acceptable data loss) and RTO (Recovery Time Objective — max acceptable downtime) drive architecture decisions. Immutable backups (WORM — Write Once Read Many) protect against ransomware that targets backup systems."
+      }
+    },
+    {
+      "id": "cb-20-wrap-up",
+      "courseId": "computer-basics",
+      "order": 20,
+      "title": "You're Ready to Explore!",
+      "type": "text",
+      "content": {
+        "beginner": "You've covered the essentials! Here's what you now know:\n\n- What computers are and their main parts\n- How to use a mouse, keyboard, and navigate the desktop\n- How to manage files and folders\n- How to browse the web safely\n- How to use email\n- How to create strong passwords and spot scams\n- How to write and save documents\n\n**What to do next:**\n\n- Practice! The more you use a computer, the more natural it feels\n- Try Google Docs to write something\n- Set up a strong password for one account using a password manager\n- Explore — curiosity is your best tool\n\nYou've got this.",
+        "intermediate": "You've covered foundational computer literacy — hardware, OS internals, networking basics, security hygiene, and productivity tools.\n\n**Natural next steps by interest:**\n\n- **Web development:** HTML, CSS, JavaScript → this app is a great example!\n- **Data analysis:** Excel/Google Sheets → Python with pandas\n- **Cybersecurity:** CompTIA Security+, TryHackMe, HackTheBox\n- **Networking:** CompTIA Network+, Cisco CCNA\n- **Cloud:** AWS/Azure/GCP free tier — build something\n\nThe best way to learn computing is to build something that matters to you. Find a problem, try to solve it, and Google the rest.",
+        "advanced": "You've got the mental models. The next frontier is depth in your chosen domain:\n\n- **Systems:** OS internals (OSTEP — free online), write a toy OS in Rust, study Linux kernel source\n- **Security:** Read CVE write-ups, practice CTFs, study cryptography (Cryptopals challenges)\n- **Distributed systems:** Read the Google papers (MapReduce, Bigtable, Spanner), study consensus algorithms (Raft, Paxos), build a distributed key-value store\n- **Compilers:** Crafting Interpreters (free online) — build a language from scratch\n- **Networking:** RFC reading, build a TCP stack, study BGP routing\n\nThe deepest learning comes from building things at the boundary of your understanding — and then one level below it."
+      }
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "quiz-cb-01-hardware",
+      "courseId": "computer-basics",
+      "afterPostOrder": 5,
+      "questions": [
+        {
+          "id": "q-cb-01-01",
+          "questionText": "Which of these is an INPUT device?",
+          "options": [
+            "Monitor",
+            "Speaker",
+            "Mouse",
+            "Printer"
+          ],
+          "correctIndex": 2,
+          "explanation": "A mouse sends commands INTO the computer, making it an input device. Monitors, speakers, and printers all output information FROM the computer."
+        },
+        {
+          "id": "q-cb-01-02",
+          "questionText": "What does RAM do?",
+          "options": [
+            "Stores your files permanently",
+            "Holds data the computer is currently using",
+            "Connects to the internet",
+            "Displays images on screen"
+          ],
+          "correctIndex": 1,
+          "explanation": "RAM is short-term (volatile) memory — it holds whatever you're working on right now. When you shut down, RAM is cleared. Your files are stored permanently on the hard drive or SSD."
+        },
+        {
+          "id": "q-cb-01-03",
+          "questionText": "You want to open a file on your desktop. What do you do?",
+          "options": [
+            "Single-click it",
+            "Right-click it",
+            "Double-click it",
+            "Press Backspace"
+          ],
+          "correctIndex": 2,
+          "explanation": "Double-clicking opens files and programs. A single click just selects them, and right-click shows a menu of options."
+        }
+      ]
+    },
+    {
+      "id": "quiz-cb-02-os",
+      "courseId": "computer-basics",
+      "afterPostOrder": 9,
+      "questions": [
+        {
+          "id": "q-cb-02-01",
+          "questionText": "What is the operating system?",
+          "options": [
+            "A type of keyboard shortcut",
+            "Software that manages the hardware and runs other programs",
+            "The physical box the computer comes in",
+            "The internet browser"
+          ],
+          "correctIndex": 1,
+          "explanation": "The operating system (like Windows or macOS) is the foundation software that manages all hardware resources and lets other applications run on top of it."
+        },
+        {
+          "id": "q-cb-02-02",
+          "questionText": "You want to undo a mistake while typing. Which shortcut do you use?",
+          "options": [
+            "Ctrl + S",
+            "Ctrl + C",
+            "Ctrl + Z",
+            "Ctrl + V"
+          ],
+          "correctIndex": 2,
+          "explanation": "Ctrl + Z is the universal undo shortcut. Ctrl + S saves, Ctrl + C copies, and Ctrl + V pastes."
+        },
+        {
+          "id": "q-cb-02-03",
+          "questionText": "A file named 'holiday.jpg' — what type of file is it?",
+          "options": [
+            "A Word document",
+            "A spreadsheet",
+            "An image/photo",
+            "A video file"
+          ],
+          "correctIndex": 2,
+          "explanation": "The .jpg extension indicates a JPEG image file — typically a photo. .docx is Word, .xlsx is a spreadsheet, and .mp4 is a common video format."
+        }
+      ]
+    },
+    {
+      "id": "quiz-cb-03-internet",
+      "courseId": "computer-basics",
+      "afterPostOrder": 14,
+      "questions": [
+        {
+          "id": "q-cb-03-01",
+          "questionText": "You want to visit the BBC website. What should you do in a browser?",
+          "options": [
+            "Open your email and type bbc.com",
+            "Type bbc.com in the address bar and press Enter",
+            "Search Google for 'internet'",
+            "Double-click the desktop"
+          ],
+          "correctIndex": 1,
+          "explanation": "The address bar (at the top of the browser) is where you type website addresses like bbc.com. Press Enter and the browser takes you there."
+        },
+        {
+          "id": "q-cb-03-02",
+          "questionText": "What does the 'S' in HTTPS stand for?",
+          "options": [
+            "Speed",
+            "Server",
+            "Secure",
+            "Standard"
+          ],
+          "correctIndex": 2,
+          "explanation": "HTTPS = HyperText Transfer Protocol Secure. The S means the connection is encrypted — your data is protected from eavesdroppers."
+        },
+        {
+          "id": "q-cb-03-03",
+          "questionText": "Which of these email situations is a red flag?",
+          "options": [
+            "An email from your friend with a funny story",
+            "Your bank's monthly statement arriving as usual",
+            "An urgent email saying your account is locked and to click a link immediately",
+            "A newsletter you signed up for"
+          ],
+          "correctIndex": 2,
+          "explanation": "Urgency + suspicious link is a classic phishing combination. Legitimate organisations won't pressure you to click immediately or ask for your password via email."
+        },
+        {
+          "id": "q-cb-03-04",
+          "questionText": "What is CC used for in an email?",
+          "options": [
+            "Sending the email secretly so others can't see",
+            "Sending a visible copy to additional recipients",
+            "Cancelling the email before it sends",
+            "Attaching a file to the email"
+          ],
+          "correctIndex": 1,
+          "explanation": "CC (Carbon Copy) sends a visible copy to extra recipients — everyone on the email can see who was CC'd. BCC (Blind Carbon Copy) is the hidden version."
+        }
+      ]
+    },
+    {
+      "id": "quiz-cb-04-security",
+      "courseId": "computer-basics",
+      "afterPostOrder": 17,
+      "questions": [
+        {
+          "id": "q-cb-04-01",
+          "questionText": "Which of these is the strongest password?",
+          "options": [
+            "password123",
+            "John1990",
+            "correct-horse-battery-staple",
+            "qwerty"
+          ],
+          "correctIndex": 2,
+          "explanation": "A long passphrase like 'correct-horse-battery-staple' is much stronger than short passwords, even ones with numbers. Length is the biggest factor in password strength."
+        },
+        {
+          "id": "q-cb-04-02",
+          "questionText": "You get an email with an urgent subject 'Your account will be deleted in 24 hours!' What do you do?",
+          "options": [
+            "Click the link immediately to save your account",
+            "Reply with your password to verify your identity",
+            "Don't click the link — go directly to the website by typing the address yourself",
+            "Forward it to all your friends to warn them"
+          ],
+          "correctIndex": 2,
+          "explanation": "Urgency is a phishing tactic. Never click links in suspicious emails. Instead, open a new browser tab and type the website address yourself to check your account status."
+        },
+        {
+          "id": "q-cb-04-03",
+          "questionText": "What is two-factor authentication (2FA)?",
+          "options": [
+            "Having two different passwords for one account",
+            "A second verification step (like a code sent to your phone) in addition to your password",
+            "Logging in from two different devices",
+            "Sharing your password with a trusted friend as backup"
+          ],
+          "correctIndex": 1,
+          "explanation": "2FA adds a second layer of security — even if someone steals your password, they still need the second factor (a code from your phone, fingerprint, or hardware key) to get in."
+        }
+      ]
+    },
+    {
+      "id": "quiz-cb-05-final",
+      "courseId": "computer-basics",
+      "afterPostOrder": 20,
+      "questions": [
+        {
+          "id": "q-cb-05-01",
+          "questionText": "Where should you save important files to avoid losing them?",
+          "options": [
+            "Only on the desktop",
+            "In the Recycle Bin",
+            "In cloud storage AND a local backup",
+            "In your email drafts"
+          ],
+          "correctIndex": 2,
+          "explanation": "The 3-2-1 backup rule: keep 3 copies, on 2 different types of storage, with 1 copy offsite (like the cloud). Relying on a single location risks losing everything."
+        },
+        {
+          "id": "q-cb-05-02",
+          "questionText": "Which shortcut saves a document in most apps?",
+          "options": [
+            "Ctrl + P",
+            "Ctrl + S",
+            "Ctrl + X",
+            "Ctrl + A"
+          ],
+          "correctIndex": 1,
+          "explanation": "Ctrl + S (or Cmd + S on Mac) saves your document in almost every app. Get in the habit of pressing it often while working!"
+        },
+        {
+          "id": "q-cb-05-03",
+          "questionText": "Your computer is acting strangely and apps keep crashing. What should you try first?",
+          "options": [
+            "Buy a new computer",
+            "Delete all your files",
+            "Restart the computer",
+            "Unplug the monitor"
+          ],
+          "correctIndex": 2,
+          "explanation": "A restart clears the computer's temporary memory and closes all processes, fixing the majority of software glitches. It's always the first thing to try!"
+        }
+      ]
+    }
+  ]
+}
