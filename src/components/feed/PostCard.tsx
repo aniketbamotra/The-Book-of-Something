@@ -66,6 +66,158 @@ const typeConfig: Record<
   },
 };
 
+// Apply bold, inline-code, and ✅ formatting to a string
+function applyInline(text: string): string {
+  return text
+    .replace(
+      /\*\*(.*?)\*\*/g,
+      `<strong style="color:${colors.textPrimary};font-weight:600">$1</strong>`
+    )
+    .replace(
+      /`([^`]+)`/g,
+      `<code style="background:${colors.codeBlockBg};color:${colors.codeText};padding:1px 5px;border-radius:5px;font-size:0.85em;font-family:var(--font-mono)">$1</code>`
+    )
+    .replace(/^✅\s/, `<span style="color:${colors.quizCorrect}">✅ </span>`);
+}
+
+function isTableRow(line: string): boolean {
+  return line.trim().startsWith("|");
+}
+
+function isTableSeparator(line: string): boolean {
+  return /^\|[\s|:|-]+\|$/.test(line.trim());
+}
+
+function parseTableCells(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\||\|$/g, "")
+    .split("|")
+    .map((c) => c.trim());
+}
+
+function renderTextLines(lines: string[], blockKey: string): React.ReactNode {
+  const nodes: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Detect table: current line is a table row and the next is a separator
+    if (
+      isTableRow(line) &&
+      i + 1 < lines.length &&
+      isTableSeparator(lines[i + 1])
+    ) {
+      const tableLines: string[] = [];
+      while (i < lines.length && isTableRow(lines[i])) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+
+      const [headerLine, , ...dataLines] = tableLines; // skip separator at index 1
+      const headers = parseTableCells(headerLine);
+      const rows = dataLines.map(parseTableCells);
+
+      nodes.push(
+        <div
+          key={`${blockKey}-t${i}`}
+          className="overflow-x-auto scrollbar-thin my-3"
+          style={{
+            borderRadius: "10px",
+            border: `1px solid ${colors.borderDefault}`,
+          }}
+        >
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.875rem",
+            }}
+          >
+            <thead>
+              <tr style={{ background: colors.bgElevated }}>
+                {headers.map((cell, ci) => (
+                  <th
+                    key={ci}
+                    style={{
+                      padding: "8px 14px",
+                      textAlign: "left",
+                      fontWeight: 600,
+                      color: colors.textPrimary,
+                      borderBottom: `1px solid ${colors.borderDefault}`,
+                      whiteSpace: "nowrap",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: applyInline(cell) }}
+                  />
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, ri) => (
+                <tr
+                  key={ri}
+                  style={{
+                    background: ri % 2 === 0 ? "transparent" : colors.bgSurface,
+                  }}
+                >
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      style={{
+                        padding: "7px 14px",
+                        color: colors.textSecondary,
+                        borderBottom:
+                          ri < rows.length - 1
+                            ? `1px solid ${colors.borderSubtle}`
+                            : "none",
+                      }}
+                      dangerouslySetInnerHTML={{ __html: applyInline(cell) }}
+                    />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      continue;
+    }
+
+    // Regular line rendering
+    const html = applyInline(line);
+
+    if (line.startsWith("- ") || line.startsWith("• ")) {
+      nodes.push(
+        <li
+          key={`${blockKey}-${i}`}
+          className="ml-5"
+          style={{
+            color: colors.textSecondary,
+            lineHeight: "1.7",
+            marginBottom: "6px",
+            listStyleType: "disc",
+          }}
+          dangerouslySetInnerHTML={{ __html: applyInline(line.slice(2)) }}
+        />
+      );
+    } else if (line.trim() === "") {
+      nodes.push(<div key={`${blockKey}-${i}`} style={{ height: "0.6em" }} />);
+    } else {
+      nodes.push(
+        <p
+          key={`${blockKey}-${i}`}
+          style={{ color: colors.textSecondary, lineHeight: "1.7" }}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      );
+    }
+    i++;
+  }
+
+  return nodes;
+}
+
 function renderContent(
   content: string,
   type: LessonPost["type"],
@@ -107,52 +259,12 @@ function renderContent(
       );
     }
 
-    const rendered = part.split("\n").map((line, j) => {
-      const formatted = line.replace(
-        /\*\*(.*?)\*\*/g,
-        `<strong style="color:${colors.textPrimary};font-weight:600">$1</strong>`
-      );
-      const withCode = formatted.replace(
-        /`([^`]+)`/g,
-        `<code style="background:${colors.codeBlockBg};color:${colors.codeText};padding:1px 5px;border-radius:5px;font-size:0.85em;font-family:var(--font-mono)">$1</code>`
-      );
-      const withChecks = withCode.replace(
-        /^✅\s/,
-        `<span style="color:${colors.quizCorrect}">✅ </span>`
-      );
-
-      if (line.startsWith("- ") || line.startsWith("• ")) {
-        return (
-          <li
-            key={j}
-            className="ml-5"
-            style={{
-              color: colors.textSecondary,
-              lineHeight: "1.7",
-              marginBottom: "6px",
-              listStyleType: "disc",
-            }}
-            dangerouslySetInnerHTML={{ __html: withCode.slice(2) }}
-          />
-        );
-      }
-      if (line.trim() === "")
-        return <div key={j} style={{ height: "0.6em" }} />;
-      return (
-        <p
-          key={j}
-          style={{ color: colors.textSecondary, lineHeight: "1.7" }}
-          dangerouslySetInnerHTML={{ __html: withChecks }}
-        />
-      );
-    });
-
     return (
       <div
         key={i}
         style={{ display: "flex", flexDirection: "column", gap: "8px" }}
       >
-        {rendered}
+        {renderTextLines(part.split("\n"), String(i))}
       </div>
     );
   });
