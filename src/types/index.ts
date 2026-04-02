@@ -72,3 +72,5 @@ export interface UserProgress {
   version: number;
   courses: Record<string, CourseProgress>;
 }
+
+export type ConfidenceResult = "got_it" | "need_help" | "show_again";

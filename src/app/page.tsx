@@ -1,10 +1,26 @@
-import type { Course } from "@/types";
+import type { Course, CourseData } from "@/types";
 import { CourseGrid } from "@/components/home/CourseGrid";
 import coursesData from "@/data/courses.json";
 import { BookOpen, Smartphone } from "lucide-react";
 
-export default function HomePage() {
+async function getLessonCounts(): Promise<Record<string, number>> {
+  const counts: Record<string, number> = {};
+  await Promise.all(
+    (coursesData as Course[]).map(async (course) => {
+      try {
+        const data = await import(`@/data/courses/${course.id}.json`);
+        counts[course.id] = (data.default as CourseData).posts.length;
+      } catch {
+        counts[course.id] = 0;
+      }
+    })
+  );
+  return counts;
+}
+
+export default async function HomePage() {
   const courses = coursesData as Course[];
+  const lessonCounts = await getLessonCounts();
 
   return (
     <main className="min-h-screen bg-zinc-950">
@@ -41,7 +57,7 @@ export default function HomePage() {
             {courses.length} courses
           </span>
         </div>
-        <CourseGrid courses={courses} />
+        <CourseGrid courses={courses} lessonCounts={lessonCounts} />
       </div>
     </main>
   );

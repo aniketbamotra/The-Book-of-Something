@@ -11,11 +11,18 @@ import { getDifficultyLabel } from "@/lib/difficultyEngine";
 interface CourseCardProps {
   course: Course;
   progress?: CourseProgress | null;
+  totalPosts?: number;
 }
 
-export function CourseCard({ course, progress }: CourseCardProps) {
+export function CourseCard({
+  course,
+  progress,
+  totalPosts = 0,
+}: CourseCardProps) {
+  const completedCount = progress?.completedPostIds.length ?? 0;
+  const total = totalPosts > 0 ? totalPosts : 1;
   const progressPct = progress
-    ? Math.round((progress.completedPostIds.length / Math.max(1, 15)) * 100)
+    ? Math.min(100, Math.round((completedCount / total) * 100))
     : 0;
 
   return (
@@ -73,12 +80,14 @@ export function CourseCard({ course, progress }: CourseCardProps) {
               <span className="text-white/30">{course.category}</span>
             </div>
 
-            {/* progress bar */}
-            {progress && !progress.completedAt && (
+            {/* in-progress bar with card count */}
+            {progress && !progress.completedAt && completedCount > 0 && (
               <div className="mt-4">
                 <div className="flex justify-between text-xs text-white/40 mb-1.5">
                   <span>In progress</span>
-                  <span>{progressPct}%</span>
+                  <span>
+                    {completedCount}/{totalPosts > 0 ? totalPosts : "?"} lessons
+                  </span>
                 </div>
                 <div className="h-1.5 bg-white/8 rounded-full overflow-hidden">
                   <motion.div

@@ -9,9 +9,10 @@ import { stagger } from "@/lib/animations";
 
 interface CourseGridProps {
   courses: Course[];
+  lessonCounts: Record<string, number>;
 }
 
-export function CourseGrid({ courses }: CourseGridProps) {
+export function CourseGrid({ courses, lessonCounts }: CourseGridProps) {
   const [progressMap, setProgressMap] = useState<
     Record<string, CourseProgress>
   >({});
@@ -34,6 +35,7 @@ export function CourseGrid({ courses }: CourseGridProps) {
           key={course.id}
           course={course}
           progress={progressMap[course.id] ?? null}
+          totalPosts={lessonCounts[course.id] ?? 0}
         />
       ))}
     </motion.div>

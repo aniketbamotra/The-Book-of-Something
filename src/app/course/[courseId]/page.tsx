@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { CourseData } from "@/types";
 import { getDifficultyLabel } from "@/lib/difficultyEngine";
+import { ContinueButton } from "@/components/course/ContinueButton";
 import coursesIndex from "@/data/courses.json";
 
 interface Props {
@@ -65,7 +66,7 @@ export default async function CoursePage({ params }: Props) {
         </div>
       </div>
 
-      {/* start button */}
+      {/* CTA buttons */}
       <div className="px-6 mt-6">
         <Link
           href={`/course/${courseId}/feed`}
@@ -74,6 +75,9 @@ export default async function CoursePage({ params }: Props) {
           Start Learning →
         </Link>
       </div>
+
+      {/* "Continue" button — only rendered client-side if progress exists */}
+      <ContinueButton courseId={courseId} />
 
       {/* lesson list */}
       <div className="px-6 py-8 max-w-2xl mx-auto">

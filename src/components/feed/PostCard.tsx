@@ -127,63 +127,61 @@ export function PostCard({
   const content = post.content[difficulty];
 
   return (
-    <div className="feed-item flex flex-col">
-      <motion.div
-        variants={slideUp}
-        initial="hidden"
-        animate={isActive ? "visible" : "hidden"}
-        className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 py-8"
+    <motion.div
+      variants={slideUp}
+      initial="hidden"
+      animate={isActive ? "visible" : "hidden"}
+      className="h-full flex flex-col max-w-2xl mx-auto w-full px-4 pt-16 pb-6"
+    >
+      {/* Type badge + post number */}
+      <div className="flex items-center justify-between mb-6">
+        <span
+          className={cn(
+            "text-sm font-medium flex items-center gap-1.5",
+            typeInfo.color
+          )}
+        >
+          {typeInfo.icon}
+          {typeInfo.label}
+        </span>
+        <span className="text-xs text-white/30 tabular-nums">
+          {post.order} / {totalPosts}
+        </span>
+      </div>
+
+      {/* Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: 12 }}
+        animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ delay: 0.1, duration: 0.35 }}
+        className="text-2xl sm:text-3xl font-bold text-white mb-6 leading-tight"
       >
-        {/* Type badge + post number */}
-        <div className="flex items-center justify-between mb-6">
-          <span
-            className={cn(
-              "text-sm font-medium flex items-center gap-1.5",
-              typeInfo.color
-            )}
-          >
-            {typeInfo.icon}
-            {typeInfo.label}
-          </span>
-          <span className="text-xs text-white/30 tabular-nums">
-            {post.order} / {totalPosts}
-          </span>
-        </div>
+        {post.title}
+      </motion.h2>
 
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ delay: 0.1, duration: 0.35 }}
-          className="text-2xl sm:text-3xl font-bold text-white mb-6 leading-tight"
-        >
-          {post.title}
-        </motion.h2>
-
-        {/* Content */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isActive ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="flex-1 space-y-3 text-[15px]"
-        >
-          {renderContent(content, post.type, post.codeLanguage)}
-        </motion.div>
-
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isActive ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.35, duration: 0.3 }}
-          className="mt-8 flex items-center justify-between"
-        >
-          <Badge variant={difficulty}>{difficulty}</Badge>
-          <span className="text-xs text-white/25 flex items-center gap-1">
-            <ChevronUp size={12} />
-            Swipe up to continue
-          </span>
-        </motion.div>
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isActive ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
+        className="flex-1 space-y-3 text-[15px]"
+      >
+        {renderContent(content, post.type, post.codeLanguage)}
       </motion.div>
-    </div>
+
+      {/* Footer */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isActive ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 0.35, duration: 0.3 }}
+        className="mt-auto pt-6 flex items-center justify-between"
+      >
+        <Badge variant={difficulty}>{difficulty}</Badge>
+        <span className="text-xs text-white/25 flex items-center gap-1">
+          <ChevronUp size={12} />
+          Swipe up to continue
+        </span>
+      </motion.div>
+    </motion.div>
   );
 }
