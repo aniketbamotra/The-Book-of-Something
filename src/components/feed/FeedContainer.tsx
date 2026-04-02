@@ -393,7 +393,7 @@ export function FeedContainer({ data }: FeedContainerProps) {
   return (
     <div
       className="relative"
-      style={{ height: "100dvh", background: "#FFFFFF" }}
+      style={{ height: "100dvh", background: "#FFF9F5" }}
     >
       <FeedProgressHUD
         current={currentPostNumber}

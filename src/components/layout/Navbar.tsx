@@ -13,9 +13,9 @@ export function Navbar() {
     <header
       className="sticky top-0 z-50 w-full"
       style={{
-        background: "rgba(255,255,255,0.92)",
+        background: "rgba(255,249,245,0.94)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #E5E7EB",
+        borderBottom: "1px solid #EDE5DE",
       }}
     >
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">

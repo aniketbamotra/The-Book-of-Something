@@ -48,13 +48,13 @@ export function FeedProgressHUD({
     <div
       className="fixed top-0 left-0 right-0 z-40 pointer-events-none"
       style={{
-        background: "rgba(255,255,255,0.90)",
+        background: "rgba(255,249,245,0.92)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #E5E7EB",
+        borderBottom: "1px solid #EDE5DE",
       }}
     >
       {/* Progress bar */}
-      <div className="relative h-0.5" style={{ background: "#E5E7EB" }}>
+      <div className="relative h-0.5" style={{ background: "#EDE5DE" }}>
         <motion.div
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.4, ease: "easeOut" }}

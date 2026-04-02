@@ -57,6 +57,7 @@ export function CourseCard({
           "0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(99,102,241,0.18)",
       }}
       transition={{ duration: 0.2 }}
+      style={{ borderRadius: "16px" }}
     >
       <Link href={`/course/${course.id}`} className="block cursor-pointer">
         <div

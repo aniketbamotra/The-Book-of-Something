@@ -10,8 +10,8 @@ export function Footer() {
     <footer
       className="w-full mt-auto"
       style={{
-        borderTop: "1px solid #F3F4F6",
-        background: "#F9FAFB",
+        borderTop: "1px solid #EDE5DE",
+        background: "#FEF5EF",
       }}
     >
       <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">

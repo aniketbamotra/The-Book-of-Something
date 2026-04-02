@@ -28,14 +28,14 @@ export default async function HomePage() {
       <section
         className="relative overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, #EEF2FF 0%, #FFFFFF 100%)",
-          borderBottom: "1px solid #E5E7EB",
+          background: "linear-gradient(180deg, #FFF4EC 0%, #FFF9F5 100%)",
+          borderBottom: "1px solid #EDE5DE",
         }}
       >
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full blur-[120px]"
-            style={{ background: "rgba(99,102,241,0.10)" }}
+            style={{ background: "rgba(217,119,6,0.07)" }}
           />
         </div>
         <div className="max-w-5xl mx-auto px-6 py-16 sm:py-20 text-center relative">
@@ -67,7 +67,7 @@ export default async function HomePage() {
       <section className="max-w-5xl mx-auto px-6 py-12">
         <div
           className="flex items-center gap-2 mb-8 pb-5"
-          style={{ borderBottom: "1px solid #E5E7EB" }}
+          style={{ borderBottom: "1px solid #EDE5DE" }}
         >
           <BookOpen size={18} style={{ color: "#6366F1" }} strokeWidth={2} />
           <h2

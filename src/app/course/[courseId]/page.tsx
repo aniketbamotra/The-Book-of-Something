@@ -150,7 +150,7 @@ export default async function CoursePage({ params }: Props) {
       <div className="max-w-3xl mx-auto px-6 py-10">
         <div
           className="flex items-center gap-2 mb-5 pb-4"
-          style={{ borderBottom: "1px solid #E5E7EB" }}
+          style={{ borderBottom: "1px solid #EDE5DE" }}
         >
           <BookOpen size={16} strokeWidth={2} style={{ color: "#6366F1" }} />
           <h2
@@ -176,8 +176,8 @@ export default async function CoursePage({ params }: Props) {
                 <div
                   className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer"
                   style={{
-                    background: idx % 2 === 0 ? "#FFFFFF" : "#F9FAFB",
-                    border: "1px solid #F3F4F6",
+                    background: idx % 2 === 0 ? "#FFFFFF" : "#FEF5EF",
+                    border: "1px solid #F0EBE6",
                   }}
                 >
                   <span
