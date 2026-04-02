@@ -369,7 +369,7 @@ export function FeedContainer({ data }: FeedContainerProps) {
   // ─── Render ───────────────────────────────────────────────────────────────
 
   return (
-    <div className="relative bg-zinc-950" style={{ height: "100dvh" }}>
+    <div className="relative bg-background" style={{ height: "100dvh" }}>
       <FeedProgressHUD
         current={currentPostNumber}
         total={posts.length}

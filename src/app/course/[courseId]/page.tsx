@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { BrainCircuit } from "lucide-react";
 import type { CourseData } from "@/types";
 import { getDifficultyLabel } from "@/lib/difficultyEngine";
 import { ContinueButton } from "@/components/course/ContinueButton";
@@ -30,18 +31,19 @@ export default async function CoursePage({ params }: Props) {
   const { course, posts, quizzes } = data;
 
   return (
-    <main className="min-h-screen bg-zinc-950">
+    <main className="min-h-screen bg-background">
       {/* back */}
       <div className="px-6 pt-6">
         <Link
           href="/"
-          className="text-white/40 hover:text-white transition-colors text-sm"
+          className="text-sm transition-colors"
+          style={{ color: "rgba(30,27,75,0.45)" }}
         >
           ← All Courses
         </Link>
       </div>
 
-      {/* hero */}
+      {/* hero card */}
       <div
         className={`mx-6 mt-6 rounded-3xl bg-gradient-to-br ${course.coverGradient} p-8 text-white`}
       >
@@ -55,7 +57,7 @@ export default async function CoursePage({ params }: Props) {
             {getDifficultyLabel(course.difficulty)}
           </span>
           <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-            ⏱ {course.estimatedMinutes} min
+            {course.estimatedMinutes} min
           </span>
           <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
             {posts.length} lessons
@@ -66,7 +68,7 @@ export default async function CoursePage({ params }: Props) {
         </div>
       </div>
 
-      {/* CTA buttons */}
+      {/* CTA */}
       <div className="px-6 mt-6">
         <Link
           href={`/course/${courseId}/feed`}
@@ -76,12 +78,14 @@ export default async function CoursePage({ params }: Props) {
         </Link>
       </div>
 
-      {/* "Continue" button — only rendered client-side if progress exists */}
+      {/* Continue button — client-side, only shows if progress exists */}
       <ContinueButton courseId={courseId} />
 
       {/* lesson list */}
       <div className="px-6 py-8 max-w-2xl mx-auto">
-        <h2 className="text-lg font-semibold text-white mb-4">Lessons</h2>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: "#1E1B4B" }}>
+          Lessons
+        </h2>
         <div className="space-y-2">
           {posts.map((post) => {
             const isQuizAfter = quizzes.some(
@@ -89,22 +93,49 @@ export default async function CoursePage({ params }: Props) {
             );
             return (
               <div key={post.id}>
-                <div className="flex items-center gap-3 py-3 px-4 bg-white/5 border border-white/5 rounded-xl">
-                  <span className="text-white/30 text-sm tabular-nums w-6">
+                <div
+                  className="flex items-center gap-3 py-3 px-4 rounded-xl border"
+                  style={{
+                    background: "#FFFFFF",
+                    borderColor: "rgba(99,102,241,0.12)",
+                  }}
+                >
+                  <span
+                    className="text-sm tabular-nums w-6"
+                    style={{ color: "rgba(30,27,75,0.30)" }}
+                  >
                     {post.order}
                   </span>
-                  <span className="text-white/80 text-sm flex-1">
+                  <span
+                    className="text-sm flex-1"
+                    style={{ color: "rgba(30,27,75,0.75)" }}
+                  >
                     {post.title}
                   </span>
-                  <span className="text-xs text-white/30 capitalize">
+                  <span
+                    className="text-xs capitalize"
+                    style={{ color: "rgba(30,27,75,0.35)" }}
+                  >
                     {post.type}
                   </span>
                 </div>
                 {isQuizAfter && (
-                  <div className="flex items-center gap-2 py-2 px-4 text-xs text-amber-400/70">
-                    <div className="flex-1 h-px bg-amber-500/20" />
-                    <span>🧠 Quiz checkpoint</span>
-                    <div className="flex-1 h-px bg-amber-500/20" />
+                  <div
+                    className="flex items-center gap-2 py-2 px-4 text-xs"
+                    style={{ color: "rgba(217,119,6,0.70)" }}
+                  >
+                    <div
+                      className="flex-1 h-px"
+                      style={{ background: "rgba(217,119,6,0.18)" }}
+                    />
+                    <span className="flex items-center gap-1">
+                      <BrainCircuit size={11} strokeWidth={2} />
+                      Quiz checkpoint
+                    </span>
+                    <div
+                      className="flex-1 h-px"
+                      style={{ background: "rgba(217,119,6,0.18)" }}
+                    />
                   </div>
                 )}
               </div>

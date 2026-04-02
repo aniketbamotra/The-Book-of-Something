@@ -35,7 +35,9 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-zinc-950 text-white min-h-screen">{children}</body>
+      <body className="bg-background text-foreground min-h-screen">
+        {children}
+      </body>
     </html>
   );
 }

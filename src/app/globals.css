@@ -2,77 +2,78 @@
 
 /* ─── Design system tokens as CSS custom properties ──────────────────────────
    All raw values live in src/design-system/tokens.ts — these CSS vars
-   expose them to Tailwind and non-JS contexts.                              */
+   expose them to Tailwind and non-JS contexts.
+   Theme: Light — education design system, indigo brand.              */
 
 :root {
-  /* Backgrounds — OLED-optimised dark layers */
-  --ds-bg-base: #09090b;
-  --ds-bg-surface: #0f0f12;
-  --ds-bg-card: #18181b;
-  --ds-bg-elevated: #232329;
+  /* Backgrounds — light indigo-tinted layers */
+  --ds-bg-base: #f8f7ff;
+  --ds-bg-surface: #eef2ff;
+  --ds-bg-card: #ffffff;
+  --ds-bg-elevated: #e8ecfb;
 
   /* Primary — Indigo brand */
   --ds-primary-300: #a5b4fc;
   --ds-primary-400: #818cf8;
   --ds-primary: #6366f1;
   --ds-primary-600: #4f46e5;
-  --ds-primary-glow: rgba(99, 102, 241, 0.18);
-  --ds-primary-border: rgba(99, 102, 241, 0.3);
-  --ds-primary-muted: rgba(99, 102, 241, 0.12);
+  --ds-primary-glow: rgba(99, 102, 241, 0.14);
+  --ds-primary-border: rgba(99, 102, 241, 0.22);
+  --ds-primary-muted: rgba(99, 102, 241, 0.08);
 
-  /* Text */
-  --ds-text-primary: #fafafa;
-  --ds-text-secondary: rgba(250, 250, 250, 0.7);
-  --ds-text-muted: rgba(250, 250, 250, 0.45);
-  --ds-text-subtle: rgba(250, 250, 250, 0.25);
+  /* Text — deep indigo */
+  --ds-text-primary: #1e1b4b;
+  --ds-text-secondary: rgba(30, 27, 75, 0.68);
+  --ds-text-muted: rgba(30, 27, 75, 0.48);
+  --ds-text-subtle: rgba(30, 27, 75, 0.32);
 
-  /* Borders */
-  --ds-border-subtle: rgba(255, 255, 255, 0.06);
-  --ds-border-default: rgba(255, 255, 255, 0.1);
-  --ds-border-strong: rgba(255, 255, 255, 0.2);
+  /* Borders — indigo-tinted (visible on light bg) */
+  --ds-border-subtle: rgba(99, 102, 241, 0.08);
+  --ds-border-default: rgba(99, 102, 241, 0.16);
+  --ds-border-strong: rgba(99, 102, 241, 0.3);
 
   /* Confidence states */
-  --ds-got-it: #22c55e;
-  --ds-got-it-light: #4ade80;
-  --ds-got-it-bg: rgba(34, 197, 94, 0.1);
-  --ds-got-it-border: rgba(34, 197, 94, 0.25);
+  --ds-got-it: #16a34a;
+  --ds-got-it-light: #22c55e;
+  --ds-got-it-bg: rgba(22, 163, 74, 0.08);
+  --ds-got-it-border: rgba(22, 163, 74, 0.22);
 
-  --ds-need-help: #f59e0b;
-  --ds-need-help-light: #fbbf24;
-  --ds-need-help-bg: rgba(245, 158, 11, 0.1);
-  --ds-need-help-border: rgba(245, 158, 11, 0.25);
+  --ds-need-help: #d97706;
+  --ds-need-help-light: #f59e0b;
+  --ds-need-help-bg: rgba(217, 119, 6, 0.08);
+  --ds-need-help-border: rgba(217, 119, 6, 0.22);
 
-  --ds-show-again: #3b82f6;
-  --ds-show-again-light: #60a5fa;
-  --ds-show-again-bg: rgba(59, 130, 246, 0.1);
-  --ds-show-again-border: rgba(59, 130, 246, 0.25);
+  --ds-show-again: #2563eb;
+  --ds-show-again-light: #3b82f6;
+  --ds-show-again-bg: rgba(37, 99, 235, 0.08);
+  --ds-show-again-border: rgba(37, 99, 235, 0.22);
 
   /* Quiz states */
-  --ds-quiz-correct: #10b981;
-  --ds-quiz-correct-bg: rgba(16, 185, 129, 0.12);
-  --ds-quiz-incorrect: #f87171;
-  --ds-quiz-incorrect-bg: rgba(248, 113, 113, 0.12);
+  --ds-quiz-correct: #15803d;
+  --ds-quiz-correct-bg: rgba(21, 128, 61, 0.08);
+  --ds-quiz-incorrect: #dc2626;
+  --ds-quiz-incorrect-bg: rgba(220, 38, 38, 0.08);
 
   /* Achievement */
-  --ds-achievement: #eab308;
-  --ds-achievement-bg: rgba(234, 179, 8, 0.12);
+  --ds-achievement: #d97706;
+  --ds-achievement-bg: rgba(217, 119, 6, 0.08);
 
-  /* Shadows */
+  /* Shadows — indigo-tinted (no harsh dark shadows on light bg) */
   --ds-shadow-card:
-    0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.4);
+    0 0 0 1px rgba(99, 102, 241, 0.1), 0 4px 24px rgba(99, 102, 241, 0.07);
   --ds-shadow-elevated:
-    0 0 0 1px rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.6);
+    0 0 0 1px rgba(99, 102, 241, 0.14), 0 12px 48px rgba(99, 102, 241, 0.1);
   --ds-shadow-primary:
-    0 0 0 1px rgba(99, 102, 241, 0.3), 0 0 24px rgba(99, 102, 241, 0.14);
+    0 0 0 1px rgba(99, 102, 241, 0.25), 0 0 24px rgba(99, 102, 241, 0.14);
 
   /* Legacy compat */
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #f8f7ff;
+  --foreground: #1e1b4b;
   --color-primary: #6366f1;
   --color-primary-hover: #818cf8;
-  --color-primary-muted: rgba(99, 102, 241, 0.12);
-  --color-primary-border: rgba(99, 102, 241, 0.3);
-  --color-success: #22c55e;
+  --color-primary-muted: rgba(99, 102, 241, 0.08);
+  --color-primary-border: rgba(99, 102, 241, 0.22);
+  --color-success: #16a34a;
 }
 
 /* ─── Tailwind theme wiring ───────────────────────────────────────────────── */
@@ -164,7 +165,7 @@ samp {
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  scrollbar-color: rgba(99, 102, 241, 0.2) transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
@@ -176,7 +177,7 @@ samp {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(99, 102, 241, 0.2);
   border-radius: 2px;
 }
 
@@ -184,10 +185,10 @@ samp {
 
 .code-block {
   position: relative;
-  border-left: 2px solid rgba(139, 92, 246, 0.45);
+  border-left: 2px solid rgba(124, 58, 237, 0.35);
   box-shadow:
-    inset 0 0 24px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(139, 92, 246, 0.1);
+    inset 0 0 24px rgba(99, 102, 241, 0.04),
+    0 0 0 1px rgba(124, 58, 237, 0.12);
 }
 
 /* ─── Glow utilities ─────────────────────────────────────────────────────── */
@@ -199,21 +200,21 @@ samp {
 .glow-indigo {
   box-shadow:
     0 0 0 1px var(--ds-primary-border),
-    0 0 20px rgba(99, 102, 241, 0.12);
+    0 0 20px rgba(99, 102, 241, 0.1);
 }
 
 .glow-indigo-strong {
   box-shadow:
-    0 0 0 1px rgba(99, 102, 241, 0.5),
-    0 0 30px rgba(99, 102, 241, 0.2);
+    0 0 0 1px rgba(99, 102, 241, 0.35),
+    0 0 30px rgba(99, 102, 241, 0.15);
 }
 
 .text-glow {
-  text-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+  text-shadow: 0 0 40px rgba(99, 102, 241, 0.35);
 }
 
 .glow-achievement {
-  box-shadow: 0 0 48px rgba(234, 179, 8, 0.22);
+  box-shadow: 0 0 48px rgba(217, 119, 6, 0.18);
 }
 
 /* ─── Semantic card ──────────────────────────────────────────────────────── */
@@ -231,7 +232,7 @@ samp {
   background:
     radial-gradient(
       ellipse 80% 60% at 50% 0%,
-      rgba(99, 102, 241, 0.08) 0%,
+      rgba(99, 102, 241, 0.06) 0%,
       transparent 70%
     ),
     var(--ds-bg-surface);
@@ -243,7 +244,7 @@ samp {
   background:
     radial-gradient(
       ellipse 60% 40% at 50% 10%,
-      rgba(234, 179, 8, 0.1) 0%,
+      rgba(217, 119, 6, 0.08) 0%,
       transparent 60%
     ),
     var(--ds-bg-base);

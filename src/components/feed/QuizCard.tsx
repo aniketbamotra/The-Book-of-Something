@@ -129,7 +129,7 @@ export function QuizCard({
               if (isCorrect) {
                 bgColor = colors.quizCorrectBg;
                 borderColor = colors.quizCorrect;
-                textColor = "#6EE7B7";
+                textColor = colors.quizCorrect;
                 statusIcon = (
                   <CheckCircle2
                     size={16}
@@ -140,7 +140,7 @@ export function QuizCard({
               } else if (isSelected) {
                 bgColor = colors.quizIncorrectBg;
                 borderColor = colors.quizIncorrect;
-                textColor = "#FCA5A5";
+                textColor = colors.quizIncorrect;
                 statusIcon = (
                   <XCircle
                     size={16}

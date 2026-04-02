@@ -87,7 +87,7 @@ function renderContent(
           key={i}
           className="code-block rounded-2xl p-4 overflow-x-auto scrollbar-thin my-3"
           style={{
-            background: "rgba(0,0,0,0.50)",
+            background: colors.codeBlockBg,
             fontSize: "0.8125rem",
             lineHeight: "1.7",
             fontFamily: "var(--font-mono), JetBrains Mono, monospace",
@@ -98,14 +98,14 @@ function renderContent(
               className="mb-2 uppercase tracking-widest font-sans"
               style={{
                 fontSize: "0.6875rem",
-                color: colors.typeCode,
-                opacity: 0.7,
+                color: colors.codeLabel,
+                opacity: 0.8,
               }}
             >
               {lang}
             </div>
           )}
-          <code style={{ color: "#C4B5FD" }}>{code}</code>
+          <code style={{ color: colors.codeText }}>{code}</code>
         </pre>
       );
     }
@@ -113,11 +113,11 @@ function renderContent(
     const rendered = part.split("\n").map((line, j) => {
       const formatted = line.replace(
         /\*\*(.*?)\*\*/g,
-        '<strong style="color:#FAFAFA;font-weight:600">$1</strong>'
+        `<strong style="color:${colors.textPrimary};font-weight:600">$1</strong>`
       );
       const withCode = formatted.replace(
         /`([^`]+)`/g,
-        `<code style="background:rgba(167,139,250,0.12);color:#C4B5FD;padding:2px 6px;border-radius:6px;font-size:0.875em;font-family:var(--font-mono);border:1px solid rgba(167,139,250,0.18)">$1</code>`
+        `<code style="background:${colors.typeCodeBg};color:${colors.typeCode};padding:2px 6px;border-radius:6px;font-size:0.875em;font-family:var(--font-mono);border:1px solid ${colors.typeCodeBorder}">$1</code>`
       );
       const withChecks = withCode.replace(
         /^✅\s/,
@@ -130,7 +130,7 @@ function renderContent(
             key={j}
             className="ml-5"
             style={{
-              color: "rgba(250,250,250,0.72)",
+              color: colors.textSecondary,
               lineHeight: "1.65",
               marginBottom: "4px",
               listStyleType: "disc",
@@ -144,7 +144,7 @@ function renderContent(
       return (
         <p
           key={j}
-          style={{ color: "rgba(250,250,250,0.72)", lineHeight: "1.65" }}
+          style={{ color: colors.textSecondary, lineHeight: "1.65" }}
           dangerouslySetInnerHTML={{ __html: withChecks }}
         />
       );
@@ -223,9 +223,9 @@ export function PostCard({
         <span
           className="text-xs tabular-nums font-medium px-2.5 py-1 rounded-full border"
           style={{
-            color: "rgba(250,250,250,0.35)",
-            background: "rgba(255,255,255,0.04)",
-            borderColor: "rgba(255,255,255,0.08)",
+            color: colors.textMuted,
+            background: colors.bgSurface,
+            borderColor: colors.borderSubtle,
           }}
         >
           {post.order} / {totalPosts}
@@ -279,7 +279,7 @@ export function PostCard({
 
         <span
           className="flex items-center gap-1 text-xs"
-          style={{ color: "rgba(250,250,250,0.22)" }}
+          style={{ color: colors.textSubtle }}
         >
           <ChevronUp size={12} />
           Swipe up

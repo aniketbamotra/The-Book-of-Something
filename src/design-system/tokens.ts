@@ -2,7 +2,8 @@
  * Design Tokens — The Book of Something
  *
  * Source of truth for every visual value in the app.
- * Education design system: dark OLED, micro-interactions, vibrant semantic states.
+ * Education design system: light theme, indigo brand, micro-interactions.
+ * Audience: developers, designers, and general learners.
  *
  * Usage in components:
  *   - `colors.*`    → raw hex/rgba for Framer Motion, SVG attributes, inline styles
@@ -18,105 +19,111 @@
 // ─── Color palette ────────────────────────────────────────────────────────────
 
 export const colors = {
-  // Backgrounds — OLED-optimised dark layers
-  bgBase: "#09090B", // page background
-  bgSurface: "#0F0F12", // slightly lifted surface
-  bgCard: "#18181B", // card / panel background
-  bgElevated: "#232329", // modal / tooltip / dropdown
+  // Backgrounds — light indigo-tinted layers (education design system)
+  bgBase: "#F8F7FF", // page background — barely-there lavender
+  bgSurface: "#EEF2FF", // lifted surface — light indigo (skill-recommended)
+  bgCard: "#FFFFFF", // card / panel — pure white for max contrast
+  bgElevated: "#E8ECFB", // modals / dropdowns — slightly deeper
 
   // Primary — Indigo brand (engagement, trust, learning)
   primary300: "#A5B4FC",
   primary400: "#818CF8", // hover / light accent
   primary500: "#6366F1", // main brand
   primary600: "#4F46E5", // pressed / deep
-  primaryGlow: "rgba(99,102,241,0.18)",
-  primaryBorder: "rgba(99,102,241,0.30)",
-  primaryMuted: "rgba(99,102,241,0.12)",
+  primaryGlow: "rgba(99,102,241,0.14)",
+  primaryBorder: "rgba(99,102,241,0.22)",
+  primaryMuted: "rgba(99,102,241,0.08)",
 
-  // Text
-  textPrimary: "#FAFAFA",
-  textSecondary: "rgba(250,250,250,0.70)",
-  textMuted: "rgba(250,250,250,0.45)",
-  textSubtle: "rgba(250,250,250,0.25)",
-  textDisabled: "rgba(250,250,250,0.15)",
+  // Text — deep indigo (skill recommends #312E81 family)
+  textPrimary: "#1E1B4B", // indigo-950
+  textSecondary: "rgba(30,27,75,0.68)",
+  textMuted: "rgba(30,27,75,0.48)",
+  textSubtle: "rgba(30,27,75,0.32)",
+  textDisabled: "rgba(30,27,75,0.20)",
 
-  // Borders
-  borderSubtle: "rgba(255,255,255,0.06)",
-  borderDefault: "rgba(255,255,255,0.10)",
-  borderStrong: "rgba(255,255,255,0.20)",
+  // Borders — indigo-tinted (visible on light backgrounds)
+  borderSubtle: "rgba(99,102,241,0.08)",
+  borderDefault: "rgba(99,102,241,0.16)",
+  borderStrong: "rgba(99,102,241,0.30)",
 
   // ── Confidence state colours (education core) ──────────────────────────────
-  // Got It — emerald green → confidence & success
-  gotIt500: "#22C55E",
-  gotIt400: "#4ADE80",
-  gotItBg: "rgba(34,197,94,0.10)",
-  gotItBorder: "rgba(34,197,94,0.25)",
-  gotItGlow: "rgba(34,197,94,0.15)",
+  // Got It — green → confidence & success
+  gotIt500: "#16A34A", // green-600 (darker for light bg)
+  gotIt400: "#22C55E", // green-500
+  gotItBg: "rgba(22,163,74,0.08)",
+  gotItBorder: "rgba(22,163,74,0.22)",
+  gotItGlow: "rgba(22,163,74,0.12)",
 
-  // Need Help — warm amber → attention without alarm
-  needHelp500: "#F59E0B",
-  needHelp400: "#FBBF24",
-  needHelpBg: "rgba(245,158,11,0.10)",
-  needHelpBorder: "rgba(245,158,11,0.25)",
+  // Need Help — amber → attention without alarm
+  needHelp500: "#D97706", // amber-600 (darker for light bg)
+  needHelp400: "#F59E0B", // amber-500
+  needHelpBg: "rgba(217,119,6,0.08)",
+  needHelpBorder: "rgba(217,119,6,0.22)",
 
-  // Show Again — sky blue → neutral, informational replay
-  showAgain500: "#3B82F6",
-  showAgain400: "#60A5FA",
-  showAgainBg: "rgba(59,130,246,0.10)",
-  showAgainBorder: "rgba(59,130,246,0.25)",
+  // Show Again — blue → neutral, informational replay
+  showAgain500: "#2563EB", // blue-600 (darker for light bg)
+  showAgain400: "#3B82F6", // blue-500
+  showAgainBg: "rgba(37,99,235,0.08)",
+  showAgainBorder: "rgba(37,99,235,0.22)",
 
   // ── Quiz states ────────────────────────────────────────────────────────────
-  quizCorrect: "#10B981", // emerald-500
-  quizCorrectBg: "rgba(16,185,129,0.12)",
-  quizCorrectBorder: "#10B981",
-  quizCorrectGlow: "rgba(16,185,129,0.15)",
+  quizCorrect: "#15803D", // green-700 — readable on white
+  quizCorrectBg: "rgba(21,128,61,0.08)",
+  quizCorrectBorder: "#15803D",
+  quizCorrectGlow: "rgba(21,128,61,0.12)",
 
-  quizIncorrect: "#F87171", // red-400
-  quizIncorrectBg: "rgba(248,113,113,0.12)",
-  quizIncorrectBorder: "#F87171",
+  quizIncorrect: "#DC2626", // red-600 — readable on white
+  quizIncorrectBg: "rgba(220,38,38,0.08)",
+  quizIncorrectBorder: "#DC2626",
 
-  quizNeutral: "rgba(255,255,255,0.05)",
-  quizNeutralBorder: "rgba(255,255,255,0.10)",
+  quizNeutral: "rgba(99,102,241,0.04)",
+  quizNeutralBorder: "rgba(99,102,241,0.14)",
 
   // ── Achievement / completion ───────────────────────────────────────────────
-  achievement: "#EAB308", // yellow-500
-  achievementLight: "#FDE047", // yellow-300
-  achievementBg: "rgba(234,179,8,0.12)",
-  achievementGlow: "rgba(234,179,8,0.20)",
+  achievement: "#D97706", // amber-600
+  achievementLight: "#F59E0B", // amber-500
+  achievementBg: "rgba(217,119,6,0.08)",
+  achievementGlow: "rgba(217,119,6,0.18)",
 
-  // ── Content type badge colours ─────────────────────────────────────────────
-  typeText: "#60A5FA", // blue-400
-  typeTextBg: "rgba(96,165,250,0.10)",
-  typeTextBorder: "rgba(96,165,250,0.20)",
+  // ── Content type badge colours — darker variants for light backgrounds ─────
+  typeText: "#2563EB", // blue-600
+  typeTextBg: "rgba(37,99,235,0.07)",
+  typeTextBorder: "rgba(37,99,235,0.18)",
 
-  typeCode: "#A78BFA", // violet-400
-  typeCodeBg: "rgba(167,139,250,0.10)",
-  typeCodeBorder: "rgba(167,139,250,0.20)",
+  typeCode: "#7C3AED", // violet-600
+  typeCodeBg: "rgba(124,58,237,0.07)",
+  typeCodeBorder: "rgba(124,58,237,0.18)",
 
-  typeTip: "#FBBF24", // amber-400
-  typeTipBg: "rgba(251,191,36,0.10)",
-  typeTipBorder: "rgba(251,191,36,0.20)",
+  typeTip: "#D97706", // amber-600
+  typeTipBg: "rgba(217,119,6,0.07)",
+  typeTipBorder: "rgba(217,119,6,0.18)",
 
-  typeAnalogy: "#C084FC", // purple-400
-  typeAnalogyBg: "rgba(192,132,252,0.10)",
-  typeAnalogyBorder: "rgba(192,132,252,0.20)",
+  typeAnalogy: "#9333EA", // purple-600
+  typeAnalogyBg: "rgba(147,51,234,0.07)",
+  typeAnalogyBorder: "rgba(147,51,234,0.18)",
 
-  typeFact: "#FB923C", // orange-400
-  typeFactBg: "rgba(251,146,60,0.10)",
-  typeFactBorder: "rgba(251,146,60,0.20)",
+  typeFact: "#EA580C", // orange-600
+  typeFactBg: "rgba(234,88,12,0.07)",
+  typeFactBorder: "rgba(234,88,12,0.18)",
 
-  // ── Difficulty colours (match badge system) ────────────────────────────────
-  diffBeginner: "#4ADE80",
-  diffBeginnerBg: "rgba(74,222,128,0.10)",
-  diffBeginnerBorder: "rgba(74,222,128,0.20)",
+  // ── Difficulty colours — darker for light backgrounds ──────────────────────
+  diffBeginner: "#16A34A", // green-600
+  diffBeginnerBg: "rgba(22,163,74,0.08)",
+  diffBeginnerBorder: "rgba(22,163,74,0.22)",
 
-  diffIntermediate: "#FBBF24",
-  diffIntermediateBg: "rgba(251,191,36,0.10)",
-  diffIntermediateBorder: "rgba(251,191,36,0.20)",
+  diffIntermediate: "#D97706", // amber-600
+  diffIntermediateBg: "rgba(217,119,6,0.08)",
+  diffIntermediateBorder: "rgba(217,119,6,0.22)",
 
-  diffAdvanced: "#F87171",
-  diffAdvancedBg: "rgba(248,113,113,0.10)",
-  diffAdvancedBorder: "rgba(248,113,113,0.20)",
+  diffAdvanced: "#DC2626", // red-600
+  diffAdvancedBg: "rgba(220,38,38,0.08)",
+  diffAdvancedBorder: "rgba(220,38,38,0.22)",
+
+  // ── Code block ────────────────────────────────────────────────────────────
+  codeBlockBg: "#F0EEFF", // very light indigo — code bg on light theme
+  codeBlockBorder: "rgba(124,58,237,0.22)",
+  codeText: "#5B21B6", // violet-700 — readable code on light bg
+  codeLabel: "#7C3AED", // violet-600 — language label
 } as const;
 
 // ─── CSS variable references ──────────────────────────────────────────────────
@@ -214,17 +221,19 @@ export const radii = {
   full: "9999px",
 } as const;
 
-// ─── Shadows & glows ─────────────────────────────────────────────────────────
+// ─── Shadows & glows — light mode (indigo-tinted, no harsh dark shadows) ─────
 
 export const shadows = {
-  card: "0 0 0 1px rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.40)",
-  cardHover: "0 0 0 1px rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.50)",
-  elevated: "0 0 0 1px rgba(255,255,255,0.10), 0 12px 48px rgba(0,0,0,0.60)",
-  primary: "0 0 0 1px rgba(99,102,241,0.30), 0 0 24px rgba(99,102,241,0.14)",
-  glowPrimary: "0 0 32px rgba(99,102,241,0.22)",
-  glowGotIt: "0 0 24px rgba(34,197,94,0.18)",
-  glowAchievement: "0 0 48px rgba(234,179,8,0.22)",
-  insetCode: "inset 0 0 24px rgba(0,0,0,0.30)",
+  card: "0 0 0 1px rgba(99,102,241,0.10), 0 4px 24px rgba(99,102,241,0.07)",
+  cardHover:
+    "0 0 0 1px rgba(99,102,241,0.18), 0 8px 32px rgba(99,102,241,0.12)",
+  elevated:
+    "0 0 0 1px rgba(99,102,241,0.14), 0 12px 48px rgba(99,102,241,0.10)",
+  primary: "0 0 0 1px rgba(99,102,241,0.25), 0 0 24px rgba(99,102,241,0.14)",
+  glowPrimary: "0 0 32px rgba(99,102,241,0.18)",
+  glowGotIt: "0 0 24px rgba(22,163,74,0.14)",
+  glowAchievement: "0 0 48px rgba(217,119,6,0.18)",
+  insetCode: "inset 0 0 24px rgba(99,102,241,0.06)",
 } as const;
 
 // ─── Animation durations (seconds for Framer Motion) ─────────────────────────
