@@ -1,54 +1,49 @@
 @import "tailwindcss";
 
-/* ─── Design system tokens as CSS custom properties ──────────────────────────
-   All raw values live in src/design-system/tokens.ts — these CSS vars
-   expose them to Tailwind and non-JS contexts.
-   Theme: Light — education design system, indigo brand.              */
+/* ─── Design system tokens ────────────────────────────────────────────────── */
 
 :root {
-  /* Backgrounds — light indigo-tinted layers */
-  --ds-bg-base: #f8f7ff;
-  --ds-bg-surface: #eef2ff;
+  /* Backgrounds */
+  --ds-bg-base: #ffffff;
+  --ds-bg-surface: #f9fafb;
   --ds-bg-card: #ffffff;
-  --ds-bg-elevated: #e8ecfb;
+  --ds-bg-elevated: #f3f4f6;
 
-  /* Primary — Indigo brand */
+  /* Primary — Indigo */
   --ds-primary-300: #a5b4fc;
   --ds-primary-400: #818cf8;
   --ds-primary: #6366f1;
   --ds-primary-600: #4f46e5;
-  --ds-primary-glow: rgba(99, 102, 241, 0.14);
-  --ds-primary-border: rgba(99, 102, 241, 0.22);
+  --ds-primary-glow: rgba(99, 102, 241, 0.12);
+  --ds-primary-border: rgba(99, 102, 241, 0.2);
   --ds-primary-muted: rgba(99, 102, 241, 0.08);
 
-  /* Text — deep indigo */
-  --ds-text-primary: #1e1b4b;
-  --ds-text-secondary: rgba(30, 27, 75, 0.68);
-  --ds-text-muted: rgba(30, 27, 75, 0.48);
-  --ds-text-subtle: rgba(30, 27, 75, 0.32);
+  /* Text */
+  --ds-text-primary: #111827;
+  --ds-text-secondary: #374151;
+  --ds-text-muted: #6b7280;
+  --ds-text-subtle: #9ca3af;
 
-  /* Borders — indigo-tinted (visible on light bg) */
-  --ds-border-subtle: rgba(99, 102, 241, 0.08);
-  --ds-border-default: rgba(99, 102, 241, 0.16);
-  --ds-border-strong: rgba(99, 102, 241, 0.3);
+  /* Borders */
+  --ds-border-subtle: #f3f4f6;
+  --ds-border-default: #e5e7eb;
+  --ds-border-strong: #d1d5db;
 
-  /* Confidence states */
+  /* Confidence */
   --ds-got-it: #16a34a;
   --ds-got-it-light: #22c55e;
   --ds-got-it-bg: rgba(22, 163, 74, 0.08);
   --ds-got-it-border: rgba(22, 163, 74, 0.22);
-
   --ds-need-help: #d97706;
   --ds-need-help-light: #f59e0b;
   --ds-need-help-bg: rgba(217, 119, 6, 0.08);
   --ds-need-help-border: rgba(217, 119, 6, 0.22);
-
   --ds-show-again: #2563eb;
   --ds-show-again-light: #3b82f6;
   --ds-show-again-bg: rgba(37, 99, 235, 0.08);
   --ds-show-again-border: rgba(37, 99, 235, 0.22);
 
-  /* Quiz states */
+  /* Quiz */
   --ds-quiz-correct: #15803d;
   --ds-quiz-correct-bg: rgba(21, 128, 61, 0.08);
   --ds-quiz-incorrect: #dc2626;
@@ -58,21 +53,21 @@
   --ds-achievement: #d97706;
   --ds-achievement-bg: rgba(217, 119, 6, 0.08);
 
-  /* Shadows — indigo-tinted (no harsh dark shadows on light bg) */
+  /* Shadows */
   --ds-shadow-card:
-    0 0 0 1px rgba(99, 102, 241, 0.1), 0 4px 24px rgba(99, 102, 241, 0.07);
+    0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
   --ds-shadow-elevated:
-    0 0 0 1px rgba(99, 102, 241, 0.14), 0 12px 48px rgba(99, 102, 241, 0.1);
+    0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.06);
   --ds-shadow-primary:
-    0 0 0 1px rgba(99, 102, 241, 0.25), 0 0 24px rgba(99, 102, 241, 0.14);
+    0 0 0 1px rgba(99, 102, 241, 0.25), 0 4px 16px rgba(99, 102, 241, 0.18);
 
-  /* Legacy compat */
-  --background: #f8f7ff;
-  --foreground: #1e1b4b;
+  /* Legacy */
+  --background: #ffffff;
+  --foreground: #111827;
   --color-primary: #6366f1;
   --color-primary-hover: #818cf8;
   --color-primary-muted: rgba(99, 102, 241, 0.08);
-  --color-primary-border: rgba(99, 102, 241, 0.22);
+  --color-primary-border: rgba(99, 102, 241, 0.2);
   --color-success: #16a34a;
 }
 
@@ -84,8 +79,6 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
-
-  /* Design system color utilities */
   --color-primary: var(--ds-primary);
   --color-primary-light: var(--ds-primary-400);
   --color-primary-deep: var(--ds-primary-600);
@@ -100,7 +93,7 @@
   --color-achievement: var(--ds-achievement);
 }
 
-/* ─── Global resets & base ───────────────────────────────────────────────── */
+/* ─── Global resets ───────────────────────────────────────────────────────── */
 
 * {
   box-sizing: border-box;
@@ -137,7 +130,7 @@ samp {
     "calt" 1;
 }
 
-/* ─── Doom-scroll feed ───────────────────────────────────────────────────── */
+/* ─── Feed scroll ─────────────────────────────────────────────────────────── */
 
 .feed-container {
   height: 100dvh;
@@ -161,96 +154,79 @@ samp {
   position: relative;
 }
 
-/* ─── Scrollbar (code blocks) ────────────────────────────────────────────── */
+/* ─── Scrollbar (code blocks) ─────────────────────────────────────────────── */
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(99, 102, 241, 0.2) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
   height: 3px;
+  width: 3px;
 }
-
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.2);
+  background: rgba(148, 163, 184, 0.4);
   border-radius: 2px;
 }
 
-/* ─── Code block ─────────────────────────────────────────────────────────── */
+/* ─── Code block ──────────────────────────────────────────────────────────── */
 
 .code-block {
   position: relative;
-  border-left: 2px solid rgba(124, 58, 237, 0.35);
-  box-shadow:
-    inset 0 0 24px rgba(99, 102, 241, 0.04),
-    0 0 0 1px rgba(124, 58, 237, 0.12);
+  border-left: 2px solid #4f46e5;
+  border-radius: 12px;
 }
 
-/* ─── Glow utilities ─────────────────────────────────────────────────────── */
-
-.glow-primary {
-  box-shadow: var(--ds-shadow-primary);
-}
-
-.glow-indigo {
-  box-shadow:
-    0 0 0 1px var(--ds-primary-border),
-    0 0 20px rgba(99, 102, 241, 0.1);
-}
-
-.glow-indigo-strong {
-  box-shadow:
-    0 0 0 1px rgba(99, 102, 241, 0.35),
-    0 0 30px rgba(99, 102, 241, 0.15);
-}
-
-.text-glow {
-  text-shadow: 0 0 40px rgba(99, 102, 241, 0.35);
-}
-
-.glow-achievement {
-  box-shadow: 0 0 48px rgba(217, 119, 6, 0.18);
-}
-
-/* ─── Semantic card ──────────────────────────────────────────────────────── */
+/* ─── Semantic card ───────────────────────────────────────────────────────── */
 
 .ds-card {
   background: var(--ds-bg-card);
   border: 1px solid var(--ds-border-default);
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: var(--ds-shadow-card);
 }
 
-/* ─── Confidence card background ─────────────────────────────────────────── */
+/* ─── Confidence background ───────────────────────────────────────────────── */
 
 .ds-confidence-bg {
   background:
     radial-gradient(
       ellipse 80% 60% at 50% 0%,
-      rgba(99, 102, 241, 0.06) 0%,
+      rgba(99, 102, 241, 0.05) 0%,
       transparent 70%
     ),
     var(--ds-bg-surface);
 }
 
-/* ─── Completion background ──────────────────────────────────────────────── */
+/* ─── Completion background ───────────────────────────────────────────────── */
 
 .ds-completion-bg {
   background:
     radial-gradient(
       ellipse 60% 40% at 50% 10%,
-      rgba(217, 119, 6, 0.08) 0%,
+      rgba(217, 119, 6, 0.07) 0%,
       transparent 60%
     ),
     var(--ds-bg-base);
 }
 
-/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+/* ─── Glow utilities ──────────────────────────────────────────────────────── */
+
+.glow-primary {
+  box-shadow: var(--ds-shadow-primary);
+}
+.glow-achievement {
+  box-shadow: 0 0 40px rgba(217, 119, 6, 0.18);
+}
+.text-glow {
+  text-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+}
+
+/* ─── Reduced motion ──────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   * {

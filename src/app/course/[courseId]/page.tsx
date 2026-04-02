@@ -1,6 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { BrainCircuit } from "lucide-react";
+import {
+  ArrowLeft,
+  Clock,
+  BookOpen,
+  BrainCircuit,
+  ChevronRight,
+} from "lucide-react";
 import type { CourseData } from "@/types";
 import { getDifficultyLabel } from "@/lib/difficultyEngine";
 import { ContinueButton } from "@/components/course/ContinueButton";
@@ -23,6 +29,45 @@ export async function generateStaticParams() {
   return coursesIndex.map((c) => ({ courseId: c.id }));
 }
 
+const typeColors: Record<
+  string,
+  { color: string; bg: string; border: string }
+> = {
+  text: {
+    color: "#2563EB",
+    bg: "rgba(37,99,235,0.07)",
+    border: "rgba(37,99,235,0.18)",
+  },
+  code: {
+    color: "#7C3AED",
+    bg: "rgba(124,58,237,0.07)",
+    border: "rgba(124,58,237,0.18)",
+  },
+  tip: {
+    color: "#D97706",
+    bg: "rgba(217,119,6,0.07)",
+    border: "rgba(217,119,6,0.18)",
+  },
+  analogy: {
+    color: "#9333EA",
+    bg: "rgba(147,51,234,0.07)",
+    border: "rgba(147,51,234,0.18)",
+  },
+  fact: {
+    color: "#EA580C",
+    bg: "rgba(234,88,12,0.07)",
+    border: "rgba(234,88,12,0.18)",
+  },
+};
+
+const typeLabels: Record<string, string> = {
+  text: "Read",
+  code: "Code",
+  tip: "Tip",
+  analogy: "Analogy",
+  fact: "Fact",
+};
+
 export default async function CoursePage({ params }: Props) {
   const { courseId } = await params;
   const data = await getCourseData(courseId);
@@ -31,98 +76,134 @@ export default async function CoursePage({ params }: Props) {
   const { course, posts, quizzes } = data;
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* back */}
-      <div className="px-6 pt-6">
+    <div className="bg-background min-h-screen">
+      {/* Back nav */}
+      <div className="max-w-3xl mx-auto px-6 pt-6">
         <Link
           href="/"
-          className="text-sm transition-colors"
-          style={{ color: "rgba(30,27,75,0.45)" }}
+          className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors rounded-lg px-3 py-1.5 -ml-3"
+          style={{ color: "#6B7280", background: "transparent" }}
         >
-          ← All Courses
+          <ArrowLeft size={15} strokeWidth={2.5} />
+          All Courses
         </Link>
       </div>
 
-      {/* hero card */}
-      <div
-        className={`mx-6 mt-6 rounded-3xl bg-gradient-to-br ${course.coverGradient} p-8 text-white`}
-      >
-        <div className="text-6xl mb-4">{course.emoji}</div>
-        <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
-        <p className="text-white/80 leading-relaxed mb-5">
-          {course.description}
-        </p>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-            {getDifficultyLabel(course.difficulty)}
-          </span>
-          <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-            {course.estimatedMinutes} min
-          </span>
-          <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-            {posts.length} lessons
-          </span>
-          <span className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">
-            {quizzes.length} quizzes
-          </span>
+      {/* Course hero — constrained width, rounded */}
+      <div className="max-w-3xl mx-auto px-6 mt-4">
+        <div
+          className={`rounded-3xl bg-gradient-to-br ${course.coverGradient} p-8 text-white`}
+        >
+          <div className="text-5xl mb-4">{course.emoji}</div>
+          <h1
+            className="font-bold mb-2"
+            style={{
+              fontSize: "clamp(1.5rem, 4vw, 2rem)",
+              letterSpacing: "-0.025em",
+            }}
+          >
+            {course.title}
+          </h1>
+          <p className="text-white/80 leading-relaxed mb-5 max-w-lg">
+            {course.description}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {[
+              getDifficultyLabel(course.difficulty),
+              `${course.estimatedMinutes} min`,
+              `${posts.length} lessons`,
+              `${quizzes.length} quizzes`,
+            ].map((label) => (
+              <span
+                key={label}
+                className="text-sm px-3 py-1 rounded-full font-medium"
+                style={{
+                  background: "rgba(255,255,255,0.18)",
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* CTA */}
-      <div className="px-6 mt-6">
+      <div className="max-w-3xl mx-auto px-6 mt-6 flex flex-col items-center gap-3">
         <Link
           href={`/course/${courseId}/feed`}
-          className={`block w-full text-center py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r ${course.coverGradient} text-white hover:opacity-90 transition-opacity`}
+          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all hover:opacity-90 active:scale-95"
+          style={{
+            background: "#6366F1",
+            boxShadow: "0 4px 14px rgba(99,102,241,0.35)",
+            fontSize: "1rem",
+          }}
         >
-          Start Learning →
+          Start Learning
+          <ChevronRight size={18} strokeWidth={2.5} />
         </Link>
+        <ContinueButton courseId={courseId} />
       </div>
 
-      {/* Continue button — client-side, only shows if progress exists */}
-      <ContinueButton courseId={courseId} />
+      {/* Lessons list */}
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <div
+          className="flex items-center gap-2 mb-5 pb-4"
+          style={{ borderBottom: "1px solid #E5E7EB" }}
+        >
+          <BookOpen size={16} strokeWidth={2} style={{ color: "#6366F1" }} />
+          <h2
+            className="font-semibold"
+            style={{ color: "#111827", fontSize: "1rem" }}
+          >
+            Lessons
+          </h2>
+          <span className="ml-auto text-xs" style={{ color: "#9CA3AF" }}>
+            {posts.length} total
+          </span>
+        </div>
 
-      {/* lesson list */}
-      <div className="px-6 py-8 max-w-2xl mx-auto">
-        <h2 className="text-lg font-semibold mb-4" style={{ color: "#1E1B4B" }}>
-          Lessons
-        </h2>
-        <div className="space-y-2">
-          {posts.map((post) => {
+        <div className="flex flex-col gap-1">
+          {posts.map((post, idx) => {
             const isQuizAfter = quizzes.some(
               (q) => q.afterPostOrder === post.order
             );
+            const tc = typeColors[post.type] ?? typeColors.text;
+            const tl = typeLabels[post.type] ?? post.type;
             return (
               <div key={post.id}>
                 <div
-                  className="flex items-center gap-3 py-3 px-4 rounded-xl border"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer"
                   style={{
-                    background: "#FFFFFF",
-                    borderColor: "rgba(99,102,241,0.12)",
+                    background: idx % 2 === 0 ? "#FFFFFF" : "#F9FAFB",
+                    border: "1px solid #F3F4F6",
                   }}
                 >
                   <span
-                    className="text-sm tabular-nums w-6"
-                    style={{ color: "rgba(30,27,75,0.30)" }}
+                    className="text-xs tabular-nums font-medium w-6 flex-shrink-0 text-center"
+                    style={{ color: "#D1D5DB" }}
                   >
                     {post.order}
                   </span>
-                  <span
-                    className="text-sm flex-1"
-                    style={{ color: "rgba(30,27,75,0.75)" }}
-                  >
+                  <span className="text-sm flex-1" style={{ color: "#374151" }}>
                     {post.title}
                   </span>
                   <span
-                    className="text-xs capitalize"
-                    style={{ color: "rgba(30,27,75,0.35)" }}
+                    className="text-xs font-medium px-2 py-0.5 rounded-full border flex-shrink-0"
+                    style={{
+                      color: tc.color,
+                      background: tc.bg,
+                      borderColor: tc.border,
+                    }}
                   >
-                    {post.type}
+                    {tl}
                   </span>
                 </div>
                 {isQuizAfter && (
                   <div
                     className="flex items-center gap-2 py-2 px-4 text-xs"
-                    style={{ color: "rgba(217,119,6,0.70)" }}
+                    style={{ color: "#D97706" }}
                   >
                     <div
                       className="flex-1 h-px"
@@ -143,6 +224,6 @@ export default async function CoursePage({ params }: Props) {
           })}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

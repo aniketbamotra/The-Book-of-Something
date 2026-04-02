@@ -220,6 +220,28 @@ export function FeedContainer({ data }: FeedContainerProps) {
     return () => observer.disconnect();
   }, [feedItems, course.id, updatePost, markComplete]);
 
+  // Keyboard navigation
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        if (activeFeedIndex < feedItems.length - 1)
+          scrollToIndex(activeFeedIndex + 1, "smooth");
+      }
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        if (activeFeedIndex > 0) scrollToIndex(activeFeedIndex - 1, "smooth");
+      }
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [activeFeedIndex, feedItems.length, scrollToIndex]);
+
   // Restore scroll position on mount (instant, no animation)
   useEffect(() => {
     const saved = loadFeedIndex(course.id);
@@ -369,7 +391,10 @@ export function FeedContainer({ data }: FeedContainerProps) {
   // ─── Render ───────────────────────────────────────────────────────────────
 
   return (
-    <div className="relative bg-background" style={{ height: "100dvh" }}>
+    <div
+      className="relative"
+      style={{ height: "100dvh", background: "#FFFFFF" }}
+    >
       <FeedProgressHUD
         current={currentPostNumber}
         total={posts.length}

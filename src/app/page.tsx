@@ -1,7 +1,7 @@
 import type { Course, CourseData } from "@/types";
 import { CourseGrid } from "@/components/home/CourseGrid";
 import coursesData from "@/data/courses.json";
-import { BookOpen, Smartphone } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 async function getLessonCounts(): Promise<Record<string, number>> {
   const counts: Record<string, number> = {};
@@ -23,61 +23,65 @@ export default async function HomePage() {
   const lessonCounts = await getLessonCounts();
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* hero */}
-      <div
-        className="border-b px-6 py-20 text-center relative overflow-hidden"
-        style={{ borderColor: "rgba(99,102,241,0.10)" }}
+    <div className="bg-background">
+      {/* ── Hero ──────────────────────────────────────────────────────── */}
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background: "linear-gradient(180deg, #EEF2FF 0%, #FFFFFF 100%)",
+          borderBottom: "1px solid #E5E7EB",
+        }}
       >
-        {/* background glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-500/8 blur-[100px] rounded-full" />
-        </div>
-
-        <div className="max-w-2xl mx-auto relative">
           <div
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm mb-6 border"
-            style={{
-              background: "rgba(99,102,241,0.07)",
-              borderColor: "rgba(99,102,241,0.18)",
-              color: "#4F46E5",
-            }}
-          >
-            <Smartphone size={14} strokeWidth={2} />
-            <span>Scroll to learn</span>
-          </div>
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full blur-[120px]"
+            style={{ background: "rgba(99,102,241,0.10)" }}
+          />
+        </div>
+        <div className="max-w-5xl mx-auto px-6 py-16 sm:py-20 text-center relative">
           <h1
-            className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight"
-            style={{ color: "#1E1B4B", letterSpacing: "-0.025em" }}
+            className="font-bold tracking-tight mb-4"
+            style={{
+              fontFamily: "var(--font-heading)",
+              fontSize: "clamp(2rem, 5vw, 3.25rem)",
+              letterSpacing: "-0.03em",
+              color: "#111827",
+            }}
           >
             The Book of <span style={{ color: "#6366F1" }}>Something</span>
           </h1>
           <p
-            className="text-lg leading-relaxed"
-            style={{ color: "rgba(30,27,75,0.55)" }}
+            className="text-lg leading-relaxed max-w-xl mx-auto mb-6"
+            style={{ color: "#6B7280" }}
           >
             Bite-sized lessons designed for the scroll generation. Pick a
             course, scroll through posts, and level up — one swipe at a time.
           </p>
+          <p className="text-sm" style={{ color: "#9CA3AF" }}>
+            Scroll to learn ↓
+          </p>
         </div>
-      </div>
+      </section>
 
-      {/* courses */}
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-8">
+      {/* ── Courses ───────────────────────────────────────────────────── */}
+      <section className="max-w-5xl mx-auto px-6 py-12">
+        <div
+          className="flex items-center gap-2 mb-8 pb-5"
+          style={{ borderBottom: "1px solid #E5E7EB" }}
+        >
+          <BookOpen size={18} style={{ color: "#6366F1" }} strokeWidth={2} />
           <h2
-            className="text-xl font-semibold flex items-center gap-2"
-            style={{ color: "#1E1B4B" }}
+            className="font-semibold"
+            style={{ fontSize: "1.0625rem", color: "#111827" }}
           >
-            <BookOpen size={18} style={{ color: "#6366F1" }} />
             All Courses
           </h2>
-          <span className="text-sm" style={{ color: "rgba(30,27,75,0.40)" }}>
+          <span className="ml-auto text-sm" style={{ color: "#9CA3AF" }}>
             {courses.length} courses
           </span>
         </div>
         <CourseGrid courses={courses} lessonCounts={lessonCounts} />
-      </div>
-    </main>
+      </section>
+    </div>
   );
 }
