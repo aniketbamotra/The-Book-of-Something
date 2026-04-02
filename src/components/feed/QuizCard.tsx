@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, BrainCircuit } from "lucide-react";
+import {
+  ChevronRight,
+  BrainCircuit,
+  CheckCircle2,
+  XCircle,
+} from "lucide-react";
 import type { QuizQuestion } from "@/types";
-import { cn } from "@/lib/utils";
+import { colors } from "@/design-system/tokens";
 
 interface QuizCardProps {
   question: QuizQuestion;
@@ -39,61 +44,115 @@ export function QuizCard({
     onAnswer({ questionId: question.id, selectedIndex: idx, correct });
   }
 
+  const isLastQuestion = questionIndex === totalQuestions - 1;
+
   return (
-    <div className="h-full flex flex-col max-w-2xl mx-auto w-full px-4 pt-16 pb-6 justify-center">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <span className="text-indigo-400 text-sm font-medium flex items-center gap-1.5">
-          <BrainCircuit size={15} strokeWidth={2} />
+    <div className="h-full flex flex-col max-w-2xl mx-auto w-full px-5 pt-16 pb-6 justify-center">
+      {/* ── Header ──────────────────────────────────────────────────── */}
+      <div className="flex items-center gap-2 mb-4">
+        <span
+          className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border"
+          style={{
+            color: colors.primary400,
+            background: colors.primaryMuted,
+            borderColor: colors.primaryBorder,
+          }}
+        >
+          <BrainCircuit size={13} strokeWidth={2} />
           Quiz · {checkpointIndex + 1}
         </span>
-        <div className="flex-1 h-px bg-white/10" />
-        <span className="text-white/40 text-sm tabular-nums">
+        <div
+          className="flex-1 h-px"
+          style={{ background: colors.borderSubtle }}
+        />
+        <span
+          className="text-xs tabular-nums font-medium px-2.5 py-1 rounded-full border"
+          style={{
+            color: "rgba(250,250,250,0.35)",
+            background: "rgba(255,255,255,0.04)",
+            borderColor: colors.borderSubtle,
+          }}
+        >
           {questionIndex + 1} / {totalQuestions}
         </span>
       </div>
 
-      {/* Progress dots */}
+      {/* ── Progress bar ─────────────────────────────────────────────── */}
       <div className="flex gap-1.5 mb-6">
         {Array.from({ length: totalQuestions }).map((_, i) => (
           <div
             key={i}
-            className={cn(
-              "h-1 flex-1 rounded-full transition-colors duration-300",
-              i < questionIndex
-                ? "bg-indigo-500"
-                : i === questionIndex
-                  ? "bg-white/60"
-                  : "bg-white/15"
-            )}
+            className="h-1 flex-1 rounded-full transition-colors duration-300"
+            style={{
+              background:
+                i < questionIndex
+                  ? colors.primary500
+                  : i === questionIndex
+                    ? "rgba(250,250,250,0.55)"
+                    : colors.borderSubtle,
+            }}
           />
         ))}
       </div>
 
       <motion.div
         key={question.id}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0 }}
         transition={{ duration: 0.28 }}
       >
-        <p className="text-white font-semibold text-lg leading-snug mb-5">
+        {/* ── Question ─────────────────────────────────────────────────── */}
+        <p
+          className="font-semibold leading-snug mb-6"
+          style={{
+            fontSize: "clamp(1.05rem, 3.5vw, 1.25rem)",
+            color: colors.textPrimary,
+            fontFamily: "var(--font-heading)",
+            letterSpacing: "-0.015em",
+          }}
+        >
           {question.questionText}
         </p>
 
-        <div className="space-y-2.5 mb-4">
+        {/* ── Options ──────────────────────────────────────────────────── */}
+        <div className="flex flex-col gap-2.5 mb-4">
           {question.options.map((option, i) => {
             const isSelected = selected === i;
             const isCorrect = i === question.correctIndex;
-            let style =
-              "bg-white/5 border-white/12 text-white/80 hover:bg-indigo-500/10 hover:border-indigo-500/30";
+
+            let bgColor: string = "rgba(255,255,255,0.04)";
+            let borderColor: string = colors.borderDefault;
+            let textColor: string = colors.textSecondary;
+            let statusIcon: React.ReactNode = null;
+
             if (isReviewing) {
-              if (isCorrect)
-                style = "bg-emerald-500/20 border-emerald-400 text-emerald-200";
-              else if (isSelected)
-                style = "bg-rose-500/20 border-rose-400 text-rose-200";
-              else style = "bg-white/4 border-white/8 text-white/30";
-            } else if (isSelected) {
-              style = "bg-indigo-500/20 border-indigo-400 text-white";
+              if (isCorrect) {
+                bgColor = colors.quizCorrectBg;
+                borderColor = colors.quizCorrect;
+                textColor = "#6EE7B7";
+                statusIcon = (
+                  <CheckCircle2
+                    size={16}
+                    strokeWidth={2}
+                    style={{ color: colors.quizCorrect, flexShrink: 0 }}
+                  />
+                );
+              } else if (isSelected) {
+                bgColor = colors.quizIncorrectBg;
+                borderColor = colors.quizIncorrect;
+                textColor = "#FCA5A5";
+                statusIcon = (
+                  <XCircle
+                    size={16}
+                    strokeWidth={2}
+                    style={{ color: colors.quizIncorrect, flexShrink: 0 }}
+                  />
+                );
+              } else {
+                bgColor = "rgba(255,255,255,0.02)";
+                borderColor = "rgba(255,255,255,0.06)";
+                textColor = "rgba(250,250,250,0.28)";
+              }
             }
 
             return (
@@ -102,51 +161,107 @@ export function QuizCard({
                 onClick={() => handleSelect(i)}
                 animate={
                   isReviewing && isSelected && !isCorrect
-                    ? { x: [0, -8, 8, -8, 8, 0] }
+                    ? { x: [0, -7, 7, -7, 7, 0] }
                     : {}
                 }
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.38 }}
+                whileTap={!isReviewing ? { scale: 0.98 } : {}}
                 disabled={isReviewing}
-                className={cn(
-                  "w-full text-left px-4 py-3.5 rounded-2xl border text-sm transition-all duration-200 cursor-pointer disabled:cursor-default",
-                  style
-                )}
+                className="w-full text-left rounded-2xl border transition-colors duration-200 cursor-pointer disabled:cursor-default"
+                style={{
+                  minHeight: "56px",
+                  padding: "14px 16px",
+                  background: bgColor,
+                  borderColor: borderColor,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
               >
-                <span className="font-mono text-xs mr-2.5 opacity-50">
+                <span
+                  className="font-mono flex-shrink-0"
+                  style={{
+                    fontSize: "0.6875rem",
+                    color: "rgba(250,250,250,0.35)",
+                    minWidth: "16px",
+                  }}
+                >
                   {String.fromCharCode(65 + i)}.
                 </span>
-                {option}
+                <span
+                  style={{
+                    fontSize: "0.9375rem",
+                    color: textColor,
+                    lineHeight: "1.45",
+                    flex: 1,
+                  }}
+                >
+                  {option}
+                </span>
+                {statusIcon}
               </motion.button>
             );
           })}
         </div>
 
+        {/* ── Explanation ──────────────────────────────────────────────── */}
         <AnimatePresence>
           {isReviewing && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="bg-indigo-500/8 border border-indigo-500/20 rounded-xl px-4 py-3 mb-4 text-white/70 text-sm overflow-hidden"
+              transition={{ duration: 0.28 }}
+              className="overflow-hidden mb-4"
             >
-              <span className="font-medium text-white/90">Explanation: </span>
-              {question.explanation}
+              <div
+                className="rounded-2xl px-4 py-3 border"
+                style={{
+                  background: colors.primaryMuted,
+                  borderColor: colors.primaryBorder,
+                }}
+              >
+                <span
+                  className="font-semibold mr-1"
+                  style={{ fontSize: "0.8125rem", color: colors.primary300 }}
+                >
+                  Explanation:
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.8125rem",
+                    color: colors.textSecondary,
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {question.explanation}
+                </span>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
+        {/* ── Next CTA ─────────────────────────────────────────────────── */}
         <AnimatePresence>
           {isReviewing && (
             <motion.button
-              initial={{ opacity: 0, y: 6 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.22 }}
+              whileTap={{ scale: 0.97 }}
               onClick={onNext}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-2xl transition-colors cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl font-semibold cursor-pointer border"
+              style={{
+                minHeight: "52px",
+                background: colors.primary500,
+                borderColor: colors.primary600,
+                color: "#FAFAFA",
+                fontSize: "0.9375rem",
+                boxShadow: "0 0 20px rgba(99,102,241,0.22)",
+              }}
             >
-              {questionIndex === totalQuestions - 1
-                ? "See results"
-                : "Next question"}
-              <ChevronRight size={16} />
+              {isLastQuestion ? "See results" : "Next question"}
+              <ChevronRight size={16} strokeWidth={2.5} />
             </motion.button>
           )}
         </AnimatePresence>

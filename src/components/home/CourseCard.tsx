@@ -2,16 +2,36 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
+import { Clock, CheckCircle2 } from "lucide-react";
 import type { Course, CourseProgress } from "@/types";
-import { Badge } from "@/components/ui/Badge";
 import { fadeUp } from "@/lib/animations";
 import { getDifficultyLabel } from "@/lib/difficultyEngine";
+import { colors } from "@/design-system/tokens";
 
 interface CourseCardProps {
   course: Course;
   progress?: CourseProgress | null;
   totalPosts?: number;
+}
+
+function getDiffTokens(diff: string) {
+  if (diff === "beginner")
+    return {
+      color: colors.diffBeginner,
+      bg: colors.diffBeginnerBg,
+      border: colors.diffBeginnerBorder,
+    };
+  if (diff === "intermediate")
+    return {
+      color: colors.diffIntermediate,
+      bg: colors.diffIntermediateBg,
+      border: colors.diffIntermediateBorder,
+    };
+  return {
+    color: colors.diffAdvanced,
+    bg: colors.diffAdvancedBg,
+    border: colors.diffAdvancedBorder,
+  };
 }
 
 export function CourseCard({
@@ -24,19 +44,28 @@ export function CourseCard({
   const progressPct = progress
     ? Math.min(100, Math.round((completedCount / total) * 100))
     : 0;
+  const diff = getDiffTokens(course.difficulty);
+  const isCompleted = !!progress?.completedAt;
+  const isInProgress = progress && !isCompleted && completedCount > 0;
 
   return (
     <motion.div
       variants={fadeUp}
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ duration: 0.22 }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2 }}
     >
       <Link
         href={`/course/${course.id}`}
         className="block group cursor-pointer"
       >
-        <div className="relative bg-white/4 border border-white/8 rounded-2xl overflow-hidden hover:border-indigo-500/40 hover:bg-white/6 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-950/50">
-          {/* gradient header */}
+        <div
+          className="rounded-2xl overflow-hidden border transition-colors duration-300"
+          style={{
+            background: colors.bgCard,
+            borderColor: colors.borderSubtle,
+          }}
+        >
+          {/* ── Cover gradient ──────────────────────────────────────── */}
           <div
             className={`h-28 bg-gradient-to-br ${course.coverGradient} flex items-center justify-center`}
           >
@@ -45,75 +74,95 @@ export function CourseCard({
             </span>
           </div>
 
-          {/* body */}
+          {/* ── Body ───────────────────────────────────────────────── */}
           <div className="p-5">
             <div className="flex items-start justify-between gap-2 mb-2">
-              <h3 className="font-semibold text-white text-lg leading-tight">
+              <h3
+                className="font-semibold leading-tight"
+                style={{ fontSize: "1.0625rem", color: colors.textPrimary }}
+              >
                 {course.title}
               </h3>
-              <Badge
-                variant={
-                  course.difficulty as "beginner" | "intermediate" | "advanced"
-                }
+              <span
+                className="flex-shrink-0 text-xs font-semibold px-2.5 py-0.5 rounded-full border capitalize"
+                style={{
+                  color: diff.color,
+                  background: diff.bg,
+                  borderColor: diff.border,
+                }}
               >
                 {getDifficultyLabel(course.difficulty)}
-              </Badge>
+              </span>
             </div>
 
-            <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
+            <p
+              className="text-sm leading-relaxed mb-4 line-clamp-2"
+              style={{ color: colors.textMuted }}
+            >
               {course.description}
             </p>
 
             <div className="flex flex-wrap gap-1.5 mb-4">
               {course.tags.map((tag) => (
-                <Badge key={tag} variant="outline">
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 rounded-full border"
+                  style={{
+                    color: "rgba(250,250,250,0.40)",
+                    background: "rgba(255,255,255,0.04)",
+                    borderColor: colors.borderSubtle,
+                  }}
+                >
                   {tag}
-                </Badge>
+                </span>
               ))}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-white/40">
+            <div
+              className="flex items-center justify-between text-xs"
+              style={{ color: "rgba(250,250,250,0.35)" }}
+            >
               <span className="flex items-center gap-1.5">
                 <Clock size={12} strokeWidth={2} />
                 {course.estimatedMinutes} min
               </span>
-              <span className="text-white/30">{course.category}</span>
+              <span>{course.category}</span>
             </div>
 
-            {/* in-progress bar with card count */}
-            {progress && !progress.completedAt && completedCount > 0 && (
+            {/* ── In-progress bar ─────────────────────────────────── */}
+            {isInProgress && (
               <div className="mt-4">
-                <div className="flex justify-between text-xs text-white/40 mb-1.5">
+                <div
+                  className="flex justify-between text-xs mb-1.5"
+                  style={{ color: "rgba(250,250,250,0.35)" }}
+                >
                   <span>In progress</span>
                   <span>
                     {completedCount}/{totalPosts > 0 ? totalPosts : "?"} lessons
                   </span>
                 </div>
-                <div className="h-1.5 bg-white/8 rounded-full overflow-hidden">
+                <div
+                  className="h-1.5 rounded-full overflow-hidden"
+                  style={{ background: colors.borderSubtle }}
+                >
                   <motion.div
-                    className="h-full bg-indigo-500 rounded-full"
+                    className="h-full rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${progressPct}%` }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
+                    style={{ background: colors.primary500 }}
                   />
                 </div>
               </div>
             )}
 
-            {progress?.completedAt && (
-              <div className="mt-4 text-xs text-emerald-400 font-medium flex items-center gap-1">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
+            {/* ── Completed badge ─────────────────────────────────── */}
+            {isCompleted && (
+              <div
+                className="mt-4 flex items-center gap-1 text-xs font-medium"
+                style={{ color: colors.gotIt400 }}
+              >
+                <CheckCircle2 size={12} strokeWidth={2.5} />
                 Completed
               </div>
             )}

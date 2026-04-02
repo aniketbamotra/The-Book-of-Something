@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { colors } from "@/design-system/tokens";
 
 interface ContinueButtonProps {
   courseId: string;
@@ -25,10 +26,16 @@ export function ContinueButton({ courseId }: ContinueButtonProps) {
     <div className="px-6 mt-3">
       <Link
         href={`/course/${courseId}/feed`}
-        className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 transition-colors font-medium text-sm cursor-pointer"
+        className="flex items-center justify-center gap-2 w-full rounded-2xl font-medium text-sm cursor-pointer border transition-colors"
+        style={{
+          minHeight: "48px",
+          color: colors.primary300,
+          background: colors.primaryMuted,
+          borderColor: colors.primaryBorder,
+        }}
       >
         Continue where you left off
-        <ChevronRight size={15} />
+        <ChevronRight size={15} strokeWidth={2} />
       </Link>
     </div>
   );
