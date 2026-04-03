@@ -246,7 +246,10 @@ export function FeedContainer({ data }: FeedContainerProps) {
   useEffect(() => {
     const saved = loadFeedIndex(course.id);
     if (saved > 0 && saved < feedItems.length) {
-      setTimeout(() => scrollToIndex(saved, "instant"), 150);
+      // Double rAF ensures the scroll-snap container has painted before we jump
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToIndex(saved, "instant"));
+      });
     }
   }, [course.id, feedItems.length, scrollToIndex]);
 

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import type { DifficultyLevel } from "@/types";
-import { getDifficultyLabel } from "@/lib/difficultyEngine";
+import { getDifficultyLabel, getDiffTokens } from "@/lib/difficultyEngine";
 import { colors } from "@/design-system/tokens";
 
 interface FeedProgressHUDProps {
@@ -14,31 +14,11 @@ interface FeedProgressHUDProps {
   onBack: () => void;
 }
 
-function getDiffTokens(diff: DifficultyLevel) {
-  if (diff === "beginner")
-    return {
-      color: colors.diffBeginner,
-      border: colors.diffBeginnerBorder,
-      bg: colors.diffBeginnerBg,
-    };
-  if (diff === "intermediate")
-    return {
-      color: colors.diffIntermediate,
-      border: colors.diffIntermediateBorder,
-      bg: colors.diffIntermediateBg,
-    };
-  return {
-    color: colors.diffAdvanced,
-    border: colors.diffAdvancedBorder,
-    bg: colors.diffAdvancedBg,
-  };
-}
-
 export function FeedProgressHUD({
   current,
   total,
   difficulty,
-  courseTitle: _courseTitle,
+  courseTitle,
   onBack,
 }: FeedProgressHUDProps) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
@@ -68,10 +48,10 @@ export function FeedProgressHUD({
         />
       </div>
 
-      <div className="flex items-center justify-between px-4 py-2 pointer-events-auto">
+      <div className="flex items-center justify-between px-4 py-2 pointer-events-auto gap-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-sm font-medium rounded-lg px-3 py-1.5 transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-sm font-medium rounded-lg px-3 py-1.5 transition-colors cursor-pointer flex-shrink-0"
           style={{ color: "#374151", background: "rgba(0,0,0,0.04)" }}
           aria-label="Back to course"
         >
@@ -79,7 +59,14 @@ export function FeedProgressHUD({
           Back
         </button>
 
-        <div className="flex items-center gap-2.5">
+        <span
+          className="text-xs font-medium truncate flex-1 text-center"
+          style={{ color: "#6B7280" }}
+        >
+          {courseTitle}
+        </span>
+
+        <div className="flex items-center gap-2.5 flex-shrink-0">
           <span
             className="text-xs font-semibold px-2.5 py-1 rounded-full border capitalize"
             style={{

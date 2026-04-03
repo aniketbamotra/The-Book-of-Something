@@ -32,7 +32,7 @@ export function CompletionScreen({
   avgAccuracyPct,
 }: CompletionScreenProps) {
   const { triggerConfetti } = useConfetti();
-  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const accuracyPct = avgAccuracyPct ?? Math.round(avgScore * 100);
   const confidencePct = avgConfidencePct ?? 0;
@@ -62,15 +62,23 @@ export function CompletionScreen({
     triggerConfetti();
   }, [triggerConfetti]);
 
+  function showToast(msg: string) {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2500);
+  }
+
   async function handleShare() {
-    const shareText = `I just learned ${course.title} in ${course.estimatedMinutes} mins on The Book of Something 🧠 Try it: https://the-book-of-something.vercel.app`;
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      "https://the-book-of-something.vercel.app";
+    const shareText = `I just learned ${course.title} in ${course.estimatedMinutes} mins on The Book of Something — Try it: ${siteUrl}`;
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title: "The Book of Something",
           text: shareText,
-          url: "https://the-book-of-something.vercel.app",
+          url: siteUrl,
         });
       } catch {
         // User cancelled — no-op
@@ -78,9 +86,10 @@ export function CompletionScreen({
     } else {
       try {
         await navigator.clipboard.writeText(shareText);
-        setToastVisible(true);
-        setTimeout(() => setToastVisible(false), 2500);
-      } catch {}
+        showToast("Copied to clipboard!");
+      } catch {
+        showToast("Couldn't copy — try manually sharing the link.");
+      }
     }
   }
 
@@ -332,7 +341,7 @@ export function CompletionScreen({
 
       {/* ── Clipboard toast ───────────────────────────────────────────────── */}
       <AnimatePresence>
-        {toastVisible && (
+        {toastMessage && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -347,7 +356,7 @@ export function CompletionScreen({
             }}
           >
             <Check size={14} style={{ color: colors.quizCorrect }} />
-            Copied to clipboard!
+            {toastMessage}
           </motion.div>
         )}
       </AnimatePresence>

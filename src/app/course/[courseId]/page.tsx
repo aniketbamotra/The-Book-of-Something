@@ -1,12 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Clock,
-  BookOpen,
-  BrainCircuit,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowLeft, BookOpen, BrainCircuit, ChevronRight } from "lucide-react";
 import type { CourseData } from "@/types";
 import { getDifficultyLabel } from "@/lib/difficultyEngine";
 import { ContinueButton } from "@/components/course/ContinueButton";

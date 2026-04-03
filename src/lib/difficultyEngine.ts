@@ -1,4 +1,5 @@
 import type { DifficultyLevel } from "@/types";
+import { colors } from "@/design-system/tokens";
 
 export function adjustDifficulty(
   current: DifficultyLevel,
@@ -55,10 +56,26 @@ export function getDifficultyLabel(level: DifficultyLevel): string {
   }[level];
 }
 
-export function getDifficultyColor(level: DifficultyLevel): string {
+export function getDiffTokens(level: DifficultyLevel): {
+  color: string;
+  bg: string;
+  border: string;
+} {
+  if (level === "beginner")
+    return {
+      color: colors.diffBeginner,
+      bg: colors.diffBeginnerBg,
+      border: colors.diffBeginnerBorder,
+    };
+  if (level === "intermediate")
+    return {
+      color: colors.diffIntermediate,
+      bg: colors.diffIntermediateBg,
+      border: colors.diffIntermediateBorder,
+    };
   return {
-    beginner: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-    intermediate: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-    advanced: "bg-rose-500/20 text-rose-400 border-rose-500/30",
-  }[level];
+    color: colors.diffAdvanced,
+    bg: colors.diffAdvancedBg,
+    border: colors.diffAdvancedBorder,
+  };
 }

@@ -5,33 +5,13 @@ import { motion } from "framer-motion";
 import { Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import type { Course, CourseProgress } from "@/types";
 import { fadeUp } from "@/lib/animations";
-import { getDifficultyLabel } from "@/lib/difficultyEngine";
+import { getDifficultyLabel, getDiffTokens } from "@/lib/difficultyEngine";
 import { colors } from "@/design-system/tokens";
 
 interface CourseCardProps {
   course: Course;
   progress?: CourseProgress | null;
   totalPosts?: number;
-}
-
-function getDiffTokens(diff: string) {
-  if (diff === "beginner")
-    return {
-      color: colors.diffBeginner,
-      bg: colors.diffBeginnerBg,
-      border: colors.diffBeginnerBorder,
-    };
-  if (diff === "intermediate")
-    return {
-      color: colors.diffIntermediate,
-      bg: colors.diffIntermediateBg,
-      border: colors.diffIntermediateBorder,
-    };
-  return {
-    color: colors.diffAdvanced,
-    bg: colors.diffAdvancedBg,
-    border: colors.diffAdvancedBorder,
-  };
 }
 
 export function CourseCard({

@@ -167,7 +167,9 @@ export function QuizCard({
                 transition={{ duration: 0.38 }}
                 whileTap={!isReviewing ? { scale: 0.98 } : {}}
                 disabled={isReviewing}
-                className="w-full text-left rounded-2xl border transition-colors duration-200 cursor-pointer disabled:cursor-default"
+                aria-label={`Option ${String.fromCharCode(65 + i)}: ${option}`}
+                aria-pressed={isSelected}
+                className="w-full text-left rounded-2xl border transition-colors duration-200 cursor-pointer disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                 style={{
                   minHeight: "56px",
                   padding: "14px 16px",
