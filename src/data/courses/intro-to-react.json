@@ -15,187 +15,322 @@
       "id": "r-1",
       "courseId": "intro-to-react",
       "order": 1,
+      "section": 1,
       "title": "What is React?",
       "type": "text",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "React is a JavaScript library created by Facebook for building user interfaces. Think of it like LEGO — you build small, reusable pieces called **components**, and snap them together to build a full UI.",
         "intermediate": "React is a declarative, component-based library for building UIs. It uses a virtual DOM to efficiently compute minimal updates to the real DOM, making re-renders fast.",
         "advanced": "React implements a unidirectional data flow with a reconciliation algorithm (Fiber) that can pause, abort, and restart rendering work. It separates the rendering phase (pure, side-effect free) from the commit phase (DOM mutations)."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "React is a JavaScript framework created by Google.",
+        "isTrue": false,
+        "explanation": "React is a library (not a framework) and was created by Facebook (Meta). The distinction matters — a library you call, a framework calls you. React handles UI; you choose the rest of the stack."
       }
     },
     {
       "id": "r-2",
       "courseId": "intro-to-react",
       "order": 2,
+      "section": 1,
       "title": "Your First Component",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "A component is just a function that returns HTML-like code called JSX:\n\n```jsx\nfunction Hello() {\n  return <h1>Hello, World!</h1>;\n}\n```\n\nThat's it! You just made your first React component.",
         "intermediate": "Components are functions (or classes) that accept `props` and return JSX. The function name must start with a capital letter so React knows it's a component, not a plain HTML tag:\n\n```jsx\nfunction Greeting({ name }) {\n  return <h1>Hello, {name}!</h1>;\n}\n```",
         "advanced": "React components must be pure with respect to their props — given the same props, they must always return the same JSX. Side effects belong in `useEffect`. Each component instance maintains its own fiber node in the work-in-progress tree."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "React component function names must start with a capital letter.",
+        "isTrue": true,
+        "explanation": "React uses the capital letter to tell the difference between a component and an HTML tag. Writing <button> renders an HTML button; writing <Button> renders your component. This is enforced by the JSX transform."
       }
     },
     {
       "id": "r-3",
       "courseId": "intro-to-react",
       "order": 3,
+      "section": 1,
       "title": "What is JSX?",
       "type": "analogy",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "JSX looks like HTML but it's actually JavaScript in disguise. It's like writing a letter with a special pen — the pen (Babel) converts your letter into machine code before the browser reads it.\n\n```jsx\n// JSX\nconst element = <h1>Hello</h1>;\n\n// What it becomes\nconst element = React.createElement('h1', null, 'Hello');\n```",
         "intermediate": "JSX is syntactic sugar over `React.createElement()`. You can embed any JavaScript expression inside `{}`. JSX attributes use camelCase (`className` not `class`, `onClick` not `onclick`).",
         "advanced": "JSX compiles to `React.createElement(type, props, ...children)` calls. With the new JSX transform (React 17+), you no longer need `import React` in scope — the transform auto-imports from `react/jsx-runtime`."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "const el = <h1>Hello</h1>;\n// Compiles to:\nconst el = React.___(\"h1\", null, \"Hello\");",
+        "blanks": [{ "position": 0, "answer": "createElement" }],
+        "explanation": "JSX is syntactic sugar for React.createElement(). Babel converts every JSX tag into this function call at build time — JSX itself never reaches the browser."
       }
     },
     {
       "id": "r-4",
       "courseId": "intro-to-react",
       "order": 4,
+      "section": 1,
       "title": "Props: Passing Data",
       "type": "text",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "Props are like function arguments for your components. You pass data into a component using props, and the component can display it:\n\n```jsx\nfunction Card({ title, description }) {\n  return (\n    <div>\n      <h2>{title}</h2>\n      <p>{description}</p>\n    </div>\n  );\n}\n\n<Card title=\"Hello\" description=\"This is a card\" />",
         "intermediate": "Props flow one way: parent → child (unidirectional data flow). Props are read-only — a component must never modify its own props. For communication upward, pass callback functions as props.",
         "advanced": "Props can be any JavaScript value — primitives, objects, arrays, functions, even other React elements (`children`). The `children` prop is implicit for content between component tags. Use `React.FC<Props>` for TypeScript typing."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "A React component is allowed to modify its own props.",
+        "isTrue": false,
+        "explanation": "Props are read-only — always. They flow one way: parent to child. If a component needs to communicate back upward, the parent passes a callback function down as a prop instead."
       }
     },
     {
       "id": "r-5",
       "courseId": "intro-to-react",
       "order": 5,
+      "section": 1,
       "title": "State with useState",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "State is data that can change over time. Use the `useState` hook to add state to a component:\n\n```jsx\nimport { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Clicked {count} times\n    </button>\n  );\n}\n```",
         "intermediate": "`useState` returns a tuple: `[currentValue, setter]`. Calling the setter triggers a re-render. State updates are **asynchronous and batched** in React 18+. Use the functional updater form `setCount(c => c + 1)` when the new state depends on old state.",
         "advanced": "`useState` is built on `useReducer` internally. State is stored in the fiber node, not the component function's closure. React uses the **hook call order** (not names) to associate state with the correct hook call — this is why hooks can't be called conditionally."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "const [count, setCount] = ___(0);",
+        "blanks": [{ "position": 0, "answer": "useState" }],
+        "explanation": "useState is the hook that adds local state to a function component. It takes the initial value and returns a tuple — the current state and a setter function that triggers a re-render."
       }
     },
     {
       "id": "r-6",
       "courseId": "intro-to-react",
       "order": 6,
+      "section": 2,
       "title": "Handling Events",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "You attach events using JSX attributes like `onClick`, `onChange`:\n\n```jsx\nfunction Button() {\n  function handleClick() {\n    alert('You clicked me!');\n  }\n  \n  return <button onClick={handleClick}>Click me</button>;\n}\n```\nNote: pass the function itself — don't call it with `()`!",
         "intermediate": "React uses synthetic events — a cross-browser wrapper around native events. Event handlers receive a `SyntheticEvent` object. React 17+ changed event delegation from `document` to the React root container.",
         "advanced": "Synthetic events are pooled and reused in React 16 (not in React 17+). Event handler closures capture state values from the render they were created in — this is the 'stale closure' problem. Use `useRef` or functional state updates to avoid it."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "function Button() {\n  return <button ___={handleClick}>Click</button>;\n}",
+        "blanks": [{ "position": 0, "answer": "onClick" }],
+        "explanation": "React uses camelCase event names — onClick not onclick. You pass the function reference directly. Writing onClick={handleClick()} would call it immediately on every render instead of waiting for a click."
       }
     },
     {
       "id": "r-7",
       "courseId": "intro-to-react",
       "order": 7,
+      "section": 2,
       "title": "Conditional Rendering",
       "type": "tip",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "You can show different UI based on conditions using regular JavaScript:\n\n```jsx\nfunction Greeting({ isLoggedIn }) {\n  if (isLoggedIn) {\n    return <h1>Welcome back!</h1>;\n  }\n  return <h1>Please log in.</h1>;\n}\n```\n\nOr use the `&&` shorthand: `{isLoggedIn && <UserPanel />}`",
         "intermediate": "Three patterns: `if/else`, ternary `condition ? <A/> : <B/>`, and short-circuit `condition && <A/>`. The short-circuit pattern can render `0` to the screen if the condition is a falsy number — use `!!count &&` or `count > 0 &&` to avoid this.",
         "advanced": "React can render `null`, `undefined`, `false`, and empty arrays — none of these produce DOM nodes. Arrays of elements are valid JSX and require unique `key` props. Avoid using indexes as keys when list items can reorder."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "The expression {0 && <Component />} renders nothing to the screen.",
+        "isTrue": false,
+        "explanation": "The number 0 is falsy, but React renders it as the literal character '0'. Only false, null, undefined, and empty strings render nothing. Use {count > 0 && <Component />} to safely short-circuit."
       }
     },
     {
       "id": "r-8",
       "courseId": "intro-to-react",
       "order": 8,
+      "section": 2,
       "title": "Lists and Keys",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "Use `.map()` to render a list of items:\n\n```jsx\nconst fruits = ['Apple', 'Banana', 'Cherry'];\n\nfunction FruitList() {\n  return (\n    <ul>\n      {fruits.map(fruit => (\n        <li key={fruit}>{fruit}</li>\n      ))}\n    </ul>\n  );\n}\n```\n\nAlways add a `key` prop — React needs it to track items!",
         "intermediate": "Keys must be stable, unique among siblings. Using array index as key causes bugs when items reorder or are inserted/deleted — React will incorrectly reuse DOM nodes. Prefer database IDs or stable unique strings.",
         "advanced": "Keys are React's reconciliation hint. During diffing, if a key doesn't match, React destroys the old component and mounts a new one (resetting state). Keys work per-list — the same key can appear in different lists. Keys are not passed as props — use a separate `id` prop if needed."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "<ul>\n  {items.map(item => (\n    <li ___={item.id}>{item.name}</li>\n  ))}\n</ul>",
+        "blanks": [{ "position": 0, "answer": "key" }],
+        "explanation": "Every element in a .map() list needs a unique key prop so React can track which items changed, were added, or removed. Without it you'll get a console warning — and subtle rendering bugs."
       }
     },
     {
       "id": "r-9",
       "courseId": "intro-to-react",
       "order": 9,
+      "section": 2,
       "title": "useEffect: Side Effects",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "`useEffect` lets you run code after the component renders — like fetching data:\n\n```jsx\nimport { useState, useEffect } from 'react';\n\nfunction User({ id }) {\n  const [user, setUser] = useState(null);\n\n  useEffect(() => {\n    fetch(`/api/users/${id}`)\n      .then(r => r.json())\n      .then(setUser);\n  }, [id]); // runs when id changes\n\n  return <div>{user?.name}</div>;\n}",
         "intermediate": "The `useEffect` dependency array controls when the effect runs: `[]` = once on mount, `[val]` = when `val` changes, no array = every render. Always include all values from the component scope that the effect uses — the `exhaustive-deps` ESLint rule enforces this.",
         "advanced": "Effects run after paint (asynchronous). Return a cleanup function to cancel subscriptions, abort fetches, or clear timers — it runs before the next effect and on unmount. In React 18 Strict Mode, effects run twice in development to help detect missing cleanups."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "useEffect(() => {\n  fetch(`/api/users/${id}`).then(setUser);\n}, [___]); // re-runs when id changes",
+        "blanks": [{ "position": 0, "answer": "id" }],
+        "explanation": "The dependency array tells React when to re-run the effect. Listing id here means 're-fetch whenever the id prop changes'. An empty array [] means run once on mount only."
       }
     },
     {
       "id": "r-10",
       "courseId": "intro-to-react",
       "order": 10,
+      "section": 2,
       "title": "The Component Lifecycle",
       "type": "analogy",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "Think of a React component like a plant:\n- **Mount** = seed sprouting (component appears on screen)\n- **Update** = plant growing (state/props change, re-render)\n- **Unmount** = plant removed (component leaves the screen)\n\n`useEffect` lets you hook into each stage.",
         "intermediate": "Functional components with hooks map to lifecycle: mount → `useEffect(fn, [])`, update → `useEffect(fn, [dep])`, unmount → cleanup function returned from `useEffect`. Class component methods (`componentDidMount`, `componentDidUpdate`, `componentWillUnmount`) are now discouraged.",
         "advanced": "React 18's concurrent features mean components can mount, unmount, and remount (e.g. Offscreen/Activity API). This breaks code that assumes mount = once. Strict Mode's double-mount in development simulates this. Effects must be idempotent — running them twice should produce the same result."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "useEffect with an empty dependency array [] runs after every re-render.",
+        "isTrue": false,
+        "explanation": "useEffect with [] runs exactly once — after the component first mounts. It's the functional equivalent of componentDidMount. No dependency array at all (omitting it) is what runs after every render."
       }
     },
     {
       "id": "r-11",
       "courseId": "intro-to-react",
       "order": 11,
+      "section": 3,
       "title": "Custom Hooks",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "You can extract reusable logic into a custom hook — it's just a function that starts with `use`:\n\n```jsx\nfunction useWindowWidth() {\n  const [width, setWidth] = useState(window.innerWidth);\n\n  useEffect(() => {\n    const handler = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', handler);\n    return () => window.removeEventListener('resize', handler);\n  }, []);\n\n  return width;\n}",
         "intermediate": "Custom hooks let you share stateful logic between components without changing the component tree (no render props or HOCs needed). Each component that calls a custom hook gets its own isolated state — hooks don't share state, just logic.",
         "advanced": "Custom hooks are the primary abstraction unit in modern React. They compose: hooks can call other hooks. The `use` prefix is a lint-enforced convention that enables ESLint rules (like `exhaustive-deps`) to apply to your custom hook. Hooks can even wrap async functions using the new `use()` hook for Suspense integration."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "// Custom hook names must start with ___\nfunction useWindowWidth() {\n  // ...\n}",
+        "blanks": [{ "position": 0, "answer": "use" }],
+        "explanation": "The 'use' prefix is both a naming convention and a requirement. React's ESLint plugin uses it to enforce rules-of-hooks on your custom hooks. useWindowWidth, useAuth, useLocalStorage — always start with 'use'."
       }
     },
     {
       "id": "r-12",
       "courseId": "intro-to-react",
       "order": 12,
+      "section": 3,
       "title": "Context API",
       "type": "text",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "Passing props through many levels of components is called **prop drilling** — it's annoying. Context lets you share data without passing props at every level:\n\n```jsx\nconst ThemeContext = createContext('light');\n\n// Wrap your tree\n<ThemeContext.Provider value=\"dark\">\n  <App />\n</ThemeContext.Provider>\n\n// Use it anywhere inside\nconst theme = useContext(ThemeContext);",
         "intermediate": "Context is not a state management solution — it's a dependency injection mechanism. Every component that consumes a Context will re-render when the context value changes. For large apps, split contexts by update frequency to minimize unnecessary re-renders.",
         "advanced": "Context uses object identity for change detection — passing `value={{ user, setUser }}` creates a new object every render, causing all consumers to re-render. Memoize the value with `useMemo`. For complex state, pair Context with `useReducer` or use Zustand/Jotai for fine-grained subscriptions."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "const ThemeContext = ___('light');",
+        "blanks": [{ "position": 0, "answer": "createContext" }],
+        "explanation": "createContext() creates a Context object with a default value. You then wrap part of your tree in ThemeContext.Provider to supply a value, and any descendant can read it with useContext — no prop drilling needed."
       }
     },
     {
       "id": "r-13",
       "courseId": "intro-to-react",
       "order": 13,
+      "section": 3,
       "title": "useMemo & useCallback",
       "type": "tip",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "`useMemo` caches a computed value so it isn't recalculated every render:\n\n```jsx\nconst expensiveResult = useMemo(() => {\n  return heavyComputation(data);\n}, [data]); // only recalculates when data changes\n```\n\n`useCallback` does the same but for functions.",
         "intermediate": "`useMemo` and `useCallback` are optimizations — only use them when you have a measured performance problem. Overusing them adds overhead (memoization has a cost) and makes code harder to read. Profile first with React DevTools Profiler.",
         "advanced": "In React Compiler (React 19+), the compiler automatically memoizes components and values — `useMemo`/`useCallback` become largely unnecessary. Until then, they're critical for: (1) referential stability for context values, (2) preventing child re-renders wrapped with `React.memo`, (3) stable deps arrays for `useEffect`."
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "You should wrap every computed value in useMemo to maximize performance.",
+        "isTrue": false,
+        "explanation": "useMemo has overhead — it allocates memory to store the cached result and runs a comparison on every render. Only use it when you've profiled and confirmed a genuine performance problem. Premature optimization makes code harder to read for no gain."
       }
     },
     {
       "id": "r-14",
       "courseId": "intro-to-react",
       "order": 14,
+      "section": 3,
       "title": "Forms in React",
       "type": "code",
       "codeLanguage": "jsx",
+      "interactionType": "fill-blank",
+      "xpReward": 20,
       "content": {
         "beginner": "Controlled inputs keep form state in React:\n\n```jsx\nfunction Form() {\n  const [name, setName] = useState('');\n\n  return (\n    <form onSubmit={e => { e.preventDefault(); alert(name); }}>\n      <input\n        value={name}\n        onChange={e => setName(e.target.value)}\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}",
         "intermediate": "Controlled vs uncontrolled inputs: controlled = React owns the value (via state + onChange), uncontrolled = DOM owns the value (access via `useRef`). Controlled is preferred for validation and computed values. `e.preventDefault()` stops the native form submission.",
         "advanced": "For complex forms, use React Hook Form — it uses uncontrolled inputs under the hood (via `register` and refs) to avoid re-renders on every keystroke. It integrates with Zod for schema validation. React 19's `useActionState` and form Actions provide native async form handling with Suspense."
+      },
+      "challenge": {
+        "type": "fill-blank",
+        "prompt": "<input\n  value={name}\n  ___={e => setName(e.target.value)}\n/>",
+        "blanks": [{ "position": 0, "answer": "onChange" }],
+        "explanation": "A controlled input pairs value (what React displays) with onChange (how React updates when the user types). Without onChange, the input becomes read-only — the value is stuck at whatever state holds."
       }
     },
     {
       "id": "r-15",
       "courseId": "intro-to-react",
       "order": 15,
+      "section": 3,
       "title": "You Know React! What's Next?",
       "type": "fact",
+      "interactionType": "true-false",
+      "xpReward": 10,
       "content": {
         "beginner": "You've learned the core of React:\n✅ Components & JSX\n✅ Props & State\n✅ Events & Conditional Rendering\n✅ Lists & Keys\n✅ useEffect\n✅ Custom Hooks\n✅ Context API\n\nNext steps: Try building a todo app, then explore **Next.js** for full-stack React!",
         "intermediate": "You've covered the fundamentals. Next, explore:\n- **React Router** for SPAs\n- **TanStack Query** for server state\n- **Zustand** for client state\n- **Next.js** for SSR/SSG\n- **Vitest + Testing Library** for testing",
         "advanced": "From here, dive into:\n- **React Compiler** (React 19)\n- **Server Components** and the `use` hook\n- **Concurrent features**: `useDeferredValue`, `useTransition`\n- **Suspense** boundaries and streaming SSR\n- **React Native** for mobile"
+      },
+      "challenge": {
+        "type": "true-false",
+        "statement": "Custom React hooks can call other hooks inside them.",
+        "isTrue": true,
+        "explanation": "Hooks compose — that's what makes them powerful. A custom hook is just a function that follows the rules of hooks, including being able to call useState, useEffect, and other custom hooks. You can build arbitrarily deep hook trees."
       }
     }
   ],

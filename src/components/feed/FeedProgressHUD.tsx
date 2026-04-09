@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Flame } from "lucide-react";
 import type { DifficultyLevel } from "@/types";
 import { getDifficultyLabel, getDiffTokens } from "@/lib/difficultyEngine";
 import { colors } from "@/design-system/tokens";
@@ -11,6 +11,7 @@ interface FeedProgressHUDProps {
   total: number;
   difficulty: DifficultyLevel;
   courseTitle: string;
+  combo: number;
   onBack: () => void;
 }
 
@@ -19,6 +20,7 @@ export function FeedProgressHUD({
   total,
   difficulty,
   courseTitle,
+  combo,
   onBack,
 }: FeedProgressHUDProps) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
@@ -67,6 +69,31 @@ export function FeedProgressHUD({
         </span>
 
         <div className="flex items-center gap-2.5 flex-shrink-0">
+          {combo >= 2 && (
+            <motion.div
+              key={combo}
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 450, damping: 22 }}
+              className="flex items-center gap-1 px-2 py-1 rounded-full border"
+              style={{
+                background: colors.achievementBg,
+                borderColor: "rgba(217,119,6,0.28)",
+              }}
+            >
+              <Flame
+                size={11}
+                strokeWidth={2.5}
+                style={{ color: colors.achievement }}
+              />
+              <span
+                className="text-xs font-bold tabular-nums"
+                style={{ color: colors.achievement }}
+              >
+                {combo}x
+              </span>
+            </motion.div>
+          )}
           <span
             className="text-xs font-semibold px-2.5 py-1 rounded-full border capitalize"
             style={{

@@ -55,6 +55,7 @@ export function initCourseProgress(
     currentDifficulty: difficulty,
     quizHistory: [],
     consecutiveHoldCount: 0,
+    xp: 0,
     startedAt: now,
     lastActiveAt: now,
   };
@@ -100,6 +101,30 @@ export function markCourseComplete(courseId: string): void {
   saveProgress(progress);
 }
 
+export function addXP(courseId: string, amount: number): number {
+  const progress = loadProgress();
+  const cp = progress.courses[courseId];
+  if (!cp) return 0;
+  cp.xp = (cp.xp ?? 0) + amount;
+  cp.lastActiveAt = new Date().toISOString();
+  saveProgress(progress);
+  return cp.xp;
+}
+
+export function updateDifficulty(
+  courseId: string,
+  difficulty: DifficultyLevel,
+  consecutiveHoldCount: number
+): void {
+  const progress = loadProgress();
+  const cp = progress.courses[courseId];
+  if (!cp) return;
+  cp.currentDifficulty = difficulty;
+  cp.consecutiveHoldCount = consecutiveHoldCount;
+  cp.lastActiveAt = new Date().toISOString();
+  saveProgress(progress);
+}
+
 export function resetCourseProgress(
   courseId: string,
   difficulty: DifficultyLevel
@@ -113,6 +138,7 @@ export function resetCourseProgress(
     currentDifficulty: difficulty,
     quizHistory: [],
     consecutiveHoldCount: 0,
+    xp: 0,
     startedAt: now,
     lastActiveAt: now,
   };

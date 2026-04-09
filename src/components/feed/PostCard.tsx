@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   BookOpen,
   Code2,
@@ -276,17 +276,24 @@ export function PostCard({
   isActive,
   totalPosts,
 }: PostCardProps) {
+  const shouldReduce = useReducedMotion();
   const typeInfo = typeConfig[post.type];
   const content = post.content[difficulty];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={
+      initial={{ opacity: 0, y: shouldReduce ? 0 : 24 }}
+      animate={
         isActive
-          ? { type: "spring", stiffness: 300, damping: 26, delay: 0.04 }
-          : { duration: 0.18 }
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: shouldReduce ? 0 : 24 }
+      }
+      transition={
+        shouldReduce
+          ? { duration: 0 }
+          : isActive
+            ? { type: "spring", stiffness: 300, damping: 26, delay: 0.04 }
+            : { duration: 0.18 }
       }
       className="h-full flex flex-col max-w-2xl mx-auto w-full px-5"
       style={{ paddingTop: "72px", paddingBottom: "24px" }}

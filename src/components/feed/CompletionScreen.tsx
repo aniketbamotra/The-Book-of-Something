@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   Trophy,
   Share2,
-  Brain,
+  Zap,
   Target,
   Check,
   RotateCcw,
@@ -18,24 +18,21 @@ import { colors, springs } from "@/design-system/tokens";
 
 interface CompletionScreenProps {
   course: Course;
-  quizCount: number;
-  avgScore: number;
-  avgConfidencePct?: number;
-  avgAccuracyPct?: number;
+  totalXP: number;
+  interactionCount: number;
+  avgAccuracyPct: number;
 }
 
 export function CompletionScreen({
   course,
-  quizCount,
-  avgScore,
-  avgConfidencePct,
+  totalXP,
+  interactionCount,
   avgAccuracyPct,
 }: CompletionScreenProps) {
   const { triggerConfetti } = useConfetti();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const accuracyPct = avgAccuracyPct ?? Math.round(avgScore * 100);
-  const confidencePct = avgConfidencePct ?? 0;
+  const accuracyPct = avgAccuracyPct;
 
   const accuracyColor =
     accuracyPct >= 80
@@ -43,13 +40,6 @@ export function CompletionScreen({
       : accuracyPct >= 60
         ? colors.needHelp400
         : colors.quizIncorrect;
-
-  const confidenceColor =
-    confidencePct >= 80
-      ? colors.gotIt400
-      : confidencePct >= 50
-        ? colors.needHelp400
-        : colors.showAgain400;
 
   const accuracyBarColor =
     accuracyPct >= 80
@@ -167,44 +157,32 @@ export function CompletionScreen({
           transition={{ delay: 0.28, duration: 0.3 }}
           className="grid grid-cols-2 gap-3 mb-4"
         >
-          {/* Confidence */}
+          {/* XP Earned */}
           <div
             className="rounded-2xl p-4 text-left border"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              borderColor: colors.borderDefault,
+              background: colors.achievementBg,
+              borderColor: "rgba(217,119,6,0.22)",
             }}
           >
             <div className="flex items-center gap-1.5 mb-2">
-              <Brain
+              <Zap
                 size={13}
                 strokeWidth={2}
-                style={{ color: colors.primary400 }}
+                style={{ color: colors.achievement }}
               />
               <span
                 className="text-xs font-medium"
                 style={{ color: colors.textMuted }}
               >
-                Confidence
+                XP Earned
               </span>
             </div>
             <div
-              className="font-bold mb-2"
-              style={{ fontSize: "1.625rem", color: confidenceColor }}
+              className="font-bold tabular-nums"
+              style={{ fontSize: "1.625rem", color: colors.achievement }}
             >
-              {confidencePct}%
-            </div>
-            <div
-              className="h-1 rounded-full overflow-hidden"
-              style={{ background: colors.borderSubtle }}
-            >
-              <motion.div
-                className="h-full rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${confidencePct}%` }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                style={{ background: confidenceColor }}
-              />
+              {totalXP}
             </div>
           </div>
 
@@ -212,7 +190,7 @@ export function CompletionScreen({
           <div
             className="rounded-2xl p-4 text-left border"
             style={{
-              background: "rgba(255,255,255,0.04)",
+              background: colors.bgSurface,
               borderColor: colors.borderDefault,
             }}
           >
@@ -230,7 +208,7 @@ export function CompletionScreen({
               </span>
             </div>
             <div
-              className="font-bold mb-2"
+              className="font-bold mb-2 tabular-nums"
               style={{ fontSize: "1.625rem", color: accuracyColor }}
             >
               {accuracyPct}%
@@ -257,22 +235,19 @@ export function CompletionScreen({
           transition={{ delay: 0.38, duration: 0.28 }}
           className="rounded-2xl px-4 py-3 mb-6 flex items-center justify-between border"
           style={{
-            background: "rgba(255,255,255,0.03)",
-            borderColor: colors.borderSubtle,
+            background: colors.bgSurface,
+            borderColor: colors.borderDefault,
           }}
         >
           <div className="text-left">
-            <div
-              className="text-xs mb-0.5"
-              style={{ color: "rgba(250,250,250,0.30)" }}
-            >
-              Quizzes completed
+            <div className="text-xs mb-0.5" style={{ color: colors.textMuted }}>
+              Challenges completed
             </div>
             <div
               className="font-bold"
               style={{ fontSize: "1.125rem", color: colors.textPrimary }}
             >
-              {quizCount}
+              {interactionCount}
             </div>
           </div>
           <span style={{ fontSize: "2rem" }}>{course.emoji}</span>
@@ -302,7 +277,10 @@ export function CompletionScreen({
             Share your result
           </motion.button>
 
-          <Link href="/" className="block">
+          <Link
+            href="/"
+            className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-2xl"
+          >
             <motion.div
               whileTap={{ scale: 0.97 }}
               className="flex items-center justify-center gap-2 rounded-2xl font-semibold cursor-pointer border"
@@ -320,7 +298,10 @@ export function CompletionScreen({
             </motion.div>
           </Link>
 
-          <Link href={`/course/${course.id}`} className="block">
+          <Link
+            href={`/course/${course.id}`}
+            className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-2xl"
+          >
             <motion.div
               whileTap={{ scale: 0.97 }}
               className="flex items-center justify-center gap-2 rounded-2xl font-medium cursor-pointer border"

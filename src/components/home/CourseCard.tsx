@@ -39,7 +39,10 @@ export function CourseCard({
       transition={{ duration: 0.2 }}
       style={{ borderRadius: "16px" }}
     >
-      <Link href={`/course/${course.id}`} className="block cursor-pointer">
+      <Link
+        href={`/course/${course.id}`}
+        className="block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-2xl"
+      >
         <div
           className="rounded-2xl overflow-hidden transition-colors duration-200"
           style={{

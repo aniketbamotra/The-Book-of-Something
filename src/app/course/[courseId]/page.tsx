@@ -127,7 +127,7 @@ export default async function CoursePage({ params }: Props) {
       <div className="max-w-3xl mx-auto px-6 mt-6 flex flex-col items-center gap-3">
         <Link
           href={`/course/${courseId}/feed`}
-          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all hover:opacity-90 active:scale-95"
+          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all hover:opacity-90 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           style={{
             background: "#6366F1",
             boxShadow: "0 4px 14px rgba(99,102,241,0.35)",

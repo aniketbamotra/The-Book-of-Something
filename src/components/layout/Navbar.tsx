@@ -21,7 +21,7 @@ export function Navbar() {
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold transition-opacity hover:opacity-75"
+          className="flex items-center gap-2 font-semibold transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-lg"
           style={{ color: "#111827", fontSize: "0.9375rem" }}
         >
           <div
@@ -35,7 +35,7 @@ export function Navbar() {
 
         <Link
           href="/"
-          className="text-sm font-medium transition-colors"
+          className="text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-md"
           style={{ color: "#6B7280" }}
         >
           Browse Courses

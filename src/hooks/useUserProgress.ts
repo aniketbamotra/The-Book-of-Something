@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { DifficultyLevel, QuizAttempt, CourseProgress } from "@/types";
+
 import * as storage from "@/lib/progressStorage";
 
 export function useUserProgress(
@@ -41,10 +42,35 @@ export function useUserProgress(
     setProgress(storage.getCourseProgress(courseId));
   }, [courseId]);
 
+  const addXP = useCallback(
+    (amount: number): number => {
+      const newTotal = storage.addXP(courseId, amount);
+      setProgress(storage.getCourseProgress(courseId));
+      return newTotal;
+    },
+    [courseId]
+  );
+
+  const updateDifficulty = useCallback(
+    (difficulty: DifficultyLevel, consecutiveHoldCount: number) => {
+      storage.updateDifficulty(courseId, difficulty, consecutiveHoldCount);
+      setProgress(storage.getCourseProgress(courseId));
+    },
+    [courseId]
+  );
+
   const reset = useCallback(() => {
     storage.resetCourseProgress(courseId, defaultDifficulty);
     setProgress(storage.getCourseProgress(courseId));
   }, [courseId, defaultDifficulty]);
 
-  return { progress, updatePost, recordQuiz, markComplete, reset };
+  return {
+    progress,
+    updatePost,
+    recordQuiz,
+    markComplete,
+    addXP,
+    updateDifficulty,
+    reset,
+  };
 }
