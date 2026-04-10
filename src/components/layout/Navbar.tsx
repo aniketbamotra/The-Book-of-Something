@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
+import { colors } from "@/design-system/tokens";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -15,28 +16,22 @@ export function Navbar() {
       style={{
         background: "rgba(255,249,245,0.94)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #EDE5DE",
+        borderBottom: `1px solid ${colors.borderSubtle}`,
       }}
     >
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-lg"
-          style={{ color: "#111827", fontSize: "0.9375rem" }}
+          className="transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-lg"
+          aria-label="The Book of Something — home"
         >
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center"
-            style={{ background: "#6366F1" }}
-          >
-            <BookOpen size={14} strokeWidth={2.5} style={{ color: "#fff" }} />
-          </div>
-          The Book of Something
+          <Logo size="sm" variant="light" />
         </Link>
 
         <Link
           href="/"
           className="text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 rounded-md"
-          style={{ color: "#6B7280" }}
+          style={{ color: colors.textMuted }}
         >
           Browse Courses
         </Link>
